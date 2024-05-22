@@ -44,9 +44,7 @@ export function RegisterScreen() {
         useState<boolean>(false);
     const [serviceTermsAcceptedError, setServiceTermsAcceptedError] =
         useState<string>('');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [isTermsOfServiceOpen, setIsTermsOfServiceOpen] =
-        useState<boolean>(false);
+    const [, setIsTermsOfServiceOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { setError } = useError();
