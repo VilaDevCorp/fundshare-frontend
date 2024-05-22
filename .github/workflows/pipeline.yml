@@ -51,5 +51,6 @@ jobs:
             ${{ secrets.GIT_PULL_COMMAND }}
             yarn install
             yarn build
+            rm -rf /var/www/fundshare_dist
             mv dist /var/www/fundshare_dist            
 #git pull https://davilasanvilar:{TOKEN}@github.com/davilasanvilar/fundshare-frontend.git
