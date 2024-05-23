@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import logo from '/logo.svg';
+import { Button } from '@chakra-ui/react';
 
 export function Layout({
     children,
@@ -43,7 +44,7 @@ export function Layout({
                     className="mb-10 self-center  w-[200px]"
                 />
                 <h2>{'You need an account to view this page'}</h2>
-                <button onClick={() => navigate('/login')}>{'Sign in'}</button>
+                <Button onClick={() => navigate('/login')}>{'Sign in'}</Button>
             </main>
         </div>
     );

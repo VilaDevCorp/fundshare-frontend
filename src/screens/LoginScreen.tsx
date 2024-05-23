@@ -19,7 +19,6 @@ export function LoginScreen() {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [rememberMe, setRememberMe] = useState<boolean>(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [notValidatedAccount, setNotValidatedAccount] =
         useState<boolean>(false);
 
