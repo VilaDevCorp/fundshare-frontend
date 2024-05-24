@@ -12,11 +12,29 @@ export const ButtonTheme = defineStyleConfig({
     sizes: {
         md: {
             padding: '8px 16px',
-            fontSize: '1.2em',
-            fontWeight: 'regular',
+            fontSize: 'lg',
+            fontWeight: 'normal',
             svg: {
                 fontSize: '1.2em',
-            }
+            },
+            height: 'auto !important',
+        },
+        lg: {
+            padding: '12px 24px',
+            fontSize: 'xl',
+            fontWeight: 'normal',
+            svg: {
+                fontSize: '1.2em',
+            },
+            height: 'auto !important',
+        },
+        square: {
+            padding: '12px 24px',
+            fontSize: 'xl',
+            fontWeight: 'normal',
+            svg: {
+                fontSize: '1.2em',
+            },
         },
     },
     variants: {
@@ -33,7 +51,8 @@ export const ButtonTheme = defineStyleConfig({
             _disabled: {
                 bg: 'primary.100 !important',
             },
-            color: 'background.50'
+            color: 'background.50',
+
         },
         outline: {
             borderColor: 'primary.500',
