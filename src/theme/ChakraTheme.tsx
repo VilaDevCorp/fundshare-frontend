@@ -2,6 +2,8 @@ import { extendTheme } from '@chakra-ui/react';
 import { } from '@chakra-ui/anatomy';
 import { ButtonTheme } from './ButtonTheme';
 import { HeadingTheme } from './HeadingTheme';
+import { InputTheme } from './InputTheme';
+// import { IconButtonTheme } from './IconButtonTheme';
 
 const colors = {
     primary: {
@@ -20,6 +22,22 @@ const colors = {
     },
 
     background: {
+        0: "#F4F4F4",
+        50: "#EEEEEE",
+        100: "#E9E9E9",
+        200: "#E3E3E3",
+        300: "#DDDDDD",
+        400: "#D8D8D8",
+        500: "#D2D2D2",
+        600: "#CDCDCD",
+        700: "#B3B3B3",
+        800: "##9F9F9F",
+        900: "#B8B8B",
+    },
+
+    text: {
+
+        0: "#FFFFFF",
         50: "#F6F6F6",
         100: "#E9E9E9",
         200: "#D9D9D9",
@@ -31,9 +49,37 @@ const colors = {
         800: "#555555",
         900: "#2D2D2D",
     },
-   
+
+    error: {
+        50: "#FFEBEB",
+        100: "#FFD1D1",
+        200: "#FFB6B6",
+        300: "#FF9A9A",
+        400: "#FF7F7F",
+        500: "#C84B4B",
+        600: "#B93F3F",
+        700: "#A93333",
+        800: "#9A2727",
+        900: "#8B1B1B",
+    },
+
     transparent: "transparent",
 };
+
+const fontSizes = {
+    xs: "0.75rem",
+    sm: "0.875rem",
+    md: "1rem",
+    lg: "1.25rem",
+    xl: "1.5rem",
+};
+
+const shadows = {
+    inputFocus: '0 0 0 1px #005654',
+    inputInvalid: '0 0 0 1px #C84B4B',
+    inputHover: '0 0 0 1px #707070',
+}
+
 export const theme = extendTheme({
     styles: {
         global: () => ({
@@ -43,10 +89,12 @@ export const theme = extendTheme({
             }
         })
     },
-
+    fontSizes,
     colors,
+    shadows,
     components: {
         Button: ButtonTheme,
-        Heading: HeadingTheme
+        Heading: HeadingTheme,
+        Input: InputTheme,
     }
 });
