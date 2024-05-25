@@ -36,7 +36,7 @@ export const useValidator = (
     input: string,
     validators: { (input: string): string }[],
     //This ref is used to activate the dirty state when the input is blurred
-    inputRef?: React.RefObject<HTMLInputElement>
+    inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement>
 ): [boolean, boolean, string, { (): boolean }] => {
     const [dirty, setDirty] = useState(false);
     const [error, setError] = useState(false);
@@ -45,6 +45,7 @@ export const useValidator = (
     useEffect(() => {
         if (inputRef && inputRef.current) {
             inputRef.current.onblur = () => {
+                console.log("SETTING DIRTY")
                 setDirty(true);
             };
         }

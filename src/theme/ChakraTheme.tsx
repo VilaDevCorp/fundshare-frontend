@@ -5,7 +5,7 @@ import { HeadingTheme } from './HeadingTheme';
 import { InputTheme } from './InputTheme';
 import { NumberInputTheme } from './NumberInputTheme';
 import { LinkTheme } from './LinkTheme';
-// import { IconButtonTheme } from './IconButtonTheme';
+import { TextareaTheme } from './TextareaTheme';
 
 const colors = {
     primary: {
@@ -100,6 +100,7 @@ export const theme = extendTheme({
         Heading: HeadingTheme,
         Input: InputTheme,
         NumberInput: NumberInputTheme,
-        Link: LinkTheme
+        Link: LinkTheme,
+        Textarea: TextareaTheme
     }
 });
