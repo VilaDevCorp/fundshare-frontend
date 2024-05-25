@@ -7,7 +7,7 @@ export const ButtonTheme = defineStyleConfig({
         borderWidth: '2px !important',
         _disabled: {
             cursor: 'default'
-        },
+        }
     },
     sizes: {
         md: {
@@ -15,27 +15,27 @@ export const ButtonTheme = defineStyleConfig({
             fontSize: 'lg',
             fontWeight: 'normal',
             svg: {
-                fontSize: '1.2em',
+                fontSize: '1.2em'
             },
-            height: 'auto !important',
+            height: 'auto !important'
         },
         lg: {
             padding: '12px 24px',
             fontSize: 'xl',
             fontWeight: 'normal',
             svg: {
-                fontSize: '1.2em',
+                fontSize: '1.2em'
             },
-            height: 'auto !important',
+            height: 'auto !important'
         },
         square: {
             padding: '12px 24px',
             fontSize: 'xl',
             fontWeight: 'normal',
             svg: {
-                fontSize: '1.2em',
-            },
-        },
+                fontSize: '1.2em'
+            }
+        }
     },
     variants: {
         solid: {
@@ -46,21 +46,20 @@ export const ButtonTheme = defineStyleConfig({
                 bg: 'primary.300'
             },
             _active: {
-                bg: 'primary.200',
+                bg: 'primary.200'
             },
             _disabled: {
-                bg: 'primary.100 !important',
+                bg: 'primary.100 !important'
             },
-            color: 'background.50',
-
+            color: 'text.0'
         },
         outline: {
             borderColor: 'primary.500',
             _hover: {
-                bg: 'background.100',
+                bg: 'background.100'
             },
             _active: {
-                bg: 'background.200',
+                bg: 'background.200'
             },
             _disabled: {
                 borderColor: 'primary.100',
