@@ -6,6 +6,7 @@ import { InputTheme } from './InputTheme';
 import { NumberInputTheme } from './NumberInputTheme';
 import { LinkTheme } from './LinkTheme';
 import { TextareaTheme } from './TextareaTheme';
+import { RadioTheme } from './RadioTheme';
 
 const colors = {
     primary: {
@@ -88,7 +89,7 @@ export const theme = extendTheme({
         global: () => ({
             body: {
                 bg: 'background.50',
-                color: 'primary.900'
+                color: 'text.900'
             }
         })
     },
@@ -101,6 +102,7 @@ export const theme = extendTheme({
         Input: InputTheme,
         NumberInput: NumberInputTheme,
         Link: LinkTheme,
-        Textarea: TextareaTheme
+        Textarea: TextareaTheme,
+        Radio: RadioTheme
     }
 });

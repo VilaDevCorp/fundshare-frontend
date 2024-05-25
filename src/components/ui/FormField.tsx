@@ -4,9 +4,9 @@ import { BiMessageAltError } from 'react-icons/bi';
 
 interface FormFieldProps {
     label: string;
-    labelIcon?: React.ReactNode;
     input: React.ReactNode;
-    error: string | undefined;
+    labelIcon?: React.ReactNode;
+    error?: string;
 }
 
 export function FormField(props: FormFieldProps) {
@@ -15,7 +15,7 @@ export function FormField(props: FormFieldProps) {
             <FormLabel
                 display={'flex'}
                 height={'25px'}
-                fontSize={12}
+                fontSize={'sm'}
                 alignItems={'center'}
                 gap={2}
             >
