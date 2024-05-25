@@ -12,7 +12,7 @@ export const NumberInputTheme = defineMultiStyleConfig({
             color: 'text.500',
             fontSize: 'xl',
             textAlign: 'end'
-        },
+        }
     },
     variants: {
         outline: {

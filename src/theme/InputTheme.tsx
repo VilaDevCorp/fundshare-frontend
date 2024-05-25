@@ -55,7 +55,7 @@ export const InputTheme = defineMultiStyleConfig({
                 color: 'text.800',
                 fontSize: 'lg',
                 borderWidth: 0,
-                height: 'auto',
+                height: 'auto'
             }
         }
     }
