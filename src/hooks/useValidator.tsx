@@ -28,15 +28,31 @@ export function upperLowerCaseValidator(input: string): string {
         : 'The field should contain upper and lower case';
 }
 
+export function upperThanZeroValidator(input: string): string {
+    return parseFloat(input) > 0 ? '' : 'The value should be greater than 0';
+}
+
 export const useValidator = (
     input: string,
-    validators: { (input: string): string }[]
+    validators: { (input: string): string }[],
+    //This ref is used to activate the dirty state when the input is blurred
+    inputRef?: React.RefObject<HTMLInputElement>
 ): [boolean, boolean, string, { (): boolean }] => {
     const [dirty, setDirty] = useState(false);
     const [error, setError] = useState(false);
     const [message, setMessage] = useState('');
+
     useEffect(() => {
-        if (!dirty && input) {
+        if (inputRef && inputRef.current) {
+            inputRef.current.onblur = () => {
+                setDirty(true);
+            };
+        }
+    }, []);
+
+    useEffect(() => {
+        //If the inputRef is not set, the dirty state is activated when the user starts typing
+        if (!inputRef && !dirty && input) {
             setDirty(true);
         }
         for (const validator of validators) {
