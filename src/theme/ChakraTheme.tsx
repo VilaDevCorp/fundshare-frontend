@@ -4,6 +4,7 @@ import { ButtonTheme } from './ButtonTheme';
 import { HeadingTheme } from './HeadingTheme';
 import { InputTheme } from './InputTheme';
 import { NumberInputTheme } from './NumberInputTheme';
+import { LinkTheme } from './LinkTheme';
 // import { IconButtonTheme } from './IconButtonTheme';
 
 const colors = {
@@ -98,6 +99,7 @@ export const theme = extendTheme({
         Button: ButtonTheme,
         Heading: HeadingTheme,
         Input: InputTheme,
-        NumberInput: NumberInputTheme
+        NumberInput: NumberInputTheme,
+        Link: LinkTheme
     }
 });
