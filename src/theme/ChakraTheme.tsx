@@ -8,6 +8,7 @@ import { LinkTheme } from './LinkTheme';
 import { TextareaTheme } from './TextareaTheme';
 import { RadioTheme } from './RadioTheme';
 import { SliderTheme } from './SliderTheme';
+import { TabsTheme } from './TabsTheme';
 
 const colors = {
     primary: {
@@ -105,6 +106,7 @@ export const theme = extendTheme({
         Link: LinkTheme,
         Textarea: TextareaTheme,
         Radio: RadioTheme,
-        Slider: SliderTheme
+        Slider: SliderTheme,
+        Tabs: TabsTheme
     }
 });
