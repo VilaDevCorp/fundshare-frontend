@@ -7,6 +7,7 @@ import { NumberInputTheme } from './NumberInputTheme';
 import { LinkTheme } from './LinkTheme';
 import { TextareaTheme } from './TextareaTheme';
 import { RadioTheme } from './RadioTheme';
+import { SliderTheme } from './SliderTheme';
 
 const colors = {
     primary: {
@@ -34,8 +35,8 @@ const colors = {
         500: '#D2D2D2',
         600: '#CDCDCD',
         700: '#B3B3B3',
-        800: '##9F9F9F',
-        900: '#B8B8B'
+        800: '#9F9F9F',
+        900: '#888888'
     },
 
     text: {
@@ -103,6 +104,7 @@ export const theme = extendTheme({
         NumberInput: NumberInputTheme,
         Link: LinkTheme,
         Textarea: TextareaTheme,
-        Radio: RadioTheme
+        Radio: RadioTheme,
+        Slider: SliderTheme
     }
 });
