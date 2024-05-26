@@ -19,15 +19,6 @@ export const ButtonTheme = defineStyleConfig({
             },
             height: 'auto !important'
         },
-        lg: {
-            padding: '12px 24px',
-            fontSize: 'xl',
-            fontWeight: 'normal',
-            svg: {
-                fontSize: '1.2em'
-            },
-            height: 'auto !important'
-        },
         square: {
             padding: '12px 24px',
             fontSize: 'xl',
