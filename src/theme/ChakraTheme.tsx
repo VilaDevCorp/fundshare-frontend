@@ -9,6 +9,7 @@ import { TextareaTheme } from './TextareaTheme';
 import { RadioTheme } from './RadioTheme';
 import { SliderTheme } from './SliderTheme';
 import { TabsTheme } from './TabsTheme';
+import { ModalTheme } from './ModalTheme';
 
 const colors = {
     primary: {
@@ -118,6 +119,7 @@ export const theme = extendTheme({
         Textarea: TextareaTheme,
         Radio: RadioTheme,
         Slider: SliderTheme,
-        Tabs: TabsTheme
+        Tabs: TabsTheme,
+        Modal: ModalTheme
     }
 });
