@@ -44,6 +44,9 @@ function Body() {
                         <Suspense fallback={<LoadingScreen />}>
                             <Routes>
                                 <Route path="/" element={<HomeScreen />} />
+                                <Route path="/groups" element={<HomeScreen />} />
+                                <Route path="/requests" element={<HomeScreen />} />
+                                <Route path="/settings" element={<HomeScreen />} />
                                 <Route
                                     path="/login"
                                     element={<LoginScreen />}

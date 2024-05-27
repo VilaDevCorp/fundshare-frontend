@@ -12,7 +12,7 @@ import { TabsTheme } from './TabsTheme';
 
 const colors = {
     primary: {
-        50: '#55ABA9',
+        50: '#C7E8E8',
         100: '#3E9A98',
         200: '#298988',
         300: '#187877',
@@ -77,7 +77,17 @@ const fontSizes = {
     lg: '1.25rem',
     xl: '1.5rem',
     '2xl': '1.875rem',
-    '3xl': '2rem',
+    '3xl': '2rem'
+};
+
+const breakpoints = {
+    base: '0em', // 0px,
+    mobileS: '320px',
+    mobileM: '375px',
+    mobileL: '425px',
+    tablet: '768px',
+    laptop: '1024px',
+    desktop: '1440px'
 };
 
 const shadows = {
@@ -98,6 +108,7 @@ export const theme = extendTheme({
     fontSizes,
     colors,
     shadows,
+    breakpoints,
     components: {
         Button: ButtonTheme,
         Heading: HeadingTheme,

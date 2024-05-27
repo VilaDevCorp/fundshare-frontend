@@ -63,11 +63,15 @@ export const ButtonTheme = defineStyleConfig({
             bg: 'transparent',
             borderColor: 'transparent',
             _hover: {
+                bg: 'transparent',
                 color: 'primary.300',
-                bg: 'background.100'
+                backdropFilter: 'brightness(0.95)'
             },
             _active: {
-                bg: 'background.200'
+                bg: 'transparent',
+                color: 'primary.300',
+
+                backdropFilter: 'brightness(0.90)'
             },
             _disabled: {
                 color: 'primary.100'
