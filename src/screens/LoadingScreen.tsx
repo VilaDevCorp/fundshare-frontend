@@ -1,3 +1,4 @@
+import { CircularProgress } from '@chakra-ui/react';
 import { Layout } from '../components/organism/Layout';
 import logo from '/logo.svg';
 
@@ -10,7 +11,7 @@ export function LoadingScreen() {
                     alt="Logo"
                     className="mb-10 self-center  w-[200px]"
                 />
-                <h2 className="animate-loadingPulse">{'Loading...'}</h2>
+                <CircularProgress isIndeterminate color="primary.300"  />
             </div>
         </Layout>
     );
