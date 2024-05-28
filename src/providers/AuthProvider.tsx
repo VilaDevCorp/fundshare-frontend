@@ -3,7 +3,7 @@ import { User } from '../types/entities';
 import { ApiError, ApiResponse } from '../types/types';
 import { useQuery } from '@tanstack/react-query';
 
-export interface AuthContext {
+interface AuthContext {
     user?: User;
     csrfToken?: string;
     login: (user: string, password: string) => Promise<string>;

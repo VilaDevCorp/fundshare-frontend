@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
-export interface ScreenContext {
+interface ScreenContext {
     screenWidth: number;
     screenHeight: number;
     isDesktop: boolean;

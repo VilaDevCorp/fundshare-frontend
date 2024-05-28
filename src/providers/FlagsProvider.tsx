@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from 'react';
 
-export interface FlagsContext {
+interface FlagsContext {
     isLoading: boolean;
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
