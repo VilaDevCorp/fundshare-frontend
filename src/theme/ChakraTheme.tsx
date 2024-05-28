@@ -10,6 +10,7 @@ import { RadioTheme } from './RadioTheme';
 import { SliderTheme } from './SliderTheme';
 import { TabsTheme } from './TabsTheme';
 import { ModalTheme } from './ModalTheme';
+import { CheckboxTheme } from './CheckboxTheme';
 
 const colors = {
     primary: {
@@ -120,6 +121,7 @@ export const theme = extendTheme({
         Radio: RadioTheme,
         Slider: SliderTheme,
         Tabs: TabsTheme,
-        Modal: ModalTheme
+        Modal: ModalTheme,
+        Checkbox: CheckboxTheme
     }
 });
