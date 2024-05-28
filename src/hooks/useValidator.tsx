@@ -45,7 +45,6 @@ export const useValidator = (
     useEffect(() => {
         if (inputRef && inputRef.current) {
             inputRef.current.onblur = () => {
-                console.log("SETTING DIRTY")
                 setDirty(true);
             };
         }
