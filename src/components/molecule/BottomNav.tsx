@@ -1,6 +1,6 @@
-import { Icon } from '@chakra-ui/react';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Icon } from '../atom/Icon';
 
 interface NavItem {
     path: string;
@@ -31,7 +31,7 @@ export function BottomNav() {
     const navigate = useNavigate();
 
     return (
-        <nav className="w-full flex justify-between px-6 py-3 gap-6 bg-background-0">
+        <nav className="w-full flex justify-between px-6 py-3 gap-6 bg-background-0 sticky bottom-0">
             {navItems.map((item) => (
                 <a
                     onClick={() => navigate(item.path)}

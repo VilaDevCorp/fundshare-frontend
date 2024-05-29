@@ -43,7 +43,7 @@ export function TopNav() {
             <nav className="flex gap-6">
                 {navItems.map((item) => (
                     <a
-                        className={`gap-2 flex items-center hover:spfont-bold cursor-pointer group ${location.pathname === item.path && 'text-primary-500'} `}
+                        className={`gap-2 flex items-center hover:spfont-bold cursor-pointer group  ${location.pathname === item.path ? 'text-primary-500' : ' transition-all ease-linear hover:scale-105'} `}
                         key={item.label}
                         onClick={() => navigate(item.path)}
                     >
@@ -51,7 +51,7 @@ export function TopNav() {
                             {item.icon}
                         </span>
                         <span
-                            className={`text-xl font-light transition-all  ${location.pathname === item.path ? 'font-bold' : 'group-hover:font-normal'}`}
+                            className={`text-xl font-light transition-all  ${location.pathname === item.path ? '!font-bold' : ''}`}
                         >
                             {item.label}
                         </span>

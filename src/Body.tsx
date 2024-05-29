@@ -37,7 +37,7 @@ function Body() {
     }, []);
 
     return (
-        <div className="w-full h-full relative ">
+        <div className="w-full h-full flex flex-col ">
             <BrowserRouter>
                 {authInfo.isLoadingUserInfo === false ? (
                     <>

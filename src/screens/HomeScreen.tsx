@@ -5,7 +5,25 @@ export function HomeScreen() {
     const { user } = useAuth();
     return (
         <Layout>
-            <h1>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
         </Layout>
     );
 }

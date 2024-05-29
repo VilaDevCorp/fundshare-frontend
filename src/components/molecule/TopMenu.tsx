@@ -9,7 +9,7 @@ export function TopMenu() {
     const { user, logout } = useAuth();
 
     return (
-        <header className="flex justify-between items-center h-24  bg-primary-50 w-full px-8 py-4 gap-4">
+        <header className="flex justify-between items-center h-24  bg-primary-50 w-full px-8 py-4 gap-4 sticky top-0">
             {isLaptop && <TopNav />}
             <HStack
                 overflow={'hidden'}

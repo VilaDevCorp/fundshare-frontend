@@ -1,8 +1,12 @@
+// import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import logo from '/logo.svg';
+import { Button } from '@chakra-ui/react';
 import { TopMenu } from '../molecule/TopMenu';
 import { BottomNav } from '../molecule/BottomNav';
 import { useScreen } from '../../hooks/useScreen';
+import { PublicFormLayout } from './PublicFormLayout';
+import { useNavigate } from 'react-router-dom';
+import { Typography } from '../ui/Typography';
 
 export function Layout({
     children,
@@ -12,6 +16,8 @@ export function Layout({
     isPublic?: boolean;
 }) {
     const { user } = useAuth();
+    const navigate = useNavigate();
+
     const { isLaptop } = useScreen();
 
     return isPublic || user ? (
@@ -25,7 +31,7 @@ export function Layout({
             <>
                 <TopMenu />
                 <main
-                    className={`w-full flex flex-col h-full max-w-[500px] m-auto p-8 gap-8`}
+                    className={`w-full flex flex-col h-full  m-auto p-8 gap-8 overflow-auto`}
                 >
                     {children}
                 </main>
@@ -34,20 +40,17 @@ export function Layout({
         )
     ) : (
         //Not logged in layout
-        <div
-            className={`min-h-full flex  flex-col items-center bg-center md:min-h-full h-screen w-full`}
-        >
-            <main
-                className={`flex rounded-lg h-full md:h-auto items-center flex-col gap-6 w-full overflow-auto`}
-            >
-                <img
-                    src={logo}
-                    alt="Web logo"
-                    className="mb-10 self-center  w-[200px]"
-                />
-                <h2>{'You need an account to view this page'}</h2>
-                <Button onClick={() => navigate('/login')}>{'Sign in'}</Button>
-            </main>
-        </div>
+        <main className="min-h-full flex-col md:h-auto md:min-h-full w-full p-4 flex backdrop-blur-sm items-center justify-center overflow-auto">
+            <PublicFormLayout>
+                <Typography type='subtitle' textAlign={'center'}>{'You need an account to view this page'}</Typography>
+                <Button
+                    onClick={() => {
+                        navigate('/login');
+                    }}
+                >
+                    {'Sign in  '}
+                </Button>
+            </PublicFormLayout>
+        </main>
     );
 }
