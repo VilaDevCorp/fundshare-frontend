@@ -15,6 +15,7 @@ import { useToast } from '../hooks/useToast';
 import { Icon } from '../components/atom/Icon';
 import { Button, Input, Link } from '@chakra-ui/react';
 import { FormField } from '../components/ui/FormField';
+import { useMutation } from '@tanstack/react-query';
 
 export function ResetPasswordScreen() {
     const navigate = useNavigate();
@@ -22,7 +23,6 @@ export function ResetPasswordScreen() {
     const [step, setStep] = useState<number>(1);
     const [password, setPassword] = useState<string>('');
     const [repeatPassword, setRepeatPassword] = useState<string>('');
-    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [passwordDirty, passwordError, passwordMessage, passwordValidate] =
@@ -38,9 +38,6 @@ export function ResetPasswordScreen() {
     const { code, username } = useParams();
 
     const { showToast } = useToast();
-
-    const disabledButton =
-        isLoading || passwordError || passwordMatchError !== '';
 
     const passwordMatchValidate = () => {
         if (!passwordMatchDirty && (password || repeatPassword)) {
@@ -59,48 +56,59 @@ export function ResetPasswordScreen() {
         passwordMatchValidate();
     }, [password, repeatPassword]);
 
-    const onChangePassword = async () => {
+    const changePassword = async () => {
         const passwordValid = passwordValidate();
         if (passwordValid) {
-            setIsLoading(true);
-            try {
-                await resetPassword(username!, code!, password);
-            } catch (e) {
-                if (e instanceof ApiError) {
-                    if (e.statusCode === StatusCode.ClientErrorConflict) {
-                        setCodeError('The code has already been used');
-                        return;
-                    }
-                    if (e.statusCode === StatusCode.ClientErrorGone) {
-                        setCodeError('The code has expired');
-                        return;
-                    }
-                    if (
-                        e.statusCode === StatusCode.ClientErrorUnauthorized &&
-                        e.code === ErrorCode.INCORRECT_VALIDATION_CODE
-                    ) {
-                        setCodeError('The code is invalid');
-                        return;
-                    }
+            await resetPassword(username!, code!, password);
+        }
+    };
+
+    const { mutate: onChangePassword, isPending: isLoading } = useMutation({
+        mutationFn: changePassword,
+        onSettled: () => {
+            setStep(2);
+        },
+        onSuccess: () => {
+            showToast('success', 'The password has been changed');
+        },
+        onError: (e) => {
+            if (e instanceof ApiError) {
+                if (e.statusCode === StatusCode.ClientErrorConflict) {
+                    setCodeError('The code has already been used');
+                    return;
                 }
-                setCodeError('An internal error occurred');
-            } finally {
-                setIsLoading(false);
-                setStep(2);
+                if (e.statusCode === StatusCode.ClientErrorGone) {
+                    setCodeError('The code has expired');
+                    return;
+                }
+                if (
+                    e.statusCode === StatusCode.ClientErrorUnauthorized &&
+                    e.code === ErrorCode.INCORRECT_VALIDATION_CODE
+                ) {
+                    setCodeError('The code is invalid');
+                    return;
+                }
             }
-        }
-    };
-    const onSendCode = async () => {
-        setIsLoading(true);
-        try {
-            await forgottenPassword(username!);
-            showToast('success', 'The code was succesfully sent!');
-        } catch (e) {
             setCodeError('An internal error occurred');
-        } finally {
-            setIsLoading(false);
         }
+    });
+
+    const disabledButton =
+        isLoading || passwordError || passwordMatchError !== '';
+
+    const sendCode = async () => {
+        await forgottenPassword(username!);
     };
+
+    const { mutate: onSendCode } = useMutation({
+        mutationFn: sendCode,
+        onSuccess: () => {
+            showToast('success', 'The code was succesfully sent!');
+        },
+        onError: () => {
+            showToast('error', 'There was an error sending the new code');
+        }
+    });
 
     return (
         <Layout isPublic>

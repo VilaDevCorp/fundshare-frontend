@@ -6,34 +6,36 @@ import { Layout } from '../components/organism/Layout';
 import { FormField } from '../components/ui/FormField';
 import { Button, Input } from '@chakra-ui/react';
 import { useToast } from '../hooks/useToast';
+import { useMutation } from '@tanstack/react-query';
 
 export function ForgottenPasswordScreen() {
     const { forgottenPassword } = useApi();
 
     const [username, setUsername] = useState<string>('');
-    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const usernameInputRef = useRef<HTMLInputElement>(null);
     const [usernameDirty, usernameError, usernameMessage, usernameValidate] =
         useValidator(username, [notEmptyValidator], usernameInputRef);
 
-    const disabledButton = isLoading || usernameError;
-
     const { showToast } = useToast();
 
-    const onSendCode = async () => {
+    const sendCode = async () => {
         if (usernameValidate()) {
-            setIsLoading(true);
-            try {
-                await forgottenPassword(username);
-                showToast('success', 'The code was succesfully sent!');
-            } catch (e) {
-                showToast('error', 'There was an error sending the new code');
-            } finally {
-                setIsLoading(false);
-            }
+            await forgottenPassword(username);
         }
     };
+
+    const { mutate: onSendCode, isPending: isLoading } = useMutation({
+        mutationFn: sendCode,
+        onSuccess: () => {
+            showToast('success', 'The code was succesfully sent!');
+        },
+        onError: () => {
+            showToast('error', 'There was an error sending the new code');
+        }
+    });
+
+    const disabledButton = isLoading || usernameError;
 
     return (
         <Layout isPublic>

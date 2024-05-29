@@ -8,12 +8,13 @@ import { Layout } from '../components/organism/Layout';
 import StatusCode from 'status-code-enum';
 import { useError } from '../hooks/useError';
 import { useApi } from '../hooks/useApi';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { FormField } from '../components/ui/FormField';
 import { Button, Checkbox, Input, Link } from '@chakra-ui/react';
 import { Typography } from '../components/ui/Typography';
 import { useToast } from '../hooks/useToast';
 import { Icon } from '../components/atom/Icon';
+import { useReactQuery } from '../hooks/useReactQuery';
 
 export function LoginScreen() {
     const auth = useAuth();
@@ -33,20 +34,22 @@ export function LoginScreen() {
     const [passwordDirty, passwordError, passwordMessage, passwordValidate] =
         useValidator(password, [notEmptyValidator], passwordInputRef);
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const { setError } = useError();
 
-    const queryClient = useQueryClient();
+    const { queryClient } = useReactQuery();
 
     const { showToast } = useToast();
 
-    const onResendCode = async () => {
-        setIsLoading(true);
-        try {
-            await sendValidationCode(username);
+    const resendCode = async () => {
+        await sendValidationCode(username);
+    };
+
+    const { mutate: onResendCode } = useMutation({
+        mutationFn: resendCode,
+        onSuccess: () => {
             showToast('success', 'The code was succesfully sent!');
-        } catch (e) {
+        },
+        onError: (e) => {
             if (e instanceof ApiError) {
                 if (e.statusCode === StatusCode.ClientErrorConflict) {
                     showToast('error', 'The account is already validated');
@@ -56,49 +59,48 @@ export function LoginScreen() {
             if (e instanceof Error) {
                 setError(e);
             }
-        } finally {
-            setIsLoading(false);
         }
-    };
+    });
 
-    const disabledButton = isLoading || usernameError || passwordError;
-
-    const onLogin = async () => {
+    const login = async () => {
         const usernameValid = usernameValidate();
         const passwordValid = passwordValidate();
 
         if (usernameValid && passwordValid) {
-            setIsLoading(true);
-            try {
-                await auth.authenticate(username, password, rememberMe);
-                queryClient.invalidateQueries({ queryKey: ['getUserInfo'] });
-                navigate('/');
-            } catch (e) {
-                setIsLoading(false);
-                if (e instanceof ApiError) {
-                    if (
-                        e.statusCode === StatusCode.ClientErrorForbidden &&
-                        e.code === ErrorCode.NOT_VALIDATED_ACCOUNT
-                    ) {
-                        setNotValidatedAccount(true);
-                        return;
-                    }
-                    if (
-                        e.statusCode === StatusCode.ClientErrorUnauthorized &&
-                        e.code === ErrorCode.INVALID_CREDENTIALS
-                    ) {
-                        showToast('error', 'Wrong credentials');
-                        return;
-                    }
-                }
-                if (e instanceof Error) {
-                    setError(e);
-                }
-            } finally {
-                setIsLoading(false);
-            }
+            await auth.authenticate(username, password, rememberMe);
         }
     };
+
+    const { mutate: onLogin, isPending: isLoading } = useMutation({
+        mutationFn: login,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['getUserInfo'] });
+            navigate('/');
+        },
+        onError: (e) => {
+            if (e instanceof ApiError) {
+                if (
+                    e.statusCode === StatusCode.ClientErrorForbidden &&
+                    e.code === ErrorCode.NOT_VALIDATED_ACCOUNT
+                ) {
+                    setNotValidatedAccount(true);
+                    return;
+                }
+                if (
+                    e.statusCode === StatusCode.ClientErrorUnauthorized &&
+                    e.code === ErrorCode.INVALID_CREDENTIALS
+                ) {
+                    showToast('error', 'Wrong credentials');
+                    return;
+                }
+            }
+            if (e instanceof Error) {
+                setError(e);
+            }
+        }
+    });
+
+    const disabledButton = isLoading || usernameError || passwordError;
 
     return (
         <Layout isPublic>

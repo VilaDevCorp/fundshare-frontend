@@ -8,6 +8,7 @@ import { Layout } from '../components/organism/Layout';
 import { useToast } from '../hooks/useToast';
 import { CircularProgress, Link } from '@chakra-ui/react';
 import { Icon } from '../components/atom/Icon';
+import { useMutation } from '@tanstack/react-query';
 
 export function ValidateAccountScreen() {
     const navigate = useNavigate();
@@ -16,18 +17,22 @@ export function ValidateAccountScreen() {
     const { code, username } = useParams();
     const [codeError, setCodeError] = useState<string>('');
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const { showToast } = useToast();
 
     useEffect(() => {
-        onValidate();
+        onValidateAccount();
     }, []);
 
-    const onValidate = async () => {
-        setIsLoading(true);
-        try {
-            await validateAccount(username!, code!);
-        } catch (e) {
+    const validate = async () => {
+        await validateAccount(username!, code!);
+    };
+
+    const { mutate: onValidateAccount, isPending: isLoading } = useMutation({
+        mutationFn: validate,
+        onSettled: () => {
+            setStep(2);
+        },
+        onError: (e) => {
             if (e instanceof ApiError) {
                 if (e.statusCode === StatusCode.ClientErrorConflict) {
                     setCodeError('The code has already been used');
@@ -46,28 +51,28 @@ export function ValidateAccountScreen() {
                 }
             }
             setCodeError('An internal error occurred');
-        } finally {
-            setStep(2);
-            setIsLoading(false);
         }
+    });
+
+    const sendCode = async () => {
+        await sendValidationCode(username!);
     };
-    const onResendCode = async () => {
-        setIsLoading(true);
-        try {
-            await sendValidationCode(username!);
+
+    const { mutate: onResendCode } = useMutation({
+        mutationFn: sendCode,
+        onSuccess: () => {
             showToast('success', 'The code was succesfully sent!');
-        } catch (e) {
+        },
+        onError: (e) => {
             if (e instanceof ApiError) {
                 if (e.statusCode === StatusCode.ClientErrorConflict) {
                     showToast('error', 'The account is already validated');
                     return;
                 }
             }
-            setCodeError('An internal error occurred');
-        } finally {
-            setIsLoading(false);
+            showToast('error', 'There was an error sending the new code');
         }
-    };
+    });
 
     return (
         <Layout isPublic>
