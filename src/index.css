@@ -17,6 +17,7 @@
     height: 100vh;
     overflow: auto;
     max-height: 100vh;
+    background-color: #EEEEEE;
 
     /* min-height: calc(var(--vh, 1vh) * 100); */
     display: flex;

@@ -1,10 +1,8 @@
-import { HStack, Icon, Image } from '@chakra-ui/react';
+import { HStack, Image } from '@chakra-ui/react';
 import React from 'react';
-import { BiGroup, BiHome } from 'react-icons/bi';
-import { CiSettings } from 'react-icons/ci';
-import { FaRegQuestionCircle } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '/logo.svg';
+import { Icon } from './Icon';
 
 interface NavItem {
     label: string;
@@ -16,22 +14,22 @@ const navItems: NavItem[] = [
     {
         label: 'Home',
         path: '/',
-        icon: <Icon as={BiHome} />
+        icon: <Icon type="home" />
     },
     {
         label: 'Groups',
         path: '/groups',
-        icon: <Icon as={BiGroup} />
+        icon: <Icon type="group" />
     },
     {
         label: 'Requests',
         path: '/requests',
-        icon: <Icon as={FaRegQuestionCircle} />
+        icon: <Icon type="request" />
     },
     {
         label: 'Settings',
         path: '/settings',
-        icon: <Icon as={CiSettings} />
+        icon: <Icon type="settings" />
     }
 ];
 

@@ -23,7 +23,7 @@ const getTypographyElement = (props: TypographyProps) => {
                 </Heading>
             );
         default:
-            return <Text fontSize={'sm'}>{props.children}</Text>;
+            return <Text fontSize={'md'}>{props.children}</Text>;
     }
 };
 

@@ -1,6 +1,6 @@
-import { FormControl, FormLabel, Icon, Tooltip } from '@chakra-ui/react';
+import { FormControl, FormLabel, Tooltip } from '@chakra-ui/react';
 import React from 'react';
-import { BiMessageAltError } from 'react-icons/bi';
+import { Icon } from '../atom/Icon';
 
 interface FormFieldProps {
     label: string;
@@ -32,7 +32,7 @@ export function FormField(props: FormFieldProps) {
                             <Icon
                                 color={'error.500'}
                                 fontSize={'lg'}
-                                as={BiMessageAltError}
+                                type={'warning'}
                             />
                         </span>
                     </Tooltip>

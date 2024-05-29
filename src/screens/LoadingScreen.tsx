@@ -11,7 +11,7 @@ export function LoadingScreen() {
                     alt="Logo"
                     className="mb-10 self-center  w-[200px]"
                 />
-                <CircularProgress isIndeterminate color="primary.300"  />
+                <CircularProgress isIndeterminate color="primary.300" />
             </div>
         </Layout>
     );

@@ -5,11 +5,11 @@ import { useValidator, notEmptyValidator } from '../hooks/useValidator';
 import { ApiError, ErrorCode } from '../types/types';
 import { PublicFormLayout } from '../components/organism/PublicFormLayout';
 import { Layout } from '../components/organism/Layout';
-import { IoMdClose } from 'react-icons/io';
 import StatusCode from 'status-code-enum';
 import { useError } from '../hooks/useError';
 import { useApi } from '../hooks/useApi';
 import { useQueryClient } from '@tanstack/react-query';
+import { Icon } from '../components/atom/Icon';
 
 export function LoginScreen() {
     const auth = useAuth();
@@ -171,10 +171,12 @@ export function LoginScreen() {
                 ) : (
                     <>
                         <div className="flex gap-2">
-                            <IoMdClose className="text-3xl text-error" />
-                            <span className="mb-4">
-                                {'Your account has not been validated'}
-                            </span>
+                            <Icon
+                                type={'warning'}
+                                color={'error.500'}
+                                fontSize={'2xl'}
+                            />
+                            <span>{'Your account has not been validated'}</span>
                         </div>
                         <span className="mb-4">{`In order to validate the account you should follow the instructions we sent you via email`}</span>
                         <span>

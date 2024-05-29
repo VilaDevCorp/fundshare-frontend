@@ -1,8 +1,5 @@
 import { Icon } from '@chakra-ui/react';
 import React from 'react';
-import { BiHome, BiGroup } from 'react-icons/bi';
-import { CiSettings } from 'react-icons/ci';
-import { FaRegQuestionCircle } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface NavItem {
@@ -13,19 +10,19 @@ interface NavItem {
 const navItems: NavItem[] = [
     {
         path: '/',
-        icon: <Icon as={BiHome} />
+        icon: <Icon type="home" />
     },
     {
         path: '/groups',
-        icon: <Icon as={BiGroup} />
+        icon: <Icon type="group" />
     },
     {
         path: '/requests',
-        icon: <Icon as={FaRegQuestionCircle} />
+        icon: <Icon type="request" />
     },
     {
         path: '/settings',
-        icon: <Icon as={CiSettings} />
+        icon: <Icon type="settings" />
     }
 ];
 

@@ -1,8 +1,7 @@
-import { Box, HStack, Icon, IconButton, Text, VStack } from '@chakra-ui/react';
-import { FaUserAlt } from 'react-icons/fa';
-import { MdLogout } from 'react-icons/md';
+import { Box, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 import { TopNav } from '../atom/TopNav';
 import { useScreen } from '../../hooks/useScreen';
+import { Icon } from '../atom/Icon';
 
 export function TopMenu() {
     const { isLaptop } = useScreen();
@@ -14,7 +13,6 @@ export function TopMenu() {
                 overflow={'hidden'}
                 gap={'16px'}
                 width={{ base: '100%', laptop: '300px' }}
-                
                 justifyContent={{ base: 'space-between', laptop: 'flex-end' }}
             >
                 <HStack gap={'16px'} overflow={'hidden'}>
@@ -26,7 +24,7 @@ export function TopMenu() {
                         padding={'10px'}
                     >
                         <Icon
-                            as={FaUserAlt}
+                            type={'user'}
                             color={'background.0'}
                             fontSize={'2xl'}
                         />
@@ -66,7 +64,7 @@ export function TopMenu() {
                     size={'square'}
                     variant={'ghost'}
                     aria-label="Log out"
-                    icon={<Icon as={MdLogout} />}
+                    icon={<Icon type={'logout'} />}
                 ></IconButton>
             </HStack>
         </header>
