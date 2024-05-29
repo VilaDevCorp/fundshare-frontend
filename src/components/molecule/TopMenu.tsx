@@ -1,10 +1,12 @@
 import { Box, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 import { TopNav } from '../atom/TopNav';
 import { useScreen } from '../../hooks/useScreen';
+import { useAuth } from '../../hooks/useAuth';
 import { Icon } from '../atom/Icon';
 
 export function TopMenu() {
     const { isLaptop } = useScreen();
+    const { user, logout } = useAuth();
 
     return (
         <header className="flex justify-between items-center h-24  bg-primary-50 w-full px-8 py-4 gap-4">
@@ -44,7 +46,7 @@ export function TopMenu() {
                             whiteSpace={'nowrap'}
                             maxWidth={'100%'}
                         >
-                            davidvilasasdfasdfasfasfsadfasdfsafsafsadfsafasdfasdfasfasdfasdfasfasfasfasd
+                            {user?.username}
                         </Text>
                         <Text
                             as={'span'}
@@ -64,6 +66,7 @@ export function TopMenu() {
                     size={'square'}
                     variant={'ghost'}
                     aria-label="Log out"
+                    onClick={() => logout()}
                     icon={<Icon type={'logout'} />}
                 ></IconButton>
             </HStack>
