@@ -253,17 +253,9 @@ export function RegisterScreen() {
                 <Button
                     type="submit"
                     isDisabled={disabledButton}
-                    onClick={onRegister}
                     isLoading={isLoading}
                 >
                     {'Sign up'}
-                </Button>
-                <Button
-                    onClick={() =>
-                        showToast('success', 'User succesfully registered ')
-                    }
-                >
-                    {'TOAST!'}
                 </Button>
                 <Modal
                     isOpen={isTermsOfServiceOpen}
