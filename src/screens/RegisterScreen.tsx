@@ -83,6 +83,9 @@ export function RegisterScreen() {
         serviceTermsAcceptedError !== '';
 
     const passwordMatchValidate = () => {
+        if (!passwordMatchDirty && (password || repeatPassword)) {
+            setPasswordMatchDirty(true);
+        }
         if (password === repeatPassword) {
             setPasswordMatchError('');
             return true;
@@ -216,7 +219,6 @@ export function RegisterScreen() {
                         <Input
                             type="password"
                             value={repeatPassword}
-                            onBlur={() => setPasswordMatchDirty(true)}
                             onChange={(e) => setRepeatPassword(e.target.value)}
                         />
                     }
