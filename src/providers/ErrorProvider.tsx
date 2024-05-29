@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from 'react';
 
-export interface ErrorContext {
+interface ErrorContext {
     error: Error | undefined;
     setError: React.Dispatch<React.SetStateAction<Error | undefined>>;
 }

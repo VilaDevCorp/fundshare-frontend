@@ -3,7 +3,7 @@ import { RegisterUserForm, User } from '../types/entities';
 import { ApiResponse } from '../types/types';
 import { checkResponseException } from '../utils/utilFunctions';
 
-export interface ApiContext {
+interface ApiContext {
     register: (user: RegisterUserForm) => void;
     sendValidationCode: (username: string) => Promise<void>;
     validateAccount: (username: string, code: string) => Promise<void>;

@@ -8,7 +8,7 @@ const termsOfService = `
 
 **Effective Date: [Date]**
 
-This Terms of Service Agreement (the "Agreement") is entered into by and between you ("User," "you," or "your") and Workblok ("we," "us," or "our"). This Agreement governs your use of the Workblok mobile application (the "App"). By accessing or using the App, you agree to be bound by this Agreement. If you do not agree to the terms and conditions of this Agreement, do not use the App.
+This Terms of Service Agreement (the "Agreement") is entered into by and between you ("User," "you," or "your") and Fundshare ("we," "us," or "our"). This Agreement governs your use of the Fundshare mobile application (the "App"). By accessing or using the App, you agree to be bound by this Agreement. If you do not agree to the terms and conditions of this Agreement, do not use the App.
 
 **1. Use of the App**
 
@@ -20,7 +20,7 @@ This Terms of Service Agreement (the "Agreement") is entered into by and between
 
 2.1 **Account Registration:** To use certain features of the App, you may be required to create an account. You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.
 
-2.2 **Account Information:** Workblok stores only your email address and a username associated with your account. We do not collect additional personal information unless explicitly provided by you.
+2.2 **Account Information:** Fundshare stores only your email address and a username associated with your account. We do not collect additional personal information unless explicitly provided by you.
 
 2.3 **Security:** You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized access or use of your account.
 
@@ -44,7 +44,7 @@ This Terms of Service Agreement (the "Agreement") is entered into by and between
 
 **7. Limitation of Liability**
 
-7.1 **Limitation of Liability:** In no event shall Workblok or its developers be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a) your use or inability to use the App; (b) any unauthorized access to or use of our servers and/or any personal information stored therein.
+7.1 **Limitation of Liability:** In no event shall Fundshare or its developers be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses, resulting from (a) your use or inability to use the App; (b) any unauthorized access to or use of our servers and/or any personal information stored therein.
 
 **8. Governing Law**
 

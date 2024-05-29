@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useApi } from '../hooks/useApi';
 import {
     emailValidator,
@@ -13,6 +13,23 @@ import { useNavigate } from 'react-router-dom';
 import { PublicFormLayout } from '../components/organism/PublicFormLayout';
 import { Layout } from '../components/organism/Layout';
 import { useError } from '../hooks/useError';
+import { FormField } from '../components/ui/FormField';
+import {
+    Button,
+    Checkbox,
+    HStack,
+    Input,
+    Link,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay
+} from '@chakra-ui/react';
+import { Typography } from '../components/ui/Typography';
+import { conf } from '../../conf';
+import { useToast } from '../hooks/useToast';
 
 export function RegisterScreen() {
     const { register } = useApi();
@@ -25,18 +42,23 @@ export function RegisterScreen() {
     const [serviceTermsAccepted, setServiceTermsAccepted] =
         useState<boolean>(false);
 
+    const usernameInputRef = useRef<HTMLInputElement>(null);
     const [usernameDirty, usernameError, usernameMessage, usernameValidate] =
         useValidator(username, [notEmptyValidator]);
+    const emailInputRef = useRef<HTMLInputElement>(null);
     const [emailDirty, emailError, emailMessage, emailValidate] = useValidator(
         email,
-        [notEmptyValidator, emailValidator]
+        [notEmptyValidator, emailValidator],
+        emailInputRef
     );
+
+    const passwordInputRef = useRef<HTMLInputElement>(null);
     const [passwordDirty, passwordError, passwordMessage, passwordValidate] =
-        useValidator(password, [
-            notEmptyValidator,
-            minLength8Validator,
-            upperLowerCaseValidator
-        ]);
+        useValidator(
+            password,
+            [notEmptyValidator, minLength8Validator, upperLowerCaseValidator],
+            passwordInputRef
+        );
     const [passwordMatchError, setPasswordMatchError] = useState<string>('');
     const [passwordMatchDirty, setPasswordMatchDirty] =
         useState<boolean>(false);
@@ -44,10 +66,13 @@ export function RegisterScreen() {
         useState<boolean>(false);
     const [serviceTermsAcceptedError, setServiceTermsAcceptedError] =
         useState<string>('');
-    const [, setIsTermsOfServiceOpen] = useState<boolean>(false);
+    const [isTermsOfServiceOpen, setIsTermsOfServiceOpen] =
+        useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { setError } = useError();
+
+    const { showToast } = useToast();
 
     const disabledButton =
         isLoading ||
@@ -110,32 +135,20 @@ export function RegisterScreen() {
             setIsLoading(true);
             try {
                 await register({ username, email, password });
-                console.log('User succesfully registered');
-                // toast({
-                //     title: 'User succesfully registered',
-                //     status: 'success',
-                //     duration: 5000,
-                // })
+                showToast('success', 'User succesfully registered');
                 navigate('/login');
             } catch (e) {
                 if (e instanceof ApiError) {
                     if (e.statusCode === StatusCode.ClientErrorConflict) {
                         if (e.code === ErrorCode.USERNAME_ALREADY_IN_USE) {
-                            console.log('The username is already in use');
-                            // toast({
-                            //     title: 'The username is already in use',
-                            //     status: 'error',
-                            //     duration: 5000,
-                            // })
+                            showToast(
+                                'error',
+                                'The username is already in use'
+                            );
                             return;
                         }
                         if (e.code === ErrorCode.EMAIL_ALREADY_IN_USE) {
-                            console.log('The email is already in use');
-                            // toast({
-                            //     title: 'The email is already in use',
-                            //     status: 'error',
-                            //     duration: 5000,
-                            // })
+                            showToast('error', 'The email is already in use');
                             return;
                         }
                     }
@@ -151,85 +164,118 @@ export function RegisterScreen() {
 
     return (
         <Layout isPublic>
-            <PublicFormLayout title={'Sign up'}>
-                <input
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+            <PublicFormLayout onSubmit={() => onRegister()} title={'Sign up'}>
+                <FormField
+                    label="Email"
+                    error={emailError && emailDirty ? emailMessage : undefined}
+                    input={
+                        <Input
+                            value={email}
+                            ref={emailInputRef}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    }
                 />
-                {emailError && emailDirty ? (
-                    <span className="text-error-600">{emailMessage}</span>
-                ) : (
-                    <></>
-                )}
+                <FormField
+                    label="Username"
+                    error={
+                        usernameError && usernameDirty
+                            ? usernameMessage
+                            : undefined
+                    }
+                    input={
+                        <Input
+                            value={username}
+                            ref={usernameInputRef}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    }
+                />
+                <FormField
+                    label="Password"
+                    error={
+                        passwordError && passwordDirty
+                            ? passwordMessage
+                            : undefined
+                    }
+                    input={
+                        <Input
+                            type="password"
+                            value={password}
+                            ref={passwordInputRef}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    }
+                />
 
-                <input
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                <FormField
+                    label="Repeat password"
+                    error={
+                        passwordMatchDirty && passwordMatchError
+                            ? passwordMatchError
+                            : undefined
+                    }
+                    input={
+                        <Input
+                            type="password"
+                            value={repeatPassword}
+                            onChange={(e) => setRepeatPassword(e.target.value)}
+                        />
+                    }
                 />
-                {usernameDirty && usernameError ? (
-                    <span className="text-error-600">{usernameMessage}</span>
-                ) : (
-                    <></>
-                )}
 
-                <input
-                    placeholder="Password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                <FormField
+                    label=""
+                    error={
+                        serviceTermsAcceptedDirty && serviceTermsAcceptedError
+                            ? serviceTermsAcceptedError
+                            : undefined
+                    }
+                    input={
+                        <HStack>
+                            <Checkbox
+                                checked={serviceTermsAccepted}
+                                onChange={(e) =>
+                                    setServiceTermsAccepted(e.target.checked)
+                                }
+                            >
+                                {'I accept the '}
+                            </Checkbox>
+                            <Link
+                                onClick={() => {
+                                    setIsTermsOfServiceOpen(true);
+                                }}
+                            >
+                                {'terms of service'}
+                            </Link>
+                        </HStack>
+                    }
                 />
-                {passwordDirty && passwordError ? (
-                    <span className="text-error-600">{passwordMessage}</span>
-                ) : (
-                    <></>
-                )}
-                <input
-                    placeholder="Repeat password"
-                    type="password"
-                    value={repeatPassword}
-                    onChange={(e) => setRepeatPassword(e.target.value)}
-                />
-                {passwordMatchDirty && passwordMatchError != '' ? (
-                    <span className="text-error-600">{passwordMatchError}</span>
-                ) : (
-                    <></>
-                )}
-                <label className="flex gap-2 items-center">
-                    <input
-                        type="checkbox"
-                        onChange={(e) =>
-                            setServiceTermsAccepted(e.target.checked)
-                        }
-                    ></input>
-                    {'I accept the '}
-                    <a onClick={() => setIsTermsOfServiceOpen(true)}>
-                        {'terms of service'}
-                    </a>
-                </label>
-                {serviceTermsAcceptedDirty &&
-                serviceTermsAcceptedError != '' ? (
-                    <span className="text-error-600">
-                        {serviceTermsAcceptedError}
-                    </span>
-                ) : (
-                    <></>
-                )}
-                <button disabled={disabledButton} onClick={onRegister}>
-                    {isLoading ? 'Loading...' : 'Sign up'}
-                </button>
 
-                {/* <Modal isOpen={isTermsOfServiceOpen} onClose={() => setIsTermsOfServiceOpen(false)}>
+                <Button
+                    type="submit"
+                    isDisabled={disabledButton}
+                    isLoading={isLoading}
+                >
+                    {'Sign up'}
+                </Button>
+                <Modal
+                    isOpen={isTermsOfServiceOpen}
+                    onClose={() => setIsTermsOfServiceOpen(false)}
+                >
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>{'Terms of service'}</ModalHeader>
-                        <ModalCloseButton />
+                        <ModalHeader>
+                            {'Terms of service'}
+                            <ModalCloseButton />
+                        </ModalHeader>
                         <ModalBody>
-                            <Typography mode='body'>{conf.termsOfService}</Typography>
+                            <Typography type="body">
+                                {conf.termsOfService}
+                            </Typography>
                         </ModalBody>
                     </ModalContent>
-                </Modal> */}
+                </Modal>
             </PublicFormLayout>
         </Layout>
     );

@@ -5,8 +5,9 @@ import { ApiError, ErrorCode } from '../types/types';
 import StatusCode from 'status-code-enum';
 import { PublicFormLayout } from '../components/organism/PublicFormLayout';
 import { Layout } from '../components/organism/Layout';
-import { BiCheck } from 'react-icons/bi';
-import { IoMdClose } from 'react-icons/io';
+import { useToast } from '../hooks/useToast';
+import { CircularProgress, Link } from '@chakra-ui/react';
+import { Icon } from '../components/atom/Icon';
 
 export function ValidateAccountScreen() {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ export function ValidateAccountScreen() {
     const [codeError, setCodeError] = useState<string>('');
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { showToast } = useToast();
 
     useEffect(() => {
         onValidate();
@@ -53,21 +55,11 @@ export function ValidateAccountScreen() {
         setIsLoading(true);
         try {
             await sendValidationCode(username!);
-            console.log('The code was succesfully sent!');
-            // toast({
-            //     title: 'The code was succesfully sent!',
-            //     status: 'success',
-            //     duration: 5000
-            // });
+            showToast('success', 'The code was succesfully sent!');
         } catch (e) {
             if (e instanceof ApiError) {
                 if (e.statusCode === StatusCode.ClientErrorConflict) {
-                    console.log('The account is already validated');
-                    // toast({
-                    //     title: 'The account is already validated',
-                    //     status: 'error',
-                    //     duration: 5000
-                    // });
+                    showToast('error', 'The account is already validated');
                     return;
                 }
             }
@@ -82,28 +74,43 @@ export function ValidateAccountScreen() {
             <PublicFormLayout title={'Email validation'}>
                 {step === 1 ? (
                     <div className="ml-auto mr-auto mt-2 flex flex-col items-center gap-4">
-                        <span className="mb-4">{'Validating...'}</span>
+                        <CircularProgress
+                            size={'32px'}
+                            isIndeterminate
+                            color="primary.300"
+                        />
                     </div>
                 ) : (
-                    <>
+                    <div className="w-full flex justify-center items-center flex-col gap-6">
                         {codeError ? (
                             <>
-                                <div className="flex gap-2">
-                                    <IoMdClose className="text-3xl text-error" />
-                                    <span className="mb-4">{codeError}</span>
+                                <div className="flex gap-2 items-center">
+                                    <Icon
+                                        type={'warning'}
+                                        color={'error.500'}
+                                        fontSize={'2xl'}
+                                    />
+                                    <span>{codeError}</span>
                                 </div>
                                 <span className="flex">
                                     {isLoading ? (
-                                        <span>{'Sending...'}</span>
+                                        <CircularProgress
+                                            size={'32px'}
+                                            isIndeterminate
+                                            color="primary.300"
+                                        />
                                     ) : (
                                         <>
-                                            <span>{`Try to`}</span>
-                                            <a
-                                                className="text-blue-500"
-                                                onClick={() => onResendCode()}
-                                            >
-                                                {' send another code'}
-                                            </a>
+                                            <span>
+                                                {`Try to `}
+                                                <Link
+                                                    onClick={() =>
+                                                        onResendCode()
+                                                    }
+                                                >
+                                                    {' send another code'}
+                                                </Link>
+                                            </span>
                                         </>
                                     )}
                                 </span>
@@ -111,23 +118,24 @@ export function ValidateAccountScreen() {
                         ) : (
                             <>
                                 <div className="flex gap-2">
-                                    <BiCheck className="text-3xl text-success" />
-                                    <span className="mb-4">
+                                    <Icon
+                                        type={'check'}
+                                        fontSize={'2xl'}
+                                        color={'primary.500'}
+                                    />
+                                    <span>
                                         {'Your email has been validated'}
                                     </span>
                                 </div>
-                                <span className="flex">
-                                    <span>{`Now you can `}</span>
-                                    <a
-                                        className="text-blue-500"
-                                        onClick={() => navigate('/login')}
-                                    >
+                                <span>
+                                    {`Now you can `}
+                                    <Link onClick={() => navigate('/login')}>
                                         {' sign in'}
-                                    </a>
+                                    </Link>
                                 </span>
                             </>
                         )}
-                    </>
+                    </div>
                 )}
             </PublicFormLayout>
         </Layout>

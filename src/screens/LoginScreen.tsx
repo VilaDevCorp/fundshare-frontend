@@ -1,15 +1,19 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useValidator, notEmptyValidator } from '../hooks/useValidator';
 import { ApiError, ErrorCode } from '../types/types';
 import { PublicFormLayout } from '../components/organism/PublicFormLayout';
 import { Layout } from '../components/organism/Layout';
-import { IoMdClose } from 'react-icons/io';
 import StatusCode from 'status-code-enum';
 import { useError } from '../hooks/useError';
 import { useApi } from '../hooks/useApi';
 import { useQueryClient } from '@tanstack/react-query';
+import { FormField } from '../components/ui/FormField';
+import { Button, Checkbox, Input, Link } from '@chakra-ui/react';
+import { Typography } from '../components/ui/Typography';
+import { useToast } from '../hooks/useToast';
+import { Icon } from '../components/atom/Icon';
 
 export function LoginScreen() {
     const auth = useAuth();
@@ -19,14 +23,15 @@ export function LoginScreen() {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [rememberMe, setRememberMe] = useState<boolean>(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [notValidatedAccount, setNotValidatedAccount] =
         useState<boolean>(false);
 
+    const usernameInputRef = useRef<HTMLInputElement>(null);
     const [usernameDirty, usernameError, usernameMessage, usernameValidate] =
-        useValidator(username, [notEmptyValidator]);
+        useValidator(username, [notEmptyValidator], usernameInputRef);
+    const passwordInputRef = useRef<HTMLInputElement>(null);
     const [passwordDirty, passwordError, passwordMessage, passwordValidate] =
-        useValidator(password, [notEmptyValidator]);
+        useValidator(password, [notEmptyValidator], passwordInputRef);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -34,25 +39,17 @@ export function LoginScreen() {
 
     const queryClient = useQueryClient();
 
+    const { showToast } = useToast();
+
     const onResendCode = async () => {
         setIsLoading(true);
         try {
             await sendValidationCode(username);
-            console.log('The code was succesfully sent!');
-            // toast({
-            //     title: 'The code was succesfully sent!',
-            //     status: 'success',
-            //     duration: 5000
-            // });
+            showToast('success', 'The code was succesfully sent!');
         } catch (e) {
             if (e instanceof ApiError) {
                 if (e.statusCode === StatusCode.ClientErrorConflict) {
-                    console.log('The account is already validated');
-                    // toast({
-                    //     title: 'The account is already validated',
-                    //     status: 'error',
-                    //     duration: 5000
-                    // });
+                    showToast('error', 'The account is already validated');
                     return;
                 }
             }
@@ -90,12 +87,7 @@ export function LoginScreen() {
                         e.statusCode === StatusCode.ClientErrorUnauthorized &&
                         e.code === ErrorCode.INVALID_CREDENTIALS
                     ) {
-                        console.log('Invalid credentials');
-                        // toast({
-                        //     title: 'Wrong credentials',
-                        //     status: 'error',
-                        //     duration: 5000
-                        // });
+                        showToast('error', 'Wrong credentials');
                         return;
                     }
                 }
@@ -110,82 +102,84 @@ export function LoginScreen() {
 
     return (
         <Layout isPublic>
-            <PublicFormLayout title={'Sign in'}>
+            <PublicFormLayout onSubmit={() => onLogin()} title={'Sign in'}>
                 {!notValidatedAccount ? (
                     <>
-                        <input
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                        <FormField
+                            label="Username"
+                            error={
+                                usernameDirty && usernameError
+                                    ? usernameMessage
+                                    : undefined
+                            }
+                            input={
+                                <Input
+                                    ref={usernameInputRef}
+                                    value={username}
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
+                                />
+                            }
                         />
-                        {usernameDirty && usernameError ? (
-                            <span className="text-error-600">
-                                {usernameMessage}
-                            </span>
-                        ) : (
-                            <></>
-                        )}
-
-                        <input
-                            placeholder="Password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                        <FormField
+                            label="Password"
+                            error={
+                                passwordDirty && passwordError
+                                    ? passwordMessage
+                                    : undefined
+                            }
+                            input={
+                                <Input
+                                    ref={passwordInputRef}
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                />
+                            }
                         />
-                        {passwordDirty && passwordError ? (
-                            <span className="text-error-600">
-                                {passwordMessage}
-                            </span>
-                        ) : (
-                            <></>
-                        )}
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={rememberMe}
-                                onChange={(e) =>
-                                    setRememberMe(e.target.checked)
-                                }
-                            />
+                        <Checkbox
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                        >
                             {'Remember me'}
-                        </label>
-                        <button
+                        </Checkbox>
+
+                        <Button
                             type="submit"
-                            disabled={disabledButton}
-                            onClick={onLogin}
+                            isDisabled={disabledButton}
+                            isLoading={isLoading}
                         >
-                            {isLoading ? 'Loading...' : 'Sign in'}
-                        </button>
-                        <a
-                            className="mt-2"
-                            onClick={() => navigate('/recover-password')}
-                        >
+                            {'Sign in'}
+                        </Button>
+                        <Link onClick={() => navigate('/recover-password')}>
                             {'I have forgotten my password'}
-                        </a>
-                        <span className="flex mt-5">
+                        </Link>
+                        <span className="flex mt-5 items-center">
                             <span>{`New here? ${'\u00A0'}`}</span>
-                            <a onClick={() => navigate('/register')}>
+                            <Link onClick={() => navigate('/register')}>
                                 {'Sign up'}
-                            </a>
+                            </Link>
                         </span>
                     </>
                 ) : (
                     <>
                         <div className="flex gap-2">
-                            <IoMdClose className="text-3xl text-error" />
-                            <span className="mb-4">
-                                {'Your account has not been validated'}
-                            </span>
+                            <Icon
+                                type={'warning'}
+                                color={'error.500'}
+                                fontSize={'2xl'}
+                            />
+                            <span>{'Your account has not been validated'}</span>
                         </div>
-                        <span className="mb-4">{`In order to validate the account you should follow the instructions we sent you via email`}</span>
+                        <Typography type="body">{`In order to validate the account you should follow the instructions we sent you via email`}</Typography>
                         <span>
                             <span>{`You can't see the email? Try to `}</span>
-                            <a
-                                className="text-blue-500"
-                                onClick={() => onResendCode()}
-                            >
+                            <Link onClick={() => onResendCode()}>
                                 {'send another code'}
-                            </a>
+                            </Link>
                         </span>
                     </>
                 )}

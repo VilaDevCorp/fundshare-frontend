@@ -2,57 +2,48 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="300"
-   height="300"
-   viewBox="0 0 79.374953 79.375"
+   width="71.440002mm"
+   height="38.200001mm"
+   viewBox="0 0 71.440003 38.200001"
    version="1.1"
    id="svg1"
-   inkscape:export-filename="bitmap.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     inkscape:export-bgcolor="#ffffff00" />
   <defs
-     id="defs1" />
+     id="defs1">
+    <rect
+       x="146.4156"
+       y="84.212898"
+       width="467.95578"
+       height="128.23328"
+       id="rect1" />
+  </defs>
   <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Capa 2"
-     style="display:inline">
-    <circle
-       style="fill:#272727;fill-opacity:1;stroke-width:3.76499;stroke-dasharray:none"
-       id="path2"
-       cx="39.6875"
-       cy="39.6875"
-       r="35" />
-  </g>
-  <g
-     inkscape:label="Capa 1"
-     inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline">
+     transform="translate(-74.280103,-2.5112273)">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50.8px;font-family:'MS Gothic';-inkscape-font-specification:'MS Gothic';white-space:pre;inline-size:139.809;fill:#ffffff;fill-opacity:1;stroke-width:3.765;stroke-dasharray:none"
-       x="10.2754"
-       y="19.049898"
-       id="text2"
-       transform="translate(3.516016,40.382133)"><tspan
-         x="10.2754"
-         y="19.049898"
-         id="tspan1">DV</tspan></text>
+       transform="matrix(0.26458333,0,0,0.26458333,39.369638,1.4996267)"
+       id="text1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:53.3333px;font-family:Corbel;-inkscape-font-specification:Corbel;white-space:pre;shape-inside:url(#rect1);display:inline;fill:#000000"><tspan
+         x="146.41602"
+         y="130.54099"
+         id="tspan2">FundShare</tspan></text>
+  </g>
+  <g
+     id="layer2"
+     transform="translate(-74.280103,-2.5112273)">
+    <g
+       id="g15"
+       transform="translate(39.39106,2.7182302)">
+      <path
+         id="path8"
+         style="fill:#6fc33a;fill-opacity:1;stroke:none;stroke-width:0;stroke-dasharray:none"
+         d="m 57.430838,11.454269 c 1.1e-5,0.01368 -3.62e-4,0.0203 -3.46e-4,0.03432 6.71e-4,0.862947 0.0094,1.047103 0.06517,1.400447 0.344804,2.185111 1.250578,4.029179 2.731922,5.561948 1.577348,1.632101 3.539996,2.640538 5.816032,2.988785 0.341526,0.05226 0.587629,0.06642 1.295077,0.07383 0.480401,0.0047 0.920951,0.0035 0.978928,-0.0032 v 3.49e-4 c 0.492758,-0.05748 0.903564,-0.11729 1.144281,-0.166044 1.683679,-0.340995 3.266999,-1.113115 4.563251,-2.225473 0.377386,-0.323849 1.038456,-1.006645 1.339444,-1.383468 0.528497,-0.661672 1.073055,-1.579484 1.410854,-2.378342 0.516156,-1.220665 0.772952,-2.559471 0.772329,-3.902893 v -3.42e-4 z" />
+      <path
+         style="opacity:1;fill:#007a78;fill-opacity:1;stroke:none;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+         d="m 63.680285,11.338476 c 2.51e-4,-0.230598 0.06641,-1.00914 0.113633,-1.337199 0.210085,-1.4594523 0.753666,-2.8579983 1.605339,-4.1302733 0.312745,-0.467196 0.527528,-0.734856 0.977796,-1.218512 0.905603,-0.972754 1.788621,-1.630855 2.95256,-2.2005025 1.018572,-0.498504 1.915827,-0.775337 3.038364,-0.937439 0.367403,-0.05306 0.59718,-0.06354 1.345107,-0.0614 0.984213,0.0028 1.099256,0.0099 1.65993,0.102301 3.008143,0.495663 5.634971,2.3452395 7.162921,5.0434895 0.714116,1.261076 1.184889,2.896791 1.232001,4.2806123 l 0.01966,0.577604 H 73.733872 63.68015 Z"
+         id="path13" />
+    </g>
   </g>
 </svg>

@@ -1,6 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import logo from '/logo.svg';
+import { Button } from '@chakra-ui/react';
+import { TopMenu } from '../molecule/TopMenu';
+import { BottomNav } from '../molecule/BottomNav';
+import { useScreen } from '../../hooks/useScreen';
+import { PublicFormLayout } from './PublicFormLayout';
+import { useNavigate } from 'react-router-dom';
+import { Typography } from '../ui/Typography';
 
 export function Layout({
     children,
@@ -12,39 +18,39 @@ export function Layout({
     const { user } = useAuth();
     const navigate = useNavigate();
 
+    const { isLaptop } = useScreen();
+
     return isPublic || user ? (
         //Public Layout
         isPublic ? (
-            <main className="min-h-full flex-col md:h-auto md:min-h-full w-full p-4 flex h-screen backdrop-blur-sm items-center justify-center">
+            <main className="min-h-full flex-col md:h-auto md:min-h-full w-full p-4 flex backdrop-blur-sm items-center justify-center overflow-auto">
                 {children}
             </main>
         ) : (
             //Private layout
             <>
-                {/* <Menu /> */}
+                <TopMenu />
                 <main
-                    className={`w-full flex flex-col h-full max-w-[500px] m-auto p-8 gap-8`}
+                    className={`w-full flex flex-col h-full  m-auto p-8 gap-8 overflow-auto`}
                 >
                     {children}
                 </main>
+                {!isLaptop && <BottomNav />}
             </>
         )
     ) : (
         //Not logged in layout
-        <div
-            className={`min-h-full flex  flex-col items-center bg-center md:min-h-full h-screen w-full px-4 py-4`}
-        >
-            <main
-                className={`flex p-8 rounded-lg h-full md:h-auto justify-center items-center py flex-col gap-6 m-auto`}
-            >
-                <img
-                    src={logo}
-                    alt="Web logo"
-                    className="mb-10 self-center  w-[200px]"
-                />
-                <h2>{'You need an account to view this page'}</h2>
-                <button onClick={() => navigate('/login')}>{'Sign in'}</button>
-            </main>
-        </div>
+        <main className="min-h-full flex-col md:h-auto md:min-h-full w-full p-4 flex backdrop-blur-sm items-center justify-center overflow-auto">
+            <PublicFormLayout>
+                <Typography type='subtitle' textAlign={'center'}>{'You need an account to view this page'}</Typography>
+                <Button
+                    onClick={() => {
+                        navigate('/login');
+                    }}
+                >
+                    {'Sign in  '}
+                </Button>
+            </PublicFormLayout>
+        </main>
     );
 }
