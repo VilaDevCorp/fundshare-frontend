@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useApi } from '../hooks/useApi';
 import {
@@ -11,8 +11,10 @@ import { ApiError, ErrorCode } from '../types/types';
 import StatusCode from 'status-code-enum';
 import { PublicFormLayout } from '../components/organism/PublicFormLayout';
 import { Layout } from '../components/organism/Layout';
-import { BiCheck } from 'react-icons/bi';
-import { IoMdClose } from 'react-icons/io';
+import { useToast } from '../hooks/useToast';
+import { Icon } from '../components/atom/Icon';
+import { Button, Input, Link } from '@chakra-ui/react';
+import { FormField } from '../components/ui/FormField';
 
 export function ResetPasswordScreen() {
     const navigate = useNavigate();
@@ -22,17 +24,20 @@ export function ResetPasswordScreen() {
     const [repeatPassword, setRepeatPassword] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const passwordInputRef = useRef<HTMLInputElement>(null);
     const [passwordDirty, passwordError, passwordMessage, passwordValidate] =
-        useValidator(password, [
-            notEmptyValidator,
-            minLength8Validator,
-            upperLowerCaseValidator
-        ]);
+        useValidator(
+            password,
+            [notEmptyValidator, minLength8Validator, upperLowerCaseValidator],
+            passwordInputRef
+        );
     const [passwordMatchError, setPasswordMatchError] = useState<string>('');
     const [passwordMatchDirty, setPasswordMatchDirty] =
         useState<boolean>(false);
     const [codeError, setCodeError] = useState<string>('');
     const { code, username } = useParams();
+
+    const { showToast } = useToast();
 
     const disabledButton =
         isLoading || passwordError || passwordMatchError !== '';
@@ -54,7 +59,7 @@ export function ResetPasswordScreen() {
         passwordMatchValidate();
     }, [password, repeatPassword]);
 
-    const onValidate = async () => {
+    const onChangePassword = async () => {
         const passwordValid = passwordValidate();
         if (passwordValid) {
             setIsLoading(true);
@@ -89,12 +94,7 @@ export function ResetPasswordScreen() {
         setIsLoading(true);
         try {
             await forgottenPassword(username!);
-            console.log('The code was succesfully sent!');
-            // toast({
-            //     title: 'The code was succesfully sent!',
-            //     status: 'success',
-            //     duration: 5000
-            // });
+            showToast('success', 'The code was succesfully sent!');
         } catch (e) {
             setCodeError('An internal error occurred');
         } finally {
@@ -104,82 +104,91 @@ export function ResetPasswordScreen() {
 
     return (
         <Layout isPublic>
-            <PublicFormLayout title={'Reset password'}>
-                {step === 1 ? (
-                    <>
-                        <input
-                            placeholder="Password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        {passwordDirty && passwordError ? (
-                            <span className="text-error-600">
-                                {passwordMessage}
+            {step === 1 ? (
+                <PublicFormLayout
+                    onSubmit={() => onChangePassword()}
+                    title={'Reset password'}
+                >
+                    <FormField
+                        label="Password"
+                        error={
+                            passwordDirty && passwordError
+                                ? passwordMessage
+                                : ''
+                        }
+                        input={
+                            <Input
+                                ref={passwordInputRef}
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        }
+                    />
+                    <FormField
+                        label="Repeat password"
+                        error={
+                            passwordMatchDirty && passwordMatchError !== ''
+                                ? passwordMatchError
+                                : ''
+                        }
+                        input={
+                            <Input
+                                value={repeatPassword}
+                                type="password"
+                                onChange={(e) =>
+                                    setRepeatPassword(e.target.value)
+                                }
+                            />
+                        }
+                    />
+                    <Button
+                        isDisabled={disabledButton}
+                        type="submit"
+                        isLoading={isLoading}
+                    >
+                        {'Change password'}
+                    </Button>
+                </PublicFormLayout>
+            ) : (
+                <PublicFormLayout title={'Reset password'}>
+                    {codeError ? (
+                        <div className="w-full flex justify-center items-center flex-col gap-6">
+                            <div className="flex gap-2 items-center">
+                                <Icon
+                                    type={'close'}
+                                    color={'error.500'}
+                                    fontSize={'2xl'}
+                                />
+                                <span>{codeError}</span>
+                            </div>
+                            <span>
+                                {`Try to `}
+                                <Link onClick={() => onSendCode()}>
+                                    {' send another code'}
+                                </Link>
                             </span>
-                        ) : (
-                            <></>
-                        )}
-                        <input
-                            placeholder="Repeat password"
-                            type="password"
-                            value={repeatPassword}
-                            onChange={(e) => setRepeatPassword(e.target.value)}
-                        />
-                        {passwordMatchDirty && passwordMatchError != '' ? (
-                            <span className="text-error-600">
-                                {passwordMatchError}
+                        </div>
+                    ) : (
+                        <div className="w-full flex justify-center items-center flex-col gap-6">
+                            <div className="flex gap-2 items-center">
+                                <Icon
+                                    type={'check'}
+                                    color={'primary.500'}
+                                    fontSize={'2xl'}
+                                />
+                                <span>{'Your password has been changed'}</span>
+                            </div>
+                            <span>
+                                {`Now you can `}
+                                <Link onClick={() => navigate('/login')}>
+                                    {' sign in'}
+                                </Link>
                             </span>
-                        ) : (
-                            <></>
-                        )}
-                        <button
-                            disabled={disabledButton}
-                            onClick={() => onValidate()}
-                        >
-                            {isLoading ? 'Loading...' : 'Change password'}
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        {codeError ? (
-                            <>
-                                <div className="flex gap-2">
-                                    <IoMdClose className="text-3xl text-error" />
-                                    <span className="mb-4">{codeError}</span>
-                                </div>
-                                <span className="flex">
-                                    <span>{`Try to `}</span>
-                                    <a
-                                        className="text-blue-500"
-                                        onClick={() => onSendCode()}
-                                    >
-                                        {' send another code'}
-                                    </a>
-                                </span>
-                            </>
-                        ) : (
-                            <>
-                                <div className="flex gap-2">
-                                    <BiCheck className="text-3xl text-success" />
-                                    <span className="mb-4">
-                                        {'Your password has been changed'}
-                                    </span>
-                                </div>
-                                <span className="flex">
-                                    <span>{`Now you can `}</span>
-                                    <a
-                                        className="text-blue-500"
-                                        onClick={() => navigate('/login')}
-                                    >
-                                        {' sign in'}
-                                    </a>
-                                </span>
-                            </>
-                        )}
-                    </>
-                )}
-            </PublicFormLayout>
+                        </div>
+                    )}
+                </PublicFormLayout>
+            )}
         </Layout>
     );
 }
