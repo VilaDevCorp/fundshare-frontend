@@ -147,7 +147,11 @@ export function LoginScreen() {
                             {'Remember me'}
                         </Checkbox>
 
-                        <Button type="submit" disabled={disabledButton}>
+                        <Button
+                            type="submit"
+                            isDisabled={disabledButton}
+                            isLoading={isLoading}
+                        >
                             {'Sign in'}
                         </Button>
                         <Link onClick={() => navigate('/recover-password')}>
