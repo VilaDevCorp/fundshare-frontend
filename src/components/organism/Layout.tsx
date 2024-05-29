@@ -31,7 +31,7 @@ export function Layout({
             <>
                 <TopMenu />
                 <main
-                    className={`w-full flex flex-col h-full  m-auto p-8 gap-8 overflow-auto`}
+                    className={`w-full flex flex-col h-full  m-auto p-4 md:p-8 gap-8 overflow-auto`}
                 >
                     {children}
                 </main>
