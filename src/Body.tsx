@@ -31,9 +31,17 @@ const LazyResetPasswordScreen = lazy(() =>
 function Body() {
     const authInfo = useAuth();
 
-    useEffect(() => {
+    const calculate1vh = () => {
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    useEffect(() => {
+        calculate1vh();
+        window.addEventListener('resize', calculate1vh);
+        return () => {
+            window.removeEventListener('resize', calculate1vh);
+        };
     }, []);
 
     return (

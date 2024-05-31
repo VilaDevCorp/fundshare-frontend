@@ -23,7 +23,10 @@ export function Layout({
     return isPublic || user ? (
         //Public Layout
         isPublic ? (
-            <main className="min-h-full flex-col md:h-auto md:min-h-full w-full p-4 flex backdrop-blur-sm items-center justify-center overflow-auto">
+            <main
+                className="min-h-full flex-col md:h-auto md:min-h-full w-full p-4 flex 
+            backdrop-blur-sm items-center overflow-auto"
+            >
                 {children}
             </main>
         ) : (
@@ -31,7 +34,8 @@ export function Layout({
             <>
                 <TopMenu />
                 <main
-                    className={`w-full flex flex-col h-full  m-auto p-4 md:p-8 gap-8 overflow-auto`}
+                    className={`w-full grow flex flex-col p-4 md:p-8 gap-8 
+                         overflow-auto`}
                 >
                     {children}
                 </main>
@@ -42,7 +46,9 @@ export function Layout({
         //Not logged in layout
         <main className="min-h-full flex-col md:h-auto md:min-h-full w-full p-4 flex backdrop-blur-sm items-center justify-center overflow-auto">
             <PublicFormLayout>
-                <Typography type='subtitle' textAlign={'center'}>{'You need an account to view this page'}</Typography>
+                <Typography type="subtitle" textAlign={'center'}>
+                    {'You need an account to view this page'}
+                </Typography>
                 <Button
                     onClick={() => {
                         navigate('/login');

@@ -31,7 +31,10 @@ export function BottomNav() {
     const navigate = useNavigate();
 
     return (
-        <nav className="w-full flex justify-between px-6 py-3 gap-6 bg-background-0 sticky bottom-0">
+        <nav
+            className="w-full h-16 flex justify-between px-6 py-3 gap-6 
+        bg-background-0"
+        >
             {navItems.map((item) => (
                 <a
                     onClick={() => navigate(item.path)}
