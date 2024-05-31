@@ -95,7 +95,7 @@ const breakpoints = {
 const shadows = {
     inputFocus: '0 0 0 1px #005654',
     inputInvalid: '0 0 0 1px #C84B4B',
-    inputHover: '0 0 0 1px #707070'
+    inputHover: '0 0 0 1px #C8C8C8'
 };
 
 export const theme = extendTheme({

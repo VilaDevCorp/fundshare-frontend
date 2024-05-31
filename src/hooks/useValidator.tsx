@@ -48,7 +48,7 @@ export const useValidator = (
                 setDirty(true);
             };
         }
-    }, []);
+    }, [inputRef?.current]);
 
     useEffect(() => {
         //If the inputRef is not set, the dirty state is activated when the user starts typing
