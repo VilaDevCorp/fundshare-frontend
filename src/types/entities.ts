@@ -15,3 +15,15 @@ export interface RegisterUserForm {
     email: string;
     password: string;
 }
+
+export interface Group extends BaseEntity {
+    name: string;
+    description: string;
+    isActive: boolean;
+    balance?: number;
+}
+
+export interface CreateGroupForm {
+    name: string;
+    description: string;
+}

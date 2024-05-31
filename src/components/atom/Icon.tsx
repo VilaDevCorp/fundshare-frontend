@@ -2,7 +2,7 @@ import {
     Icon as ChakraIcon,
     IconProps as ChakraIconProps
 } from '@chakra-ui/react';
-import { BiError, BiGroup, BiHome } from 'react-icons/bi';
+import { BiError, BiGroup, BiHome, BiPlus } from 'react-icons/bi';
 import { CiSettings } from 'react-icons/ci';
 import { FaRegQuestionCircle, FaUser } from 'react-icons/fa';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
@@ -20,7 +20,8 @@ type IconType =
     | 'logout'
     | 'chevron-left'
     | 'chevron-right'
-    | 'user';
+    | 'user'
+    | 'add';
 
 interface IconProps extends ChakraIconProps {
     type: IconType;
@@ -50,6 +51,8 @@ const getIcon = (type: IconType) => {
             return TiTimes;
         case 'warning':
             return BiError;
+        case 'add':
+            return BiPlus;
     }
 };
 
