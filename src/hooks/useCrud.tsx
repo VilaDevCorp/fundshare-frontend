@@ -1,74 +1,97 @@
+import { ApiResponse, Page } from '../types/types';
 import { checkResponseException } from '../utils/utilFunctions';
+import { useAuth } from './useAuth';
 
 interface CrudOperations<T> {
     create: (form: unknown) => Promise<T>;
     update: (id: string, form: unknown) => Promise<T>;
     get: (id: string) => Promise<T>;
-    search: (filter: SearchFilter[]) => void;
+    search: (
+        page: number,
+        totalPages: number,
+        filters: SearchFilters
+    ) => Promise<Page<T>>;
     remove: (id: string) => void;
 }
 
-type SearchFilter = { [key: string]: string | boolean | string[] };
+type SearchFilters = { [key: string]: string | boolean | string[] };
 
 export function useCrud<T>(entity: string): CrudOperations<T> {
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+    const { csrfToken } = useAuth();
 
     const create = async (form: unknown): Promise<T> => {
-        const url = `${apiUrl}/${entity}`;
+        const url = `${apiUrl}${entity}`;
         const options: RequestInit = {
             method: 'POST',
             body: JSON.stringify(form),
+            credentials: 'include',
             headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
                 'content-type': 'application/json'
             })
         };
         const res = await fetch(url, options);
-        const resObject = await res.json();
+        const resObject: ApiResponse<T> = await res.json();
         checkResponseException(res, resObject);
-        return resObject;
+        return resObject.data;
     };
     const update = async (id: string, form: unknown): Promise<T> => {
-        const url = `${apiUrl}/${entity}/${id}`;
+        const url = `${apiUrl}${entity}/${id}`;
         const options: RequestInit = {
             method: 'PATCH',
             body: JSON.stringify(form),
+            credentials: 'include',
             headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
                 'content-type': 'application/json'
             })
         };
         const res = await fetch(url, options);
-        const resObject = await res.json();
-        return resObject;
+        const resObject: ApiResponse<T> = await res.json();
+        checkResponseException(res, resObject);
+        return resObject.data;
     };
 
     const get = async (id: string): Promise<T> => {
-        const url = `${apiUrl}/${entity}/${id}`;
+        const url = `${apiUrl}${entity}/${id}`;
         const options: RequestInit = {
             method: 'GET',
+            credentials: 'include',
             headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
                 'content-type': 'application/json'
             })
         };
         const res = await fetch(url, options);
-        const resObject = await res.json();
-        return resObject;
+        const resObject: ApiResponse<T> = await res.json();
+        return resObject.data;
     };
 
-    const search = async (filters: SearchFilter[]) => {
-        const url = `${apiUrl}/${entity}`;
+    const search = async (
+        page: number,
+        pageSize: number,
+        filters: SearchFilters
+    ) => {
+        const body = { page, pageSize };
+        Object.assign(body, filters);
+
+        const url = `${apiUrl}${entity}/search`;
         const options: RequestInit = {
             method: 'POST',
-            body: JSON.stringify(filters),
+            body: JSON.stringify(body),
+            credentials: 'include',
             headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
                 'content-type': 'application/json'
             })
         };
         const res = await fetch(url, options);
-        const resObject = await res.json();
-        return resObject;
+        const resObject: ApiResponse<Page<T>> = await res.json();
+        return resObject.data;
     };
     const remove = async (id: string): Promise<void> => {
-        const url = `${apiUrl}/${entity}/${id}`;
+        const url = `${apiUrl}${entity}/${id}`;
         const options: RequestInit = {
             method: 'DELETE'
         };

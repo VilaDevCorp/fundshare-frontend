@@ -5,8 +5,8 @@ export interface SelectOption {
 
 export interface Page<T> {
     page: number;
-    totalPages: number;
-    data: T[];
+    hasNext: boolean;
+    content: T[];
 }
 
 export interface ApiResponse<T> {
