@@ -5,6 +5,7 @@ import { Suspense, lazy, useEffect } from 'react';
 import { HomeScreen } from './screens/HomeScreen';
 import { LoadingScreen } from './screens/LoadingScreen';
 import { GroupsScreen } from './screens/GroupsScreen';
+import { RequestsScreen } from './screens/RequestsScreen';
 
 const LazyRegisterScreen = lazy(() =>
     import('./screens/RegisterScreen').then((module) => ({
@@ -59,7 +60,7 @@ function Body() {
                                 />
                                 <Route
                                     path="/requests"
-                                    element={<HomeScreen />}
+                                    element={<RequestsScreen />}
                                 />
                                 <Route
                                     path="/settings"

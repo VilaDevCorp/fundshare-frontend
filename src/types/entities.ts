@@ -27,3 +27,7 @@ export interface CreateGroupForm {
     name: string;
     description: string;
 }
+
+export interface Request extends BaseEntity {
+    group: Group;
+}

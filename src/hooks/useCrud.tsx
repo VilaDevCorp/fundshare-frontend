@@ -90,6 +90,7 @@ export function useCrud<T>(entity: string): CrudOperations<T> {
         const resObject: ApiResponse<Page<T>> = await res.json();
         return resObject.data;
     };
+    
     const remove = async (id: string): Promise<void> => {
         const url = `${apiUrl}${entity}/${id}`;
         const options: RequestInit = {

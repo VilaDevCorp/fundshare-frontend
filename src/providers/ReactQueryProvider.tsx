@@ -22,7 +22,7 @@ export const ReactQueryProvider = ({ children }: { children: ReactNode }) => {
 
     const queryClient = new QueryClient({
         queryCache: new QueryCache({
-            onError: (err, query) => {
+            onError: (_, query) => {
                 if (query.meta?.errorInfo) {
                     showToast(
                         'error',

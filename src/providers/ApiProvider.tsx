@@ -2,6 +2,7 @@ import { createContext, ReactNode } from 'react';
 import { RegisterUserForm, User } from '../types/entities';
 import { ApiResponse } from '../types/types';
 import { checkResponseException } from '../utils/utilFunctions';
+import { useAuth } from '../hooks/useAuth';
 
 interface ApiContext {
     register: (user: RegisterUserForm) => void;
@@ -13,12 +14,15 @@ interface ApiContext {
         code: string,
         password: string
     ) => Promise<void>;
+    respondRequest: (requestId: string, isAccepted: boolean) => Promise<void>;
 }
 
 export const ApiContext = createContext<ApiContext>({} as ApiContext);
 
 export const ApiProvider = ({ children }: { children: ReactNode }) => {
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+
+    const { csrfToken } = useAuth();
 
     const register = async (form: RegisterUserForm) => {
         const url = `${apiUrl}public/register`;
@@ -85,12 +89,32 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         checkResponseException(res, resObject);
     };
 
+    const respondRequest = async (
+        requestId: string,
+        isAccepted: boolean
+    ): Promise<void> => {
+        const url = `${apiUrl}request/${requestId}?accept=${isAccepted}`;
+        console.log(url);
+        const options: RequestInit = {
+            method: 'POST',
+            credentials: 'include',
+            headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
+                'content-type': 'application/json'
+            })
+        };
+        const res = await fetch(url, options);
+        const resObject: ApiResponse<unknown> = await res.json();
+        checkResponseException(res, resObject);
+    };
+
     const value: ApiContext = {
         register,
         sendValidationCode,
         validateAccount,
         forgottenPassword,
-        resetPassword
+        resetPassword,
+        respondRequest
     };
 
     return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

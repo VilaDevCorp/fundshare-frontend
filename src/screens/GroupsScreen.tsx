@@ -32,7 +32,7 @@ export function GroupsScreen() {
             <div className="max-w-[800px] w-full gap-8 flex flex-col ml-auto mr-auto">
                 {isTablet ? (
                     <div className="flex justify-between">
-                        <Typography type="title">{'My groups'}</Typography>
+                        <Typography type="title">{'Groups'}</Typography>
                         <Button leftIcon={<Icon type="add" />} onClick={onOpen}>
                             {'Create group'}
                         </Button>

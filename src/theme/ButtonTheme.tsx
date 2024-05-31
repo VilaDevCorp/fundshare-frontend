@@ -44,6 +44,21 @@ export const ButtonTheme = defineStyleConfig({
             },
             color: 'text.0'
         },
+        solid_error: {
+            bg: 'error.500',
+            padding: '10px',
+            borderColor: 'transparent',
+            _hover: {
+                bg: 'error.300'
+            },
+            _active: {
+                bg: 'error.200'
+            },
+            _disabled: {
+                bg: 'error.100 !important'
+            },
+            color: 'text.0'
+        },
         outline: {
             borderColor: 'primary.500',
             _hover: {
