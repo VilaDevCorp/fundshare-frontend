@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react';
 import { User } from '../types/entities';
 import { ApiError, ApiResponse } from '../types/types';
 import { useQuery } from '@tanstack/react-query';
+import { useReactQuery } from '../hooks/useReactQuery';
 
 interface AuthContext {
     user?: User;
@@ -21,6 +22,8 @@ export const AuthContext = createContext<AuthContext>({} as AuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [csrfToken, setCsrfToken] = useState<string | undefined>(undefined);
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+
+    const { queryClient } = useReactQuery();
 
     useEffect(() => {
         loadCsrf();
@@ -105,6 +108,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const logout = () => {
         cleanUserParams();
+        queryClient.invalidateQueries();
     };
 
     const cleanUserParams = () => {
