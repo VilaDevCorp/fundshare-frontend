@@ -60,6 +60,8 @@ export function ResetPasswordScreen() {
         const passwordValid = passwordValidate();
         if (passwordValid) {
             await resetPassword(username!, code!, password);
+        } else {
+            showToast('error', 'There are errors in the form');
         }
     };
 

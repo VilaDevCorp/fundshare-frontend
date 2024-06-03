@@ -22,6 +22,8 @@ export function ForgottenPasswordScreen() {
     const sendCode = async () => {
         if (usernameValidate()) {
             await forgottenPassword(username);
+        } else {
+            showToast('error', 'There are errors in the form');
         }
     };
 

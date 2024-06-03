@@ -34,6 +34,8 @@ export function CreateGroupModal({
     const createGroup = async () => {
         if (nameValidate()) {
             await create({ name, description } as CreateGroupForm);
+        } else {
+            showToast('error', 'There are errors in the form');
         }
     };
 
@@ -57,6 +59,7 @@ export function CreateGroupModal({
     return (
         <FormModal
             isOpen={isOpen}
+            title='Create group'
             onClose={onClose}
             onSubmit={onCreateGroup}
             size="md"

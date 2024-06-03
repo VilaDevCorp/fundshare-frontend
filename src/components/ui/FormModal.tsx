@@ -13,13 +13,14 @@ interface FormModalProps {
     isOpen: boolean;
     onClose: () => void;
     size: 'sm' | 'md' | 'lg';
+    title: string;
     form: React.ReactNode;
     buttons: React.ReactNode;
     onSubmit: () => void;
 }
 
 export function FormModal(props: FormModalProps) {
-    const { isOpen, onClose, size, form, buttons, onSubmit } = props;
+    const { isOpen, title, onClose, size, form, buttons, onSubmit } = props;
 
     return (
         isOpen && (
@@ -27,7 +28,7 @@ export function FormModal(props: FormModalProps) {
                 <ModalOverlay />
                 <ModalContent px={0}>
                     <ModalHeader px={'24px'}>
-                        Create group
+                        {title}
                         <ModalCloseButton />
                     </ModalHeader>
                     <form

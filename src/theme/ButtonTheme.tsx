@@ -22,6 +22,8 @@ export const ButtonTheme = defineStyleConfig({
         square: {
             padding: '12px 24px',
             fontSize: 'xl',
+            height: '48px',
+            width: '48px',
             fontWeight: 'normal',
             svg: {
                 fontSize: '1.2em'

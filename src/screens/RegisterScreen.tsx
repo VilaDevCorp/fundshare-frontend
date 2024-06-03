@@ -125,6 +125,8 @@ export function RegisterScreen() {
             serviceTermsAccepted
         ) {
             await register({ username, email, password });
+        } else {
+            throw new Error('There are errors in the form');
         }
     };
 
@@ -250,7 +252,6 @@ export function RegisterScreen() {
                         </HStack>
                     }
                 />
-
                 <Button
                     type="submit"
                     isDisabled={disabledButton}

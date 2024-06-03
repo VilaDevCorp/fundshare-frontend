@@ -68,6 +68,8 @@ export function LoginScreen() {
 
         if (usernameValid && passwordValid) {
             await auth.authenticate(username, password, rememberMe);
+        } else {
+            showToast('error', 'There are errors in the form');
         }
     };
 
