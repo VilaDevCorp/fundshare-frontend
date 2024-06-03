@@ -1,8 +1,9 @@
-import { Box, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
+import { HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 import { TopNav } from '../atom/TopNav';
 import { useScreen } from '../../hooks/useScreen';
 import { useAuth } from '../../hooks/useAuth';
 import { Icon } from '../atom/Icon';
+import { UserPhoto } from '../atom/UserPhoto';
 
 export function TopMenu() {
     const { isLaptop } = useScreen();
@@ -21,19 +22,7 @@ export function TopMenu() {
                 justifyContent={{ base: 'space-between', laptop: 'flex-end' }}
             >
                 <HStack gap={'16px'} overflow={'hidden'}>
-                    <Box
-                        borderRadius={'50%'}
-                        bg={'background.800'}
-                        height={'50px'}
-                        width={'50px'}
-                        padding={'10px'}
-                    >
-                        <Icon
-                            type={'user'}
-                            color={'background.0'}
-                            fontSize={'2xl'}
-                        />
-                    </Box>
+                    <UserPhoto />
                     <VStack
                         gap={0}
                         alignItems={'flex-start'}
