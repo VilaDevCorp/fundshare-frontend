@@ -8,7 +8,7 @@ interface CrudOperations<T> {
     get: (id: string) => Promise<T>;
     search: (
         page: number,
-        totalPages: number,
+        pageSize: number | null,
         filters: SearchFilters
     ) => Promise<Page<T>>;
     remove: (id: string) => void;
@@ -65,12 +65,13 @@ export function useCrud<T>(entity: string): CrudOperations<T> {
         };
         const res = await fetch(url, options);
         const resObject: ApiResponse<T> = await res.json();
+        checkResponseException(res, resObject);
         return resObject.data;
     };
 
     const search = async (
         page: number,
-        pageSize: number,
+        pageSize: number | null,
         filters: SearchFilters
     ) => {
         const body = { page, pageSize };
@@ -88,13 +89,19 @@ export function useCrud<T>(entity: string): CrudOperations<T> {
         };
         const res = await fetch(url, options);
         const resObject: ApiResponse<Page<T>> = await res.json();
+        checkResponseException(res, resObject);
         return resObject.data;
     };
-    
+
     const remove = async (id: string): Promise<void> => {
         const url = `${apiUrl}${entity}/${id}`;
         const options: RequestInit = {
-            method: 'DELETE'
+            method: 'DELETE',
+            credentials: 'include',
+            headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
+                'content-type': 'application/json'
+            })
         };
         const res = await fetch(url, options);
         const resObject = await res.json();
