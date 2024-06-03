@@ -21,6 +21,7 @@ export interface Group extends BaseEntity {
     description: string;
     isActive: boolean;
     balance?: number;
+    users?: User[];
 }
 
 export interface CreateGroupForm {
@@ -29,5 +30,12 @@ export interface CreateGroupForm {
 }
 
 export interface Request extends BaseEntity {
+    id: string;
     group: Group;
+    user: User;
+}
+
+export interface CreateRequestForm {
+    usernames: string[];
+    groupId: string;
 }

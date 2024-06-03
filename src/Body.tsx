@@ -6,6 +6,7 @@ import { HomeScreen } from './screens/HomeScreen';
 import { LoadingScreen } from './screens/LoadingScreen';
 import { GroupsScreen } from './screens/GroupsScreen';
 import { RequestsScreen } from './screens/RequestsScreen';
+import { GroupDetailsScreen } from './screens/GroupDetailsScreen';
 
 const LazyRegisterScreen = lazy(() =>
     import('./screens/RegisterScreen').then((module) => ({
@@ -66,6 +67,15 @@ function Body() {
                                     path="/settings"
                                     element={<HomeScreen />}
                                 />
+                                <Route
+                                    path="/group/:id"
+                                    element={
+                                        <Suspense fallback={<LoadingScreen />}>
+                                            <GroupDetailsScreen />
+                                        </Suspense>
+                                    }
+                                />
+
                                 <Route
                                     path="/login"
                                     element={<LoginScreen />}

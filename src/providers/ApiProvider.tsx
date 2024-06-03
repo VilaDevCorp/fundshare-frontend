@@ -15,6 +15,7 @@ interface ApiContext {
         password: string
     ) => Promise<void>;
     respondRequest: (requestId: string, isAccepted: boolean) => Promise<void>;
+    kickGroupUser: (groupId: string, username: string) => Promise<void>;
 }
 
 export const ApiContext = createContext<ApiContext>({} as ApiContext);
@@ -108,13 +109,32 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         checkResponseException(res, resObject);
     };
 
+    const kickGroupUser = async (
+        groupId: string,
+        username: string
+    ): Promise<void> => {
+        const url = `${apiUrl}group/${groupId}/members/${username}`;
+        const options: RequestInit = {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
+                'content-type': 'application/json'
+            })
+        };
+        const res = await fetch(url, options);
+        const resObject = await res.json();
+        checkResponseException(res, resObject);
+    };
+
     const value: ApiContext = {
         register,
         sendValidationCode,
         validateAccount,
         forgottenPassword,
         resetPassword,
-        respondRequest
+        respondRequest,
+        kickGroupUser
     };
 
     return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

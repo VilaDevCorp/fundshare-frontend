@@ -75,7 +75,6 @@ export const ButtonTheme = defineStyleConfig({
             },
             color: 'primary.500'
         },
-
         ghost: {
             bg: 'transparent',
             borderColor: 'transparent',
@@ -94,6 +93,25 @@ export const ButtonTheme = defineStyleConfig({
                 color: 'primary.100'
             },
             color: 'primary.500'
+        },
+        ghost_error: {
+            bg: 'transparent',
+            borderColor: 'transparent',
+            _hover: {
+                bg: 'transparent',
+                color: 'error.300',
+                backdropFilter: 'brightness(0.95)'
+            },
+            _active: {
+                bg: 'transparent',
+                color: 'error.300',
+
+                backdropFilter: 'brightness(0.90)'
+            },
+            _disabled: {
+                color: 'error.100'
+            },
+            color: 'error.500'
         }
     },
     // The default size and variant values

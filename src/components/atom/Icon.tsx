@@ -2,7 +2,8 @@ import {
     Icon as ChakraIcon,
     IconProps as ChakraIconProps
 } from '@chakra-ui/react';
-import { BiError, BiGroup, BiHome, BiPlus } from 'react-icons/bi';
+import { BiError, BiGroup, BiHome, BiMoney, BiPlus } from 'react-icons/bi';
+import { CgUserAdd, CgUserRemove } from 'react-icons/cg';
 import { CiSettings } from 'react-icons/ci';
 import { FaRegQuestionCircle, FaUser } from 'react-icons/fa';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
@@ -21,7 +22,10 @@ type IconType =
     | 'chevron-left'
     | 'chevron-right'
     | 'user'
-    | 'add';
+    | 'add'
+    | 'money'
+    | 'addUser'
+    | 'deleteUser';
 
 interface IconProps extends ChakraIconProps {
     type: IconType;
@@ -53,6 +57,12 @@ const getIcon = (type: IconType) => {
             return BiError;
         case 'add':
             return BiPlus;
+        case 'money':
+            return BiMoney;
+        case 'addUser':
+            return CgUserAdd;
+        case 'deleteUser':
+            return CgUserRemove;
     }
 };
 
