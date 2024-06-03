@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { ApiError } from '../types/types';
+import { ApiError, ErrorCode } from '../types/types';
 import StatusCode from 'status-code-enum';
 import { NavigateFunction } from 'react-router-dom';
 import { useAuth } from './useAuth';
@@ -18,11 +18,17 @@ export const useError = (navigate?: NavigateFunction) => {
             if (error instanceof ApiError) {
                 switch (error.statusCode) {
                     case StatusCode.ClientErrorForbidden:
-                        logout();
-                        if (navigate) {
-                            navigate('/login');
+                        if (
+                            error.code === ErrorCode.NOT_JWT_TOKEN ||
+                            error.code === ErrorCode.NOT_CSR_TOKEN ||
+                            error.code === ErrorCode.INVALID_TOKEN
+                        ) {
+                            logout();
+                            if (navigate) {
+                                navigate('/login');
+                            }
+                            showToast('error', 'Your session has expired');
                         }
-                        showToast('error', 'Your session has expired');
                         break;
                     default:
                         showToast('error', 'An internal error has occurred');
