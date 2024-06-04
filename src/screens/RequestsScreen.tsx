@@ -7,6 +7,7 @@ import { Page } from '../types/types';
 import { Pagination } from '../components/ui/Pagination';
 import { RequestCard } from '../components/molecule/RequestCard';
 import { Request } from '../types/entities';
+import { NoElementsMessage } from '../components/atom/NoElementsMessage';
 
 export function RequestsScreen() {
     const [page, setPage] = React.useState(0);
@@ -30,18 +31,22 @@ export function RequestsScreen() {
             <div className="max-w-[800px] w-full gap-8 flex flex-col ml-auto mr-auto">
                 <Typography type="title">{'Requests'}</Typography>
                 <div className="flex justify-center flex-col gap-4 items-center">
-                    {requestPage?.content?.map((request) => (
-                        <RequestCard key={request.id} request={request} />
-                    ))}
+                    {requestPage?.content.length === 0 ? (
+                        <NoElementsMessage label="No requests found" />
+                    ) : (
+                        requestPage?.content?.map((request) => (
+                            <RequestCard key={request.id} request={request} />
+                        ))
+                    )}
                 </div>
-                <div>
+                {requestPage?.content.length !== 0 && (
                     <Pagination
                         page={page}
                         onPageChange={(page) => setPage(page)}
                         hasNextPage={!!requestPage?.hasNext}
                         boxProps={{ mt: '12px' }}
                     />
-                </div>
+                )}
             </div>
         </Layout>
     );

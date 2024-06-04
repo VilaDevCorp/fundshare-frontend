@@ -11,6 +11,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Page } from '../types/types';
 import { Group } from '../types/entities';
 import { Pagination } from '../components/ui/Pagination';
+import { NoElementsMessage } from '../components/atom/NoElementsMessage';
 
 export function GroupsScreen() {
     const { isTablet } = useScreen();
@@ -46,18 +47,22 @@ export function GroupsScreen() {
                     </>
                 )}
                 <div className="flex justify-center flex-col gap-4 items-center">
-                    {groupPage?.content?.map((group) => (
-                        <GroupCard key={group.id} group={group} />
-                    ))}
+                    {groupPage?.content.length === 0 ? (
+                        <NoElementsMessage label="No groups found" />
+                    ) : (
+                        groupPage?.content?.map((group) => (
+                            <GroupCard key={group.id} group={group} />
+                        ))
+                    )}
                 </div>
-                <div>
+                {groupPage?.content.length !== 0 && (
                     <Pagination
                         page={page}
                         onPageChange={(page) => setPage(page)}
                         hasNextPage={!!groupPage?.hasNext}
                         boxProps={{ mt: '12px' }}
                     />
-                </div>
+                )}
                 {isOpen && (
                     <CreateGroupModal isOpen={isOpen} onClose={onClose} />
                 )}

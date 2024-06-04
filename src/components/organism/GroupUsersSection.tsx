@@ -69,7 +69,7 @@ export function GroupUsersSection() {
     });
 
     return (
-        <section className="w-full flex flex-col gap-4 bg-background-0 py-4 px-6 rounded-[2px]">
+        <section className="w-[calc(50%-16px)] flex flex-col gap-4 bg-background-0 py-4 px-6 rounded-[2px]">
             <Typography type="subtitle">{'Users'}</Typography>
             {loggedUser?.username === group?.createdBy?.username && (
                 <Button
@@ -104,6 +104,7 @@ export function GroupUsersSection() {
                                 ? (username: string) => onKickUser(username)
                                 : undefined
                         }
+                        isAdmin={group.createdBy?.username === user.username}
                     />
                 ))}
             {isOpen && <AddUsersModal isOpen={isOpen} onClose={onClose} />}
