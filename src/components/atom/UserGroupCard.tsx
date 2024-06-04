@@ -6,17 +6,32 @@ import { UserPhoto } from './UserPhoto';
 
 export function UserGroupCard({
     user,
+    onAdd,
     onRemove,
-    isPending
+    isPending,
+    isAdmin
 }: {
     user: User;
+    onAdd?: (username: string) => void;
     onRemove?: (username: string) => void;
     isPending?: boolean;
+    isAdmin?: boolean;
 }) {
     return (
         <article
             className={`flex gap-3 items-center ${isPending && 'opacity-70'}`}
         >
+            {onAdd && (
+                <IconButton
+                    aria-label="Add user to group"
+                    color={'primary.500'}
+                    icon={<Icon type="addUser" />}
+                    size={'square'}
+                    variant={'ghost'}
+                    onClick={() => onAdd(user.username)}
+                />
+            )}
+
             {onRemove && (
                 <IconButton
                     aria-label="kick user from group"
@@ -30,6 +45,7 @@ export function UserGroupCard({
             <UserPhoto />
             <Typography type="subtitle">{user.username}</Typography>
             {isPending && <span className="ml-auto">{'Pending'}</span>}
+            {isAdmin && <span className="ml-auto">{'Admin'}</span>}
         </article>
     );
 }

@@ -15,13 +15,15 @@ import { useCrud } from '../../hooks/useCrud';
 import { CreateRequestForm, Request, User } from '../../types/entities';
 import { useToast } from '../../hooks/useToast';
 import { useError } from '../../hooks/useError';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useReactQuery } from '../../hooks/useReactQuery';
 import { GroupContext } from '../../providers/GroupProvider';
 import { Icon } from '../atom/Icon';
 import { UserGroupCard } from '../atom/UserGroupCard';
 import { ApiError } from '../../types/types';
 import StatusCode from 'status-code-enum';
+import { Typography } from '../ui/Typography';
+import { NoElementsMessage } from '../atom/NoElementsMessage';
 
 export function AddUsersModal({
     isOpen,
@@ -34,9 +36,8 @@ export function AddUsersModal({
     const { showToast } = useToast();
     const { setError } = useError();
 
-    const { create: createReq } =
-        useCrud<Request[]>('request');
-    const { get: getUser } = useCrud<User>('user');
+    const { create: createReq } = useCrud<Request[]>('request');
+    const { get: getUser, search: searchRelatedUsers } = useCrud<User>('user');
     const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
     const group = useContext(GroupContext);
 
@@ -48,6 +49,16 @@ export function AddUsersModal({
             groupId: group?.id
         } as CreateRequestForm);
     };
+
+    const { data: relatedUsers } = useQuery({
+        queryKey: ['relatedUsers'],
+        queryFn: async () => {
+            const result = await searchRelatedUsers(0, null, {
+                groupId: group!.id
+            });
+            return result.content;
+        }
+    });
 
     const onAddUserByUsername = async (username: string) => {
         try {
@@ -78,22 +89,30 @@ export function AddUsersModal({
         }
     };
 
-    const { mutate: onCreateRequest, isPending: isLoading } = useMutation({
-        mutationFn: createRequest,
+    const { mutate: onCreateRequest, isPending: isLoadingInvitingUsers } =
+        useMutation({
+            mutationFn: createRequest,
 
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['groupRequests'] });
-            showToast('success', 'Users invited');
-            onClose();
-        },
-        onError: (e) => {
-            if (e instanceof Error) {
-                setError(e);
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: ['groupRequests'] });
+                showToast('success', 'Users invited');
+                onClose();
+            },
+            onError: (e) => {
+                if (e instanceof Error) {
+                    setError(e);
+                }
             }
-        }
-    });
+        });
 
-    const isDisabled = selectedUsers.length <= 0 || isLoading;
+    const isDisabled = selectedUsers.length <= 0 || isLoadingInvitingUsers;
+
+    const filteredRelatedUsers = relatedUsers?.filter(
+        (user) =>
+            !selectedUsers.find(
+                (selectedUser) => selectedUser.username === user.username
+            )
+    );
 
     return (
         isOpen && (
@@ -108,11 +127,43 @@ export function AddUsersModal({
                         <ModalBody
                             display={'flex'}
                             flexDir={'column'}
-                            gap={'12px'}
+                            gap={'16px'}
                             pb={'12px'}
                             px={'24px'}
                         >
-                            <div className="flex gap-4">
+                            <Typography type={'subtitle'}>
+                                {'Selected users'}
+                            </Typography>
+                            {selectedUsers.length > 0 ? (
+                                selectedUsers.map((user) => (
+                                    <UserGroupCard
+                                        key={user.id}
+                                        user={user}
+                                        onRemove={(username: string) => {
+                                            setSelectedUsers(
+                                                selectedUsers.filter(
+                                                    (u) =>
+                                                        u.username !== username
+                                                )
+                                            );
+                                        }}
+                                    />
+                                ))
+                            ) : (
+                                <NoElementsMessage
+                                    label={'No users selected'}
+                                />
+                            )}
+                            <Typography type={'subtitle'}>
+                                {'Add by username'}
+                            </Typography>
+                            <form
+                                className="flex gap-4"
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    onAddUserByUsername(username);
+                                }}
+                            >
                                 <Input
                                     onChange={(e) =>
                                         setUsername(e.target.value)
@@ -121,27 +172,29 @@ export function AddUsersModal({
                                     value={username}
                                 />
                                 <IconButton
-                                    onClick={() =>
-                                        onAddUserByUsername(username)
-                                    }
+                                    type="submit"
                                     size={'square'}
                                     aria-label="Add user"
                                     icon={<Icon type="add" />}
                                 />
-                            </div>
-                            {selectedUsers.map((user) => (
-                                <UserGroupCard
-                                    key={user.id}
-                                    user={user}
-                                    onRemove={(username: string) => {
-                                        setSelectedUsers(
-                                            selectedUsers.filter(
-                                                (u) => u.username !== username
-                                            )
-                                        );
-                                    }}
-                                />
-                            ))}
+                            </form>
+                            <Typography type={'subtitle'}>
+                                {'Known users'}
+                            </Typography>
+                            {filteredRelatedUsers &&
+                            filteredRelatedUsers.length > 0 ? (
+                                filteredRelatedUsers.map((filteredUser) => (
+                                    <UserGroupCard
+                                        key={filteredUser.id}
+                                        user={filteredUser}
+                                        onAdd={(username: string) =>
+                                            onAddUserByUsername(username)
+                                        }
+                                    />
+                                ))
+                            ) : (
+                                <NoElementsMessage label={'No users found'} />
+                            )}
                         </ModalBody>
                     </div>
 
@@ -149,6 +202,7 @@ export function AddUsersModal({
                         <Button
                             onClick={() => onCreateRequest()}
                             disabled={isDisabled}
+                            isLoading={isLoadingInvitingUsers}
                         >
                             {'Invite'}
                         </Button>
