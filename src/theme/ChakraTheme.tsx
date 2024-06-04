@@ -73,13 +73,13 @@ const colors = {
 };
 
 const fontSizes = {
-    xs: '0.75rem',
-    sm: '0.875rem',
-    md: '1rem',
-    lg: '1.25rem',
-    xl: '1.5rem',
-    '2xl': '1.875rem',
-    '3xl': '2rem'
+    xs: '0.625rem',
+    sm: '0.75rem',
+    md: '0.875rem',
+    lg: '1rem',
+    xl: '1.125rem',
+    '2xl': '1.375rem',
+    '3xl': '1.75rem'
 };
 
 const breakpoints = {

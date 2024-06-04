@@ -12,6 +12,7 @@ import { Request } from '../../types/entities';
 import { useReactQuery } from '../../hooks/useReactQuery';
 import { Icon } from '../atom/Icon';
 import { useAuth } from '../../hooks/useAuth';
+import { useScreen } from '../../hooks/useScreen';
 
 export function GroupUsersSection() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,6 +22,8 @@ export function GroupUsersSection() {
 
     const { kickGroupUser } = useApi();
     const { queryClient } = useReactQuery();
+
+    const { isTablet } = useScreen();
 
     const { user: loggedUser } = useAuth();
 
@@ -69,8 +72,8 @@ export function GroupUsersSection() {
     });
 
     return (
-        <section className="w-[calc(50%-16px)] flex flex-col gap-4 bg-background-0 py-4 px-6 rounded-[2px]">
-            <Typography type="subtitle">{'Users'}</Typography>
+        <section className="w-full flex flex-col gap-4 bg-background-0 py-4 px-6 rounded-[2px]">
+            {isTablet &&<Typography type="subtitle">{'Users'}</Typography>}
             {loggedUser?.username === group?.createdBy?.username && (
                 <Button
                     variant={'outline'}

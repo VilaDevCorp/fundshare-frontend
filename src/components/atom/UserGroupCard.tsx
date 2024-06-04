@@ -19,7 +19,7 @@ export function UserGroupCard({
 }) {
     return (
         <article
-            className={`flex gap-3 items-center ${isPending && 'opacity-70'}`}
+            className={`flex gap-3 items-center ${isPending && 'opacity-70'} ${!onAdd && !onRemove && 'pl-[60px]'}`}
         >
             {onAdd && (
                 <IconButton
@@ -43,9 +43,17 @@ export function UserGroupCard({
                 />
             )}
             <UserPhoto />
-            <Typography type="subtitle">{user.username}</Typography>
-            {isPending && <span className="ml-auto">{'Pending'}</span>}
-            {isAdmin && <span className="ml-auto">{'Admin'}</span>}
+            <Typography type="body">{user.username}</Typography>
+            {isPending && (
+                <Typography type="detail" className="ml-auto">
+                    {'Pending'}
+                </Typography>
+            )}
+            {isAdmin && (
+                <Typography type="detail" className="ml-auto">
+                    {'Admin'}
+                </Typography>
+            )}
         </article>
     );
 }

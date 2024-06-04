@@ -1,7 +1,7 @@
 import { Heading, HeadingProps, Text } from '@chakra-ui/react';
 import React from 'react';
 
-type TypographyType = 'title' | 'subtitle' | 'body';
+type TypographyType = 'title' | 'subtitle' | 'body' | 'detail';
 
 interface TypographyProps extends HeadingProps {
     children: React.ReactNode;
@@ -24,9 +24,20 @@ const getTypographyElement = (props: TypographyProps) => {
             );
         case 'subtitle':
             return (
-                <Heading as="h2" size="lg" {...chakraHeadingProps}>
+                <Heading
+                    as="h2"
+                    size="lg"
+                    fontWeight={'bold'}
+                    {...chakraHeadingProps}
+                >
                     {children}
                 </Heading>
+            );
+        case 'detail':
+            return (
+                <Text fontSize={'sm'} {...chakraHeadingProps}>
+                    {children}
+                </Text>
             );
         default:
             return <Text fontSize={'md'}>{children}</Text>;

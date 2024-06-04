@@ -1,6 +1,14 @@
 import { Layout } from '../components/organism/Layout';
 import { Typography } from '../components/ui/Typography';
-import { Button, useDisclosure } from '@chakra-ui/react';
+import {
+    Button,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    Tabs,
+    useDisclosure
+} from '@chakra-ui/react';
 import { Icon } from '../components/atom/Icon';
 import { useScreen } from '../hooks/useScreen';
 import { CreateGroupModal } from '../components/organism/CreateGroupModal';
@@ -29,12 +37,12 @@ export function GroupDetailsScreen() {
     return (
         <Layout>
             <GroupProvider group={group}>
-                <div className="max-w-[800px] w-full gap-8 flex flex-col ml-auto mr-auto">
+                <div className="max-w-[1200px] w-full flex flex-col ml-auto mr-auto">
                     {group ? (
                         <>
                             {isTablet ? (
                                 <>
-                                    <div className="flex justify-between">
+                                    <div className="flex justify-between mb-4">
                                         <Typography type="title">
                                             {group?.name}
                                         </Typography>
@@ -46,16 +54,16 @@ export function GroupDetailsScreen() {
                                             {'Add payment'}
                                         </Button>
                                     </div>
-                                    <Typography type="subtitle">
+                                    <Typography type="body">
                                         {group?.description}
                                     </Typography>
                                 </>
                             ) : (
-                                <>
+                                <div className='flex flex-col gap-4'>
                                     <Typography type="title">
                                         {group?.name}
                                     </Typography>
-                                    <Typography type="subtitle">
+                                    <Typography type="body">
                                         {group?.description}
                                     </Typography>
                                     <Button
@@ -64,12 +72,36 @@ export function GroupDetailsScreen() {
                                     >
                                         {'Add payment'}
                                     </Button>
-                                </>
+                                </div>
                             )}
-                            <div className="w-full flex flex-row gap-4">
-                                <GroupUsersSection />
-                                <GroupUsersSection />
-                            </div>
+                            {isTablet ? (
+                                <div className="w-full grid-cols-2 grid gap-4 mt-8">
+                                    <GroupUsersSection />
+                                    <GroupUsersSection />
+                                    <GroupUsersSection />
+                                    <GroupUsersSection />
+                                </div>
+                            ) : (
+                                <Tabs marginTop={'1rem'}>
+                                    <TabList>
+                                        <Tab>{'History'}</Tab>
+                                        <Tab>{'Debts'}</Tab>
+                                        <Tab>{'Users'}</Tab>
+                                    </TabList>
+
+                                    <TabPanels>
+                                        <TabPanel>
+                                            <p>one!</p>
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <p>two!</p>
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <GroupUsersSection />
+                                        </TabPanel>
+                                    </TabPanels>
+                                </Tabs>
+                            )}{' '}
                         </>
                     ) : (
                         <Typography type="title">{'Loading...'}</Typography>
