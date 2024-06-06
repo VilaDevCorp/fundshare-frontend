@@ -66,3 +66,9 @@ export interface CreateUserPaymentForm {
     username: string;
     amount: number;
 }
+
+export interface Debt {
+    payer: User;
+    payee: User;
+    amount: number;
+}

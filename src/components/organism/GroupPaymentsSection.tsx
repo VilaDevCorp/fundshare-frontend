@@ -12,7 +12,7 @@ import { Pagination } from '../ui/Pagination';
 export function GroupPaymentsSection() {
     const { isTablet } = useScreen();
 
-    const group = useGroup();
+    const {group} = useGroup();
 
     const { search: searchPaym } = useCrud<Payment>('payment');
 

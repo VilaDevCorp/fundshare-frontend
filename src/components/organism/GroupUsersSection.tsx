@@ -27,7 +27,7 @@ export function GroupUsersSection() {
 
     const { user: loggedUser } = useAuth();
 
-    const group = useGroup();
+    const {group} = useGroup();
 
     const { mutate: onKickUser } = useMutation({
         mutationFn: async (username: string) => {

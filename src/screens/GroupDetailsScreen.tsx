@@ -13,12 +13,14 @@ import { Icon } from '../components/atom/Icon';
 import { useScreen } from '../hooks/useScreen';
 import { useCrud } from '../hooks/useCrud';
 import { useQuery } from '@tanstack/react-query';
-import { Group } from '../types/entities';
+import { Debt, Group } from '../types/entities';
 import { useParams } from 'react-router-dom';
 import { GroupUsersSection } from '../components/organism/GroupUsersSection';
 import { GroupProvider } from '../providers/GroupProvider';
 import { AddPaymentModal } from '../components/organism/AddPaymentModal';
 import { GroupPaymentsSection } from '../components/organism/GroupPaymentsSection';
+import { GroupDebtsSection } from '../components/organism/GroupDebtsSection';
+import { UserDebtsSection } from '../components/organism/UserDebtsSection';
 
 export function GroupDetailsScreen() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,9 +37,17 @@ export function GroupDetailsScreen() {
         queryFn: () => get(id as string)
     });
 
+    const { search: searchDebts } = useCrud<Debt>('debt');
+
+    const { data: debts } = useQuery({
+        queryKey: ['groupDebts'],
+        enabled: !!group?.id,
+        queryFn: () => searchDebts(0, null, { groupId: group!.id })
+    });
+
     return (
         <Layout>
-            <GroupProvider group={group}>
+            <GroupProvider value={{ group, debts }}>
                 <div className="max-w-[1200px] w-full flex flex-col ml-auto mr-auto">
                     {group ? (
                         <>
@@ -73,13 +83,14 @@ export function GroupDetailsScreen() {
                                     >
                                         {'Add payment'}
                                     </Button>
+                                    <UserDebtsSection />
                                 </div>
                             )}
                             {isTablet ? (
                                 <div className="w-full grid-cols-2 grid gap-4 mt-8">
-                                    <GroupUsersSection />
+                                    <UserDebtsSection />
                                     <GroupPaymentsSection />
-                                    <GroupUsersSection />
+                                    <GroupDebtsSection />
                                     <GroupUsersSection />
                                 </div>
                             ) : (
@@ -95,7 +106,7 @@ export function GroupDetailsScreen() {
                                             <GroupPaymentsSection />
                                         </TabPanel>
                                         <TabPanel>
-                                            <p>two!</p>
+                                            <GroupDebtsSection />
                                         </TabPanel>
                                         <TabPanel>
                                             <GroupUsersSection />

@@ -39,7 +39,7 @@ export function AddUsersModal({
     const { create: createReq } = useCrud<Request[]>('request');
     const { get: getUser, search: searchRelatedUsers } = useCrud<User>('user');
     const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-    const group = useContext(GroupContext);
+    const {group} = useContext(GroupContext);
 
     const [username, setUsername] = useState('');
 

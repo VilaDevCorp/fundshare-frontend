@@ -32,7 +32,7 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
         userAmounts
     } = props;
 
-    const group = useGroup();
+    const {group} = useGroup();
     const { user: loggedUser } = useAuth();
 
     const unassignedUsers = group?.users?.filter(

@@ -1,16 +1,22 @@
 import { ReactNode, createContext } from 'react';
-import { Group } from '../types/entities';
+import { Debt, Group } from '../types/entities';
+import { Page } from '../types/types';
 
-export const GroupContext = createContext<Group | undefined>(undefined);
+interface GroupContext {
+    group: Group | undefined;
+    debts: Page<Debt> | undefined;
+}
+
+export const GroupContext = createContext<GroupContext>({} as GroupContext);
 
 export function GroupProvider({
-    group,
+    value,
     children
 }: {
-    group: Group | undefined;
+    value: GroupContext;
     children: ReactNode;
 }) {
     return (
-        <GroupContext.Provider value={group}>{children}</GroupContext.Provider>
+        <GroupContext.Provider value={value}>{children}</GroupContext.Provider>
     );
 }

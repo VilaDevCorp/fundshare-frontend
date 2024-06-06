@@ -6,7 +6,7 @@ import { conf } from '../../../conf';
 export function PaymentCard({ payment }: { payment: Payment }) {
     return (
         <article
-            className={`flex flex-col gap-3 border-b py-4 px-6 w-full first:border-t last:!border-b-0 border-background-600 `}
+            className={`flex flex-col gap-3 border-b py-4 px-6 w-full first:border-t last:!border-b-0 border-background-300 `}
         >
             <span className="text-sm font-bold">
                 {moment(payment.createdAt).format(conf.dateTimeFormat)}

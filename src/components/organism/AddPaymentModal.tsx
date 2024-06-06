@@ -75,7 +75,7 @@ export function AddPaymentModal({
     const { showToast } = useToast();
     const { setError } = useError();
 
-    const group = useGroup();
+    const {group} = useGroup();
 
     const createPayment = async () => {
         if (
@@ -105,6 +105,7 @@ export function AddPaymentModal({
 
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['groupPayments'] });
+            queryClient.invalidateQueries({ queryKey: ['groupDebts'] });
             showToast('success', 'Payment created!');
             onClose();
         },
