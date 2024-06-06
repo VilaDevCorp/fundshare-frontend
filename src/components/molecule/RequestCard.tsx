@@ -30,8 +30,7 @@ export function RequestCard({ request }: { request: Request }) {
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['requests'] });
             },
-            onError: (e) => {
-                console.log(e);
+            onError: () => {
                 showToast('error', 'There was an error declining the request');
             }
         });

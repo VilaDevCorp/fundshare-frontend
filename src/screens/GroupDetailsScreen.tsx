@@ -18,6 +18,7 @@ import { Group } from '../types/entities';
 import { useParams } from 'react-router-dom';
 import { GroupUsersSection } from '../components/organism/GroupUsersSection';
 import { GroupProvider } from '../providers/GroupProvider';
+import { AddPaymentModal } from '../components/organism/AddPaymentModal';
 
 export function GroupDetailsScreen() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -108,7 +109,7 @@ export function GroupDetailsScreen() {
                     )}
 
                     {isOpen && (
-                        <CreateGroupModal isOpen={isOpen} onClose={onClose} />
+                        <AddPaymentModal isOpen={isOpen} onClose={onClose} />
                     )}
                 </div>
             </GroupProvider>

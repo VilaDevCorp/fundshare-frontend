@@ -95,7 +95,6 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         isAccepted: boolean
     ): Promise<void> => {
         const url = `${apiUrl}request/${requestId}?accept=${isAccepted}`;
-        console.log(url);
         const options: RequestInit = {
             method: 'POST',
             credentials: 'include',

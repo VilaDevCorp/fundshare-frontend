@@ -25,7 +25,8 @@ type IconType =
     | 'add'
     | 'money'
     | 'addUser'
-    | 'deleteUser';
+    | 'deleteUser'
+    | 'info';
 
 interface IconProps extends ChakraIconProps {
     type: IconType;
@@ -63,6 +64,8 @@ const getIcon = (type: IconType) => {
             return CgUserAdd;
         case 'deleteUser':
             return CgUserRemove;
+        case 'info':
+            return FaRegQuestionCircle;
     }
 };
 

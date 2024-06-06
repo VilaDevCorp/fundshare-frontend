@@ -99,7 +99,7 @@ export function GroupUsersSection() {
             {group?.users &&
                 group?.users.map((user) => (
                     <UserGroupCard
-                        key={user.id}
+                        key={user.username}
                         user={user}
                         onRemove={
                             group.createdBy?.username !== user.username &&

@@ -39,3 +39,29 @@ export interface CreateRequestForm {
     usernames: string[];
     groupId: string;
 }
+
+export interface Payment extends BaseEntity {
+    description: string;
+    amount: number;
+    group: Group;
+    user: User;
+}
+
+export type PaymentType = 'total' | 'divided';
+
+export interface UserPaymentDto extends BaseEntity {
+    user: User;
+    payment: Payment;
+    amount: number;
+}
+
+export interface CreatePaymentForm {
+    description: string;
+    groupId: string;
+    payees: CreateUserPaymentForm[];
+}
+
+export interface CreateUserPaymentForm {
+    username: string;
+    amount: number;
+}
