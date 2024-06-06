@@ -6,6 +6,7 @@ import { BiError, BiGroup, BiHome, BiMoney, BiPlus } from 'react-icons/bi';
 import { CgUserAdd, CgUserRemove } from 'react-icons/cg';
 import { CiSettings } from 'react-icons/ci';
 import { FaRegQuestionCircle, FaUser } from 'react-icons/fa';
+import { FaAnglesRight } from 'react-icons/fa6';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 import { MdLogout } from 'react-icons/md';
 import { TiTick, TiTimes } from 'react-icons/ti';
@@ -26,7 +27,8 @@ type IconType =
     | 'money'
     | 'addUser'
     | 'deleteUser'
-    | 'info';
+    | 'info'
+    | 'doubleChevronRight';
 
 interface IconProps extends ChakraIconProps {
     type: IconType;
@@ -66,6 +68,8 @@ const getIcon = (type: IconType) => {
             return CgUserRemove;
         case 'info':
             return FaRegQuestionCircle;
+        case 'doubleChevronRight':
+            return FaAnglesRight;
     }
 };
 

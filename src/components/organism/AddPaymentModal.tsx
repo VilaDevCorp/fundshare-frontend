@@ -104,7 +104,7 @@ export function AddPaymentModal({
         mutationFn: createPayment,
 
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['groups'] });
+            queryClient.invalidateQueries({ queryKey: ['groupPayments'] });
             showToast('success', 'Payment created!');
             onClose();
         },

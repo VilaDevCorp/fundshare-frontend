@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 import { Icon } from '../components/atom/Icon';
 import { useScreen } from '../hooks/useScreen';
-import { CreateGroupModal } from '../components/organism/CreateGroupModal';
 import { useCrud } from '../hooks/useCrud';
 import { useQuery } from '@tanstack/react-query';
 import { Group } from '../types/entities';
@@ -19,6 +18,7 @@ import { useParams } from 'react-router-dom';
 import { GroupUsersSection } from '../components/organism/GroupUsersSection';
 import { GroupProvider } from '../providers/GroupProvider';
 import { AddPaymentModal } from '../components/organism/AddPaymentModal';
+import { GroupPaymentsSection } from '../components/organism/GroupPaymentsSection';
 
 export function GroupDetailsScreen() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -60,7 +60,7 @@ export function GroupDetailsScreen() {
                                     </Typography>
                                 </>
                             ) : (
-                                <div className='flex flex-col gap-4'>
+                                <div className="flex flex-col gap-4">
                                     <Typography type="title">
                                         {group?.name}
                                     </Typography>
@@ -78,7 +78,7 @@ export function GroupDetailsScreen() {
                             {isTablet ? (
                                 <div className="w-full grid-cols-2 grid gap-4 mt-8">
                                     <GroupUsersSection />
-                                    <GroupUsersSection />
+                                    <GroupPaymentsSection />
                                     <GroupUsersSection />
                                     <GroupUsersSection />
                                 </div>
@@ -92,7 +92,7 @@ export function GroupDetailsScreen() {
 
                                     <TabPanels>
                                         <TabPanel>
-                                            <p>one!</p>
+                                            <GroupPaymentsSection />
                                         </TabPanel>
                                         <TabPanel>
                                             <p>two!</p>
