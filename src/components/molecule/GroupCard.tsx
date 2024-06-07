@@ -15,7 +15,9 @@ export function GroupCard({ group }: { group: Group }) {
                 <Typography flexShrink={1} type="subtitle">
                     {group.name}
                 </Typography>
-                <Balance balance={group.balance ? group.balance : 0} />
+                <Balance
+                    balance={group.balance !== undefined ? group.balance : 0}
+                />
             </div>
             <Typography type="body">{group.description}</Typography>
         </article>

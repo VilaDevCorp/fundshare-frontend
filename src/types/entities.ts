@@ -72,3 +72,8 @@ export interface Debt {
     payee: User;
     amount: number;
 }
+
+export interface GroupDebt {
+    group: Group;
+    amount: number;
+}

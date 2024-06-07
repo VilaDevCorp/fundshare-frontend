@@ -1,5 +1,5 @@
 import { createContext, ReactNode } from 'react';
-import { RegisterUserForm, User } from '../types/entities';
+import { GroupDebt, RegisterUserForm, User } from '../types/entities';
 import { ApiResponse } from '../types/types';
 import { checkResponseException } from '../utils/utilFunctions';
 import { useAuth } from '../hooks/useAuth';
@@ -16,6 +16,7 @@ interface ApiContext {
     ) => Promise<void>;
     respondRequest: (requestId: string, isAccepted: boolean) => Promise<void>;
     kickGroupUser: (groupId: string, username: string) => Promise<void>;
+    getDebtWithUser: (username: string) => Promise<GroupDebt[]>;
 }
 
 export const ApiContext = createContext<ApiContext>({} as ApiContext);
@@ -126,6 +127,22 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         checkResponseException(res, resObject);
     };
 
+    const getDebtWithUser = async (username: string): Promise<GroupDebt[]> => {
+        const url = `${apiUrl}debt/${username}`;
+        const options: RequestInit = {
+            method: 'GET',
+            credentials: 'include',
+            headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
+                'content-type': 'application/json'
+            })
+        };
+        const res = await fetch(url, options);
+        const resObject: ApiResponse<GroupDebt[]> = await res.json();
+        checkResponseException(res, resObject);
+        return resObject.data;
+    };
+
     const value: ApiContext = {
         register,
         sendValidationCode,
@@ -133,7 +150,8 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         forgottenPassword,
         resetPassword,
         respondRequest,
-        kickGroupUser
+        kickGroupUser,
+        getDebtWithUser
     };
 
     return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
