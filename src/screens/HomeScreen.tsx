@@ -1,29 +1,13 @@
-import { useAuth } from '../hooks/useAuth';
 import { Layout } from '../components/organism/Layout';
+import { HomeDebtsSection } from '../components/organism/HomeDebtsSection';
 
 export function HomeScreen() {
-    const { user } = useAuth();
     return (
         <Layout>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
-            <h1 className='mb-10'>{`HELLO, ${user?.username}`}</h1>
+            <div className="max-w-[1200px] w-full flex gap-6 ml-auto mr-auto">
+                <HomeDebtsSection />
+                <HomeDebtsSection />
+            </div>
         </Layout>
     );
 }
