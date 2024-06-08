@@ -21,13 +21,13 @@ export function HomePaymentsSection() {
     });
 
     return (
-        <section className="flex flex-col gap-4 w-full">
+        <section className="flex flex-col gap-4 w-full h-full overflow-hidden">
             {isTablet && (
                 <Typography type="title">{'Recent payments'}</Typography>
             )}
 
-            <div className="w-full flex flex-col gap-4 bg-background-0 rounded-[2px]">
-                <div className="flex flex-col">
+            <div className="w-full flex flex-col rounded-[2px] overflow-hidden gap-4">
+                <div className="flex flex-col overflow-auto bg-background-0">
                     {userPaymentsPage?.content.length === 0 ? (
                         <NoElementsMessage label="No payments yet" />
                     ) : (
@@ -39,15 +39,14 @@ export function HomePaymentsSection() {
                             />
                         ))
                     )}
-                    {userPaymentsPage?.content.length !== 0 && (
-                        <Pagination
-                            page={page}
-                            onPageChange={(page) => setPage(page)}
-                            hasNextPage={!!userPaymentsPage?.hasNext}
-                            boxProps={{ mt: '12px' }}
-                        />
-                    )}
                 </div>
+                {userPaymentsPage?.content.length !== 0 && (
+                    <Pagination
+                        page={page}
+                        onPageChange={(page) => setPage(page)}
+                        hasNextPage={!!userPaymentsPage?.hasNext}
+                    />
+                )}
             </div>
         </section>
     );

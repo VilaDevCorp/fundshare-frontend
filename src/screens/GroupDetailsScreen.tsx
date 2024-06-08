@@ -46,13 +46,13 @@ export function GroupDetailsScreen() {
     });
 
     return (
-        <Layout>
+        <Layout minH='min-h-[750px]'>
             <GroupProvider value={{ group, debts }}>
-                <div className="max-w-[1200px] w-full flex flex-col ml-auto mr-auto">
+                <div className="max-w-[1200px] w-full flex flex-col ml-auto mr-auto h-full overflow-hidden">
                     {group ? (
                         <>
                             {isTablet ? (
-                                <>
+                                <div className='h-[80px]'>
                                     <div className="flex justify-between mb-4">
                                         <Typography type="title">
                                             {group?.name}
@@ -68,7 +68,7 @@ export function GroupDetailsScreen() {
                                     <Typography type="body">
                                         {group?.description}
                                     </Typography>
-                                </>
+                                </div>
                             ) : (
                                 <div className="flex flex-col gap-4">
                                     <Typography type="title">
@@ -87,11 +87,15 @@ export function GroupDetailsScreen() {
                                 </div>
                             )}
                             {isTablet ? (
-                                <div className="w-full grid-cols-2 grid gap-4 mt-8">
-                                    <UserDebtsSection />
-                                    <GroupPaymentsSection />
-                                    <GroupDebtsSection />
-                                    <GroupUsersSection />
+                                <div className="w-full flex gap-8 py-6 h-[calc(100%-80px)]">
+                                    <div className="w-full flex flex-col gap-8">
+                                        <UserDebtsSection />
+                                        <GroupPaymentsSection />
+                                    </div>
+                                    <div className="w-full flex flex-col gap-8">
+                                        <GroupDebtsSection />
+                                        <GroupUsersSection />
+                                    </div>
                                 </div>
                             ) : (
                                 <Tabs marginTop={'1rem'}>

@@ -36,6 +36,7 @@ const navItems: NavItem[] = [
 export function TopNav() {
     const navigate = useNavigate();
     const location = useLocation();
+    console.log(location.pathname.split('/')[1]);
 
     return (
         <HStack width={'100%'} height={'100%'} gap={'24px'}>
@@ -43,7 +44,7 @@ export function TopNav() {
             <nav className="flex gap-6">
                 {navItems.map((item) => (
                     <a
-                        className={`gap-2 flex items-center hover:spfont-bold cursor-pointer group  ${location.pathname === item.path ? 'text-primary-500' : ' transition-all ease-out hover:scale-105'} `}
+                        className={`gap-2 flex items-center hover:spfont-bold cursor-pointer group  ${location.pathname.split('/')[1] === item.path.split('/')[1] ? 'text-primary-500' : ' transition-all ease-out hover:scale-105'} `}
                         key={item.label}
                         onClick={() => navigate(item.path)}
                     >
@@ -51,7 +52,7 @@ export function TopNav() {
                             {item.icon}
                         </span>
                         <span
-                            className={`text-xl font-light transition-all  ${location.pathname === item.path ? '!font-bold' : ''}`}
+                            className={`text-xl font-light transition-all  ${location.pathname.split('/')[1] === item.path.split('/')[1] ? '!font-bold' : ''}`}
                         >
                             {item.label}
                         </span>

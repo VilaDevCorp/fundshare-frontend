@@ -6,7 +6,6 @@ export const LinkTheme = defineStyleConfig({
         fontSize: 'md',
         textDecoration: 'underline',
         _hover: {
-            textDecoration: 'none',
             color: 'primary.300'
         }
     }

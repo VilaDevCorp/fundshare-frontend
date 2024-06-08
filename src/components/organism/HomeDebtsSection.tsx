@@ -25,16 +25,16 @@ export function HomeDebtsSection() {
     });
 
     return (
-        <section className="flex flex-col gap-4 w-full mt-2">
+        <section className="flex flex-col gap-4 w-full h-full overflow-hidden">
             {isTablet && <Typography type="title">{'Your debts'}</Typography>}
-            <div className="w-full flex flex-col gap-4 bg-background-0 rounded-[2px]">
-                <div className="flex flex-col gap-2">
+            <div className="w-full flex flex-col gap-4 bg-background-0 rounded-[2px] overflow-hidden">
+                <div className="flex flex-col gap-2 overflow-auto">
                     {debts?.content.length === 0 ? (
                         <NoElementsMessage label="No debts yet" />
                     ) : (
                         debts?.content.map((debt) => (
                             <UserDebtCard
-                                key={`${debt.payee}-${debt.payer}`}
+                                key={`${debt.payee.username}-${debt.payer.username}`}
                                 debt={debt}
                                 onClick={() =>
                                     setSelectedUser(

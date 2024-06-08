@@ -9,7 +9,7 @@ export function UserGroupDebtCard({ groupDebt }: { groupDebt: GroupDebt }) {
     return (
         <article
             className={`flex gap-3 py-2 border-b w-full justify-between items-center first:border-t  border-background-200 cursor-pointer hover:bg-background-100 transition-all px-6`}
-            onClick={() => navigate(`/group/${groupDebt.group.id}`)}
+            onClick={() => navigate(`/groups/${groupDebt.group.id}`)}
         >
             <div className="flex gap-2 items-center">
                 <UserPhoto />

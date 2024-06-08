@@ -9,7 +9,8 @@ const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(
 export const TabsTheme = defineMultiStyleConfig({
     baseStyle: {
         root: {
-            borderRadius: '2px'
+            borderRadius: '2px',
+            height: '100%'
         },
         tab: {
             bg: 'background.0',
@@ -29,13 +30,18 @@ export const TabsTheme = defineMultiStyleConfig({
         },
         tablist: {
             bg: 'background.0',
-
+            height: '45px',
             borderBottomColor: 'background.700 !important',
             gap: '0px',
             padding: '0px'
         },
+        tabpanels: {
+            height: 'calc(100% - 45px)'
+        },
         tabpanel: {
+            height: '100%',
             padding: '0',
+            overflowY: 'hidden',
             bg: 'background.0'
         }
     },

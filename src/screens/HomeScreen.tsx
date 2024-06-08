@@ -11,7 +11,7 @@ export function HomeScreen() {
         <Layout>
             {isTablet ? (
                 <div
-                    className={`max-w-[1200px] w-full flex flex-col  gap-8 ml-auto mr-auto md:flex-row`}
+                    className={`max-w-[1200px] w-full flex flex-col h-full overflow-hidden  gap-8 ml-auto mr-auto md:flex-row`}
                 >
                     <HomeDebtsSection />
                     <HomePaymentsSection />

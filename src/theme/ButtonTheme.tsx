@@ -17,6 +17,7 @@ export const ButtonTheme = defineStyleConfig({
             svg: {
                 fontSize: '1.2em'
             },
+            maxWidth: '300px',
             height: 'auto !important'
         },
         square: {

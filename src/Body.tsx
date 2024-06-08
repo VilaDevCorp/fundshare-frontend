@@ -48,7 +48,7 @@ function Body() {
     }, []);
 
     return (
-        <div className="w-full h-full flex flex-col ">
+        <div className="w-full h-full flex flex-col overflow-auto ">
             <BrowserRouter>
                 {authInfo.isLoadingUserInfo === false ? (
                     <>
@@ -68,7 +68,7 @@ function Body() {
                                     element={<HomeScreen />}
                                 />
                                 <Route
-                                    path="/group/:id"
+                                    path="/groups/:id"
                                     element={
                                         <Suspense fallback={<LoadingScreen />}>
                                             <GroupDetailsScreen />

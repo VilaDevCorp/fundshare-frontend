@@ -30,7 +30,7 @@ export function GroupsScreen() {
 
     return (
         <Layout>
-            <div className="max-w-[800px] w-full gap-8 flex flex-col ml-auto mr-auto">
+            <div className="max-w-[800px] w-full gap-8 flex flex-col ml-auto mr-auto h-full overflow-hidden">
                 {isTablet ? (
                     <div className="flex justify-between">
                         <Typography type="title">{'Groups'}</Typography>
@@ -46,23 +46,24 @@ export function GroupsScreen() {
                         </Button>
                     </>
                 )}
-                <div className="flex justify-center flex-col gap-4 items-center">
-                    {groupPage?.content.length === 0 ? (
-                        <NoElementsMessage label="No groups found" />
-                    ) : (
-                        groupPage?.content?.map((group) => (
-                            <GroupCard key={group.id} group={group} />
-                        ))
+                <div className="w-full flex flex-col overflow-hidden gap-4">
+                    <div className="flex flex-col gap-4 items-center overflow-auto">
+                        {groupPage?.content.length === 0 ? (
+                            <NoElementsMessage label="No groups found" />
+                        ) : (
+                            groupPage?.content?.map((group) => (
+                                <GroupCard key={group.id} group={group} />
+                            ))
+                        )}
+                    </div>
+                    {groupPage?.content.length !== 0 && (
+                        <Pagination
+                            page={page}
+                            onPageChange={(page) => setPage(page)}
+                            hasNextPage={!!groupPage?.hasNext}
+                        />
                     )}
                 </div>
-                {groupPage?.content.length !== 0 && (
-                    <Pagination
-                        page={page}
-                        onPageChange={(page) => setPage(page)}
-                        hasNextPage={!!groupPage?.hasNext}
-                        boxProps={{ mt: '12px' }}
-                    />
-                )}
                 {isOpen && (
                     <CreateGroupModal isOpen={isOpen} onClose={onClose} />
                 )}

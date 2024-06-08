@@ -1,4 +1,3 @@
-import { Typography } from '../ui/Typography';
 import { Button, useDisclosure } from '@chakra-ui/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AddUsersModal } from './AddUsersModal';
@@ -12,7 +11,7 @@ import { Request } from '../../types/entities';
 import { useReactQuery } from '../../hooks/useReactQuery';
 import { Icon } from '../atom/Icon';
 import { useAuth } from '../../hooks/useAuth';
-import { useScreen } from '../../hooks/useScreen';
+import { GroupDetailsSection } from '../atom/GroupDetailsSection';
 
 export function GroupUsersSection() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,11 +22,9 @@ export function GroupUsersSection() {
     const { kickGroupUser } = useApi();
     const { queryClient } = useReactQuery();
 
-    const { isTablet } = useScreen();
-
     const { user: loggedUser } = useAuth();
 
-    const {group} = useGroup();
+    const { group } = useGroup();
 
     const { mutate: onKickUser } = useMutation({
         mutationFn: async (username: string) => {
@@ -72,8 +69,7 @@ export function GroupUsersSection() {
     });
 
     return (
-        <section className="w-full flex flex-col gap-4 bg-background-0 py-4 px-6 rounded-[2px]">
-            {isTablet &&<Typography type="subtitle">{'Users'}</Typography>}
+        <GroupDetailsSection title="Users">
             {loggedUser?.username === group?.createdBy?.username && (
                 <Button
                     variant={'outline'}
@@ -83,34 +79,39 @@ export function GroupUsersSection() {
                     {'Add users'}
                 </Button>
             )}
-            {groupRequests?.content.map((request) => (
-                <UserGroupCard
-                    key={request.id}
-                    user={request.user}
-                    onRemove={
-                        loggedUser?.username === group?.createdBy?.username
-                            ? () => onRemoveRequest(request.id)
-                            : undefined
-                    }
-                    isPending
-                />
-            ))}
-
-            {group?.users &&
-                group?.users.map((user) => (
+            <div className="flex flex-col gap-2 overflow-auto bg-background-0">
+                {groupRequests?.content.map((request) => (
                     <UserGroupCard
-                        key={user.username}
-                        user={user}
+                        key={request.id}
+                        user={request.user}
                         onRemove={
-                            group.createdBy?.username !== user.username &&
-                            loggedUser?.username === group.createdBy?.username
-                                ? (username: string) => onKickUser(username)
+                            loggedUser?.username === group?.createdBy?.username
+                                ? () => onRemoveRequest(request.id)
                                 : undefined
                         }
-                        isAdmin={group.createdBy?.username === user.username}
+                        isPending
                     />
                 ))}
+
+                {group?.users &&
+                    group?.users.map((user) => (
+                        <UserGroupCard
+                            key={user.username}
+                            user={user}
+                            onRemove={
+                                group.createdBy?.username !== user.username &&
+                                loggedUser?.username ===
+                                    group.createdBy?.username
+                                    ? (username: string) => onKickUser(username)
+                                    : undefined
+                            }
+                            isAdmin={
+                                group.createdBy?.username === user.username
+                            }
+                        />
+                    ))}
+            </div>
             {isOpen && <AddUsersModal isOpen={isOpen} onClose={onClose} />}
-        </section>
+        </GroupDetailsSection>
     );
 }

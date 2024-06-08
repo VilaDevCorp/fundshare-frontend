@@ -10,10 +10,12 @@ import { Typography } from '../ui/Typography';
 
 export function Layout({
     children,
-    isPublic
+    isPublic,
+    minH
 }: {
     children: React.ReactNode;
     isPublic?: boolean;
+    minH?: string;
 }) {
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -34,8 +36,8 @@ export function Layout({
             <>
                 <TopMenu />
                 <main
-                    className={`w-full grow flex flex-col p-4 md:p-8 gap-8 
-                         overflow-auto`}
+                    className={`w-full flex flex-col px-4 py-2 md:px-8 md:py-4 gap-8 
+                    h-[calc(100vh-96px-104px)] md:h-[calc(100vh-96px)] ${minH}`}
                 >
                     {children}
                 </main>

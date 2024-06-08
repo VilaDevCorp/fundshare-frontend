@@ -27,7 +27,7 @@ export function PaymentCard({
                 <span className='text-lg'>{payment.description}</span>
                 {showGroup && (
                     <Link
-                        onClick={() => navigate(`/group/${payment.group.id}`)}
+                        onClick={() => navigate(`/groups/${payment.group.id}`)}
                     >
                         {payment.group?.name}
                     </Link>
