@@ -16,7 +16,7 @@ export function GroupDebtCard({ debt }: { debt: Debt }) {
             </div>
             <div className="flex gap-4 items-center">
                 <Icon type="doubleChevronRight" />
-                <span className=" font-bold">{debt.amount} €</span>
+                <span className=" font-bold">{debt.amount.toFixed(2)} €</span>
                 <Icon type="doubleChevronRight" />
             </div>
             <div className="flex gap-2 items-center">

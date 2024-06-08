@@ -16,7 +16,7 @@ export function UserDebtCard({
 
     return (
         <article
-            className={`flex gap-3 border-b py-4 px-6 w-full justify-between items-center first:border-t  border-background-200 cursor-pointer hover:bg-background-100 transition-all `}
+            className={`flex gap-3 border-b py-4 px-6 w-full justify-between items-center first:border-t  border-background-200 ${onClick && 'cursor-pointer hover:bg-background-100 transition-all shadow-md'} `}
             onClick={onClick}
         >
             <div className="flex gap-2 items-center">

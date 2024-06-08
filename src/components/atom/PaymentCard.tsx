@@ -1,40 +1,57 @@
 import { Payment } from '../../types/entities';
-import { Icon } from './Icon';
 import moment from 'moment';
 import { conf } from '../../../conf';
+import { Link } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
-export function PaymentCard({ payment }: { payment: Payment }) {
+export function PaymentCard({
+    payment,
+    showGroup
+}: {
+    payment: Payment;
+    showGroup?: boolean;
+}) {
+    const navigate = useNavigate();
+    const { user } = useAuth();
+
     return (
         <article
-            className={`flex flex-col gap-3 border-b py-4 px-6 w-full first:border-t last:!border-b-0 border-background-300 `}
+            className={`flex justify-between gap-3 border-b py-4 px-6 w-full first:border-t last:!border-b-0 border-background-300 `}
         >
-            <span className="text-sm font-bold">
-                {moment(payment.createdAt).format(conf.dateTimeFormat)}
-            </span>
-            <div className="flex justify-between">
-                <span>{payment.description}</span>
-                <span className="font-bold text-lg">
-                    {payment.totalAmount} €
+            <div className="flex flex-col">
+                <span className="text-sm font-bold">
+                    {moment(payment.createdAt).format(conf.dateTimeFormat)}
                 </span>
+
+                <span className='text-lg'>{payment.description}</span>
+                {showGroup && (
+                    <Link
+                        onClick={() => navigate(`/group/${payment.group.id}`)}
+                    >
+                        {payment.group?.name}
+                    </Link>
+                )}
             </div>
-            <div className="flex justify-between items-center w-full">
-                <span className="font-bold w-[20%]">
-                    {payment.createdBy?.username}
-                </span>
-                <Icon type="doubleChevronRight" />
-                <div className="flex flex-col w-[70%] max-w-[250px] ">
-                    {payment.userPayments.map((userPayment) => (
-                        <div
-                            className="flex justify-end gap-4 "
-                            key={userPayment.id}
-                        >
-                            <span>{userPayment.user.username}</span>
-                            <span className="font-bold text-right">
-                                {userPayment.amount} €
-                            </span>
-                        </div>
-                    ))}
+            <div className="flex flex-col w-[70%] max-w-[250px]  ">
+                <div
+                    className={`flex justify-end gap-2 items-center text-error-500 ${user?.username === payment.createdBy?.username ? 'font-bold' : ''} `}
+                >
+                    <span className="">{payment.createdBy?.username}</span>
+                    <span className="">- {payment.totalAmount} €</span>
                 </div>
+
+                {payment.userPayments.map((userPayment) => (
+                    <div
+                        className={`flex justify-end gap-2 items-center text-primary-500 ${user?.username === userPayment.user.username ? 'font-bold' : ''} `}
+                        key={userPayment.id}
+                    >
+                        <span>{userPayment.user.username}</span>
+                        <span className="text-right">
+                            + {userPayment.amount} €
+                        </span>
+                    </div>
+                ))}
             </div>
         </article>
     );

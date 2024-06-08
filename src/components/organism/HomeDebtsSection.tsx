@@ -7,10 +7,13 @@ import { useCrud } from '../../hooks/useCrud';
 import { DebtModal } from './DebtModal';
 import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { useScreen } from '../../hooks/useScreen';
 
 export function HomeDebtsSection() {
     const { search: searchDebts } = useCrud<Debt>('debt');
     const { user: loggedUser } = useAuth();
+
+    const { isTablet } = useScreen();
 
     const [selectedUser, setSelectedUser] = useState<User | undefined>(
         undefined
@@ -22,35 +25,36 @@ export function HomeDebtsSection() {
     });
 
     return (
-        <section className="w-full flex flex-col gap-4 bg-background-0 rounded-[2px]">
-            <Typography px={'24px'} py={'16px'} type="subtitle">
-                {'Your debts'}
-            </Typography>
-            <div className="flex flex-col">
-                {debts?.content.length === 0 ? (
-                    <NoElementsMessage label="No debts yet" />
-                ) : (
-                    debts?.content.map((debt) => (
-                        <UserDebtCard
-                            key={`${debt.payee}-${debt.payer}`}
-                            debt={debt}
-                            onClick={() =>
-                                setSelectedUser(
-                                    debt.payer.username !== loggedUser?.username
-                                        ? debt.payer
-                                        : debt.payee
-                                )
-                            }
-                        />
-                    ))
+        <section className="flex flex-col gap-4 w-full mt-2">
+            {isTablet && <Typography type="title">{'Your debts'}</Typography>}
+            <div className="w-full flex flex-col gap-4 bg-background-0 rounded-[2px]">
+                <div className="flex flex-col gap-2">
+                    {debts?.content.length === 0 ? (
+                        <NoElementsMessage label="No debts yet" />
+                    ) : (
+                        debts?.content.map((debt) => (
+                            <UserDebtCard
+                                key={`${debt.payee}-${debt.payer}`}
+                                debt={debt}
+                                onClick={() =>
+                                    setSelectedUser(
+                                        debt.payer.username !==
+                                            loggedUser?.username
+                                            ? debt.payer
+                                            : debt.payee
+                                    )
+                                }
+                            />
+                        ))
+                    )}
+                </div>
+                {selectedUser !== undefined && (
+                    <DebtModal
+                        user={selectedUser}
+                        onClose={() => setSelectedUser(undefined)}
+                    />
                 )}
             </div>
-            {selectedUser !== undefined && (
-                <DebtModal
-                    user={selectedUser}
-                    onClose={() => setSelectedUser(undefined)}
-                />
-            )}
         </section>
     );
 }
