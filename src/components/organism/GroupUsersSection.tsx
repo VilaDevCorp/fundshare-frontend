@@ -36,6 +36,7 @@ export function GroupUsersSection() {
             showToast('success', 'User kicked!');
             queryClient.invalidateQueries({ queryKey: ['group'] });
             queryClient.invalidateQueries({ queryKey: ['groupRequests'] });
+            queryClient.invalidateQueries({ queryKey: ['groupPayments'] });
         },
         onError: (e) => {
             if (e instanceof Error) {
@@ -79,7 +80,7 @@ export function GroupUsersSection() {
                     {'Add users'}
                 </Button>
             )}
-            <div className="flex flex-col gap-2 overflow-auto bg-background-0">
+            <div className="flex flex-col overflow-auto bg-background-0">
                 {groupRequests?.content.map((request) => (
                     <UserGroupCard
                         key={request.id}

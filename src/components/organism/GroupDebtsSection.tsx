@@ -8,18 +8,18 @@ export function GroupDebtsSection() {
 
     return (
         <GroupDetailsSection title="Group debts">
-            <div className="flex flex-col bg-background-0 overflow-auto">
-                {debts?.content.length === 0 ? (
-                    <NoElementsMessage label="No debts yet" />
-                ) : (
-                    debts?.content.map((debt) => (
+            {debts?.content.length === 0 ? (
+                <NoElementsMessage label="No debts yet" />
+            ) : (
+                <div className="flex flex-col bg-background-0 overflow-auto">
+                    {debts?.content.map((debt) => (
                         <GroupDebtCard
                             key={`${debt.payee}-${debt.payer}`}
                             debt={debt}
                         />
-                    ))
-                )}
-            </div>
+                    ))}
+                </div>
+            )}
         </GroupDetailsSection>
     );
 }

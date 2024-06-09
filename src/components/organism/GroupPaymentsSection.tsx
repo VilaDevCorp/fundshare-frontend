@@ -24,15 +24,15 @@ export function GroupPaymentsSection() {
     return (
         <GroupDetailsSection title="History">
             <div className="flex flex-col gap-4 overflow-hidden">
-                <div className="flex flex-col bg-background-0 overflow-auto">
-                    {groupPaymentsPage?.content.length === 0 ? (
-                        <NoElementsMessage label="No payments yet" />
-                    ) : (
-                        groupPaymentsPage?.content.map((payment) => (
+                {groupPaymentsPage?.content.length === 0 ? (
+                    <NoElementsMessage label="No payments yet" />
+                ) : (
+                    <div className="flex flex-col bg-background-0 overflow-auto">
+                        {groupPaymentsPage?.content.map((payment) => (
                             <PaymentCard key={payment.id} payment={payment} />
-                        ))
-                    )}
-                </div>
+                        ))}
+                    </div>
+                )}
                 {groupPaymentsPage?.content.length !== 0 && (
                     <Pagination
                         page={page}

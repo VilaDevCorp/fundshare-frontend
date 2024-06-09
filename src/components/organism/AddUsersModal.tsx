@@ -20,7 +20,7 @@ import { useReactQuery } from '../../hooks/useReactQuery';
 import { GroupContext } from '../../providers/GroupProvider';
 import { Icon } from '../atom/Icon';
 import { UserGroupCard } from '../atom/UserGroupCard';
-import { ApiError } from '../../types/types';
+import { ApiError, ErrorCode } from '../../types/types';
 import StatusCode from 'status-code-enum';
 import { Typography } from '../ui/Typography';
 import { NoElementsMessage } from '../atom/NoElementsMessage';
@@ -39,7 +39,7 @@ export function AddUsersModal({
     const { create: createReq } = useCrud<Request[]>('request');
     const { get: getUser, search: searchRelatedUsers } = useCrud<User>('user');
     const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
-    const {group} = useContext(GroupContext);
+    const { group } = useContext(GroupContext);
 
     const [username, setUsername] = useState('');
 
@@ -80,6 +80,13 @@ export function AddUsersModal({
             if (e instanceof ApiError) {
                 if (e.statusCode === StatusCode.ClientErrorNotFound) {
                     showToast('error', 'User not found');
+                    return;
+                }
+                if (
+                    e.statusCode === StatusCode.ClientErrorForbidden &&
+                    e.code === ErrorCode.NOT_VALIDATED_ACCOUNT
+                ) {
+                    showToast('error', 'User account not validated');
                     return;
                 }
             }
@@ -134,26 +141,29 @@ export function AddUsersModal({
                             <Typography type={'subtitle'}>
                                 {'Selected users'}
                             </Typography>
-                            {selectedUsers.length > 0 ? (
-                                selectedUsers.map((user) => (
-                                    <UserGroupCard
-                                        key={user.id}
-                                        user={user}
-                                        onRemove={(username: string) => {
-                                            setSelectedUsers(
-                                                selectedUsers.filter(
-                                                    (u) =>
-                                                        u.username !== username
-                                                )
-                                            );
-                                        }}
+                            <div className="">
+                                {selectedUsers.length > 0 ? (
+                                    selectedUsers.map((user) => (
+                                        <UserGroupCard
+                                            key={user.id}
+                                            user={user}
+                                            onRemove={(username: string) => {
+                                                setSelectedUsers(
+                                                    selectedUsers.filter(
+                                                        (u) =>
+                                                            u.username !==
+                                                            username
+                                                    )
+                                                );
+                                            }}
+                                        />
+                                    ))
+                                ) : (
+                                    <NoElementsMessage
+                                        label={'No users selected'}
                                     />
-                                ))
-                            ) : (
-                                <NoElementsMessage
-                                    label={'No users selected'}
-                                />
-                            )}
+                                )}
+                            </div>
                             <Typography type={'subtitle'}>
                                 {'Add by username'}
                             </Typography>
@@ -174,6 +184,7 @@ export function AddUsersModal({
                                 <IconButton
                                     type="submit"
                                     size={'square'}
+                                    isDisabled={username.length <= 0}
                                     aria-label="Add user"
                                     icon={<Icon type="add" />}
                                 />
@@ -181,20 +192,24 @@ export function AddUsersModal({
                             <Typography type={'subtitle'}>
                                 {'Known users'}
                             </Typography>
-                            {filteredRelatedUsers &&
-                            filteredRelatedUsers.length > 0 ? (
-                                filteredRelatedUsers.map((filteredUser) => (
-                                    <UserGroupCard
-                                        key={filteredUser.id}
-                                        user={filteredUser}
-                                        onAdd={(username: string) =>
-                                            onAddUserByUsername(username)
-                                        }
+                            <div>
+                                {filteredRelatedUsers &&
+                                filteredRelatedUsers.length > 0 ? (
+                                    filteredRelatedUsers.map((filteredUser) => (
+                                        <UserGroupCard
+                                            key={filteredUser.id}
+                                            user={filteredUser}
+                                            onAdd={(username: string) =>
+                                                onAddUserByUsername(username)
+                                            }
+                                        />
+                                    ))
+                                ) : (
+                                    <NoElementsMessage
+                                        label={'No users found'}
                                     />
-                                ))
-                            ) : (
-                                <NoElementsMessage label={'No users found'} />
-                            )}
+                                )}
+                            </div>
                         </ModalBody>
                     </div>
 

@@ -7,6 +7,9 @@ export const ButtonTheme = defineStyleConfig({
         borderWidth: '2px !important',
         _disabled: {
             cursor: 'default'
+        },
+        _focus: {
+            boxShadow: 'none'
         }
     },
     sizes: {
@@ -17,7 +20,6 @@ export const ButtonTheme = defineStyleConfig({
             svg: {
                 fontSize: '1.2em'
             },
-            maxWidth: '300px',
             height: 'auto !important'
         },
         square: {

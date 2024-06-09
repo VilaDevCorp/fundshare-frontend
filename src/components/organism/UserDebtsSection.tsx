@@ -18,18 +18,18 @@ export function UserDebtsSection() {
 
     return (
         <GroupDetailsSection title="Your debts">
-            <div className="flex flex-col bg-background-0 overflow-auto">
-                {ownDebts?.length === 0 ? (
-                    <NoElementsMessage label="No debts yet" />
-                ) : (
-                    ownDebts?.map((debt) => (
+            {ownDebts?.length === 0 ? (
+                <NoElementsMessage label="No debts yet" />
+            ) : (
+                <div className="flex flex-col bg-background-0 overflow-auto">
+                    {ownDebts?.map((debt) => (
                         <UserDebtCard
                             key={`${debt.payee}-${debt.payer}`}
                             debt={debt}
                         />
-                    ))
-                )}
-            </div>
+                    ))}
+                </div>
+            )}
         </GroupDetailsSection>
     );
 }

@@ -27,8 +27,8 @@ export function HomeDebtsSection() {
     return (
         <section className="flex flex-col gap-4 w-full h-full overflow-hidden">
             {isTablet && <Typography type="title">{'Your debts'}</Typography>}
-            <div className="w-full flex flex-col gap-4 bg-background-0 rounded-[2px] overflow-hidden">
-                <div className="flex flex-col gap-2 overflow-auto">
+            <div className="w-full flex flex-col gap-4 rounded-[2px] overflow-hidden">
+                <div className="flex flex-col gap-2 overflow-auto pr-2">
                     {debts?.content.length === 0 ? (
                         <NoElementsMessage label="No debts yet" />
                     ) : (

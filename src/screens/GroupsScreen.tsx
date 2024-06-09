@@ -47,7 +47,7 @@ export function GroupsScreen() {
                     </>
                 )}
                 <div className="w-full flex flex-col overflow-hidden gap-4">
-                    <div className="flex flex-col gap-4 items-center overflow-auto">
+                    <div className="flex flex-col gap-4 items-center overflow-auto pr-2">
                         {groupPage?.content.length === 0 ? (
                             <NoElementsMessage label="No groups found" />
                         ) : (
