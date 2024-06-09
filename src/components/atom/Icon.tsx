@@ -7,7 +7,7 @@ import { CgUserAdd, CgUserRemove } from 'react-icons/cg';
 import { CiSettings } from 'react-icons/ci';
 import { FaRegQuestionCircle, FaUser } from 'react-icons/fa';
 import { FaAnglesRight } from 'react-icons/fa6';
-import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import { IoArrowForwardCircle, IoChevronBack, IoChevronForward } from 'react-icons/io5';
 import { MdLogout } from 'react-icons/md';
 import { TiTick, TiTimes } from 'react-icons/ti';
 
@@ -28,7 +28,8 @@ type IconType =
     | 'addUser'
     | 'deleteUser'
     | 'info'
-    | 'doubleChevronRight';
+    | 'doubleChevronRight'
+    | 'arrowRight';
 
 interface IconProps extends ChakraIconProps {
     type: IconType;
@@ -70,6 +71,8 @@ const getIcon = (type: IconType) => {
             return FaRegQuestionCircle;
         case 'doubleChevronRight':
             return FaAnglesRight;
+        case 'arrowRight':
+            return IoArrowForwardCircle;
     }
 };
 
