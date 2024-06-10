@@ -226,9 +226,11 @@ export function AddUsersModal({
                         bottom={0}
                         px={'12px'}
                     >
-                        <Button onClick={onClose} variant={'outline'}>
-                            {'Cancel'}
-                        </Button>
+                        {isTablet && (
+                            <Button onClick={onClose} variant="outline">
+                                Cancel
+                            </Button>
+                        )}
                         <Button
                             onClick={() => onCreateRequest()}
                             isDisabled={isDisabled}

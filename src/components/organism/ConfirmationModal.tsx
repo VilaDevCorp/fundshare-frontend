@@ -34,15 +34,21 @@ export function ConfirmationModal({
                     <ModalBody pb={'12px'} px={'24px'}>
                         {message}
                     </ModalBody>
-                    <ModalFooter px={'12px'} display={'flex'} gap={'12px'}>
+                    <ModalFooter
+                        px={'12px'}
+                        display={'flex'}
+                        flexDir={{ base: 'column', md: 'row' }}
+                        gap={'12px'}
+                    >
                         <Button
+                            width={{ base: '100%', md: 'auto' }}
                             onClick={onClose}
-                            colorScheme={'gray'}
                             variant={'solid'}
                         >
                             {'Cancel'}
                         </Button>
                         <Button
+                            width={{ base: '100%', md: 'auto' }}
                             onClick={() => {
                                 onConfirm();
                                 onClose();

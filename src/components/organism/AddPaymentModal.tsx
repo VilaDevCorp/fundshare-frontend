@@ -36,6 +36,7 @@ import {
     getCurrencySymbol
 } from '../../utils/utilFunctions';
 import { useAuth } from '../../hooks/useAuth';
+import { useScreen } from '../../hooks/useScreen';
 
 export interface PaymentInfo {
     totalAmount: string;
@@ -81,6 +82,8 @@ export function AddPaymentModal({
     const { setError } = useError();
 
     const { group } = useGroup();
+
+    const { isTablet } = useScreen();
 
     const { user: loggedUser } = useAuth();
 
@@ -239,9 +242,11 @@ export function AddPaymentModal({
             }
             buttons={
                 <>
-                    <Button onClick={onClose} variant="outline">
-                        Cancel
-                    </Button>
+                    {isTablet && (
+                        <Button onClick={onClose} variant="outline">
+                            Cancel
+                        </Button>
+                    )}
                     <Button
                         isLoading={isLoading}
                         isDisabled={isDisabled}
