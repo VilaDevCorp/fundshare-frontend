@@ -3,9 +3,11 @@ import { GroupDebt } from '../../types/entities';
 import { Balance } from './Balance';
 import { IconButton } from '@chakra-ui/react';
 import { Icon } from './Icon';
+import { useReactQuery } from '../../hooks/useReactQuery';
 
 export function UserGroupDebtCard({ groupDebt }: { groupDebt: GroupDebt }) {
     const navigate = useNavigate();
+    const { queryClient } = useReactQuery();
 
     return (
         <article
@@ -18,8 +20,16 @@ export function UserGroupDebtCard({ groupDebt }: { groupDebt: GroupDebt }) {
                 <IconButton
                     variant={'ghost'}
                     aria-label={'Go to group' + groupDebt.group.name}
-                    icon={<Icon fontSize={'28px !important'}  type="arrowRight" />}
-                    onClick={() => navigate(`/groups/${groupDebt.group.id}`)}
+                    icon={
+                        <Icon fontSize={'28px !important'} type="arrowRight" />
+                    }
+                    onClick={() => {
+                        navigate(`/groups/${groupDebt.group.id}`);
+                        //We update the user info because they could have appear new operations in the group and the balance could be outdated
+                        queryClient.invalidateQueries({
+                            queryKey: ['getUserInfo']
+                        });
+                    }}
                 />
             </div>
             <Balance balance={groupDebt.amount} />

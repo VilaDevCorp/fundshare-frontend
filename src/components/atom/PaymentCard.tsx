@@ -4,6 +4,7 @@ import { conf } from '../../../conf';
 import { Link } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { useReactQuery } from '../../hooks/useReactQuery';
 
 export function PaymentCard({
     payment,
@@ -14,6 +15,7 @@ export function PaymentCard({
 }) {
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { queryClient } = useReactQuery();
 
     return (
         <article
@@ -24,10 +26,16 @@ export function PaymentCard({
                     {moment(payment.createdAt).format(conf.dateTimeFormat)}
                 </span>
 
-                <span className='text-lg'>{payment.description}</span>
+                <span className="text-lg">{payment.description}</span>
                 {showGroup && (
                     <Link
-                        onClick={() => navigate(`/groups/${payment.group.id}`)}
+                        onClick={() => {
+                            navigate(`/groups/${payment.group.id}`);
+                            //We update the user info because they could have appear new operations in the group and the balance could be outdated
+                            queryClient.invalidateQueries({
+                                queryKey: ['getUserInfo']
+                            });
+                        }}
                     >
                         {payment.group?.name}
                     </Link>
@@ -38,20 +46,23 @@ export function PaymentCard({
                     className={`flex justify-end gap-2 items-center text-error-500 ${user?.username === payment.createdBy?.username ? 'font-bold' : ''} `}
                 >
                     <span className="">{payment.createdBy?.username}</span>
-                    <span className="">- {payment.totalAmount.toFixed(2)} €</span>
+                    <span className="">
+                        - {payment.totalAmount.toFixed(2)} €
+                    </span>
                 </div>
 
-                {payment.userPayments && payment.userPayments.map((userPayment) => (
-                    <div
-                        className={`flex justify-end gap-2 items-center text-primary-500 ${user?.username === userPayment.user.username ? 'font-bold' : ''} `}
-                        key={userPayment.id}
-                    >
-                        <span>{userPayment.user.username}</span>
-                        <span className="text-right">
-                            + {userPayment.amount.toFixed(2)} €
-                        </span>
-                    </div>
-                ))}
+                {payment.userPayments &&
+                    payment.userPayments.map((userPayment) => (
+                        <div
+                            className={`flex justify-end gap-2 items-center text-primary-500 ${user?.username === userPayment.user.username ? 'font-bold' : ''} `}
+                            key={userPayment.id}
+                        >
+                            <span>{userPayment.user.username}</span>
+                            <span className="text-right">
+                                + {userPayment.amount.toFixed(2)} €
+                            </span>
+                        </div>
+                    ))}
             </div>
         </article>
     );

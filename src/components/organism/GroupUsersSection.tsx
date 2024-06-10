@@ -23,7 +23,6 @@ export function GroupUsersSection() {
     const { queryClient } = useReactQuery();
 
     const { user: loggedUser } = useAuth();
-
     const { group } = useGroup();
 
     const { mutate: onKickUser } = useMutation({
@@ -37,6 +36,7 @@ export function GroupUsersSection() {
             queryClient.invalidateQueries({ queryKey: ['group'] });
             queryClient.invalidateQueries({ queryKey: ['groupRequests'] });
             queryClient.invalidateQueries({ queryKey: ['groupPayments'] });
+            queryClient.invalidateQueries({ queryKey: ['getUserInfo'] });
         },
         onError: (e) => {
             if (e instanceof Error) {

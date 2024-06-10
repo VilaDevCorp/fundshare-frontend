@@ -106,6 +106,7 @@ export function AddPaymentModal({
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['groupPayments'] });
             queryClient.invalidateQueries({ queryKey: ['groupDebts'] });
+            queryClient.invalidateQueries({ queryKey: ['getUserInfo'] });
             showToast('success', 'Payment created!');
             onClose();
         },

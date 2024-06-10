@@ -50,7 +50,7 @@ export function TopMenu() {
                             whiteSpace={'nowrap'}
                             maxWidth={'100%'}
                         >
-                            -10333.15 €
+                            {user?.balance?.toFixed(2)} €
                         </Text>
                     </VStack>
                 </HStack>
