@@ -12,9 +12,21 @@ import { useReactQuery } from '../../hooks/useReactQuery';
 import { Icon } from '../atom/Icon';
 import { useAuth } from '../../hooks/useAuth';
 import { GroupDetailsSection } from '../atom/GroupDetailsSection';
+import { ConfirmationModal } from './ConfirmationModal';
+import { useState } from 'react';
 
 export function GroupUsersSection() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const {
+        isOpen: isOpenAddUsers,
+        onOpen: onOpenAddUsers,
+        onClose: onCloseAddUsers
+    } = useDisclosure();
+
+    const {
+        isOpen: isOpenConfirm,
+        onOpen: onOpenConfirm,
+        onClose: onCloseConfirm
+    } = useDisclosure();
 
     const { setError } = useError();
     const { showToast } = useToast();
@@ -24,6 +36,8 @@ export function GroupUsersSection() {
 
     const { user: loggedUser } = useAuth();
     const { group } = useGroup();
+
+    const [userToKick, setUserToKick] = useState<string | undefined>(undefined);
 
     const { mutate: onKickUser } = useMutation({
         mutationFn: async (username: string) => {
@@ -75,7 +89,7 @@ export function GroupUsersSection() {
                 <Button
                     variant={'outline'}
                     leftIcon={<Icon type="addUser" />}
-                    onClick={() => onOpen()}
+                    onClick={() => onOpenAddUsers()}
                 >
                     {'Add users'}
                 </Button>
@@ -103,7 +117,10 @@ export function GroupUsersSection() {
                                 group.createdBy?.username !== user.username &&
                                 loggedUser?.username ===
                                     group.createdBy?.username
-                                    ? (username: string) => onKickUser(username)
+                                    ? () => {
+                                          setUserToKick(user.username);
+                                          onOpenConfirm();
+                                      }
                                     : undefined
                             }
                             isAdmin={
@@ -112,7 +129,25 @@ export function GroupUsersSection() {
                         />
                     ))}
             </div>
-            {isOpen && <AddUsersModal isOpen={isOpen} onClose={onClose} />}
+            {isOpenAddUsers && (
+                <AddUsersModal
+                    isOpen={isOpenAddUsers}
+                    onClose={onCloseAddUsers}
+                />
+            )}
+            {isOpenConfirm && (
+                <ConfirmationModal
+                    isOpen={isOpenConfirm}
+                    title="Kick user"
+                    message="Are you sure you want to kick this user? 
+                    (they will be removed from the payments and the debts will be recalculated.)"
+                    onConfirm={() => {
+                        userToKick && onKickUser(userToKick);
+                        setUserToKick(undefined);
+                    }}
+                    onClose={onCloseConfirm}
+                />
+            )}
         </GroupDetailsSection>
     );
 }
