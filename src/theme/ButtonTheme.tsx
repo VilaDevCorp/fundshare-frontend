@@ -103,10 +103,12 @@ export const ButtonTheme = defineStyleConfig({
         ghost_error: {
             bg: 'transparent',
             borderColor: 'transparent',
-            _hover: {
-                bg: 'transparent',
-                color: 'error.300',
-                backdropFilter: 'brightness(0.95)'
+            _enabled: {
+                _hover: {
+                    bg: 'transparent',
+                    color: 'error.300',
+                    backdropFilter: 'brightness(0.95)'
+                }
             },
             _active: {
                 bg: 'transparent',

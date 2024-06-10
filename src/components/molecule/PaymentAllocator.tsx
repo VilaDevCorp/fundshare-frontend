@@ -32,7 +32,7 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
         userAmounts
     } = props;
 
-    const {group} = useGroup();
+    const { group } = useGroup();
     const { user: loggedUser } = useAuth();
 
     const unassignedUsers = group?.users?.filter(
@@ -136,7 +136,8 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                 ) : (
                     <span className="text-error-500">{'Underallocated:'}</span>
                 )}
-                {`${Math.abs(Number(totalAmount) - totalAssignedAmount).toFixed(2)} € 
+                {type === 'total' &&
+                    `${Math.abs(Number(totalAmount) - totalAssignedAmount).toFixed(2)} € 
                         (${
                             isNaN(
                                 (Math.abs(
