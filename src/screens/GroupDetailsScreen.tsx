@@ -7,25 +7,46 @@ import {
     TabPanel,
     TabPanels,
     Tabs,
+    Tooltip,
     useDisclosure
 } from '@chakra-ui/react';
 import { Icon } from '../components/atom/Icon';
 import { useScreen } from '../hooks/useScreen';
 import { useCrud } from '../hooks/useCrud';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Debt, Group } from '../types/entities';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GroupUsersSection } from '../components/organism/GroupUsersSection';
 import { GroupProvider } from '../providers/GroupProvider';
 import { AddPaymentModal } from '../components/organism/AddPaymentModal';
 import { GroupPaymentsSection } from '../components/organism/GroupPaymentsSection';
 import { GroupDebtsSection } from '../components/organism/GroupDebtsSection';
 import { UserDebtsSection } from '../components/organism/UserDebtsSection';
+import { ConfirmationModal } from '../components/organism/ConfirmationModal';
+import { useToast } from '../hooks/useToast';
+import { useAuth } from '../hooks/useAuth';
+import { useApi } from '../hooks/useApi';
+import { useError } from '../hooks/useError';
+import { ApiError, ErrorCode } from '../types/types';
 
 export function GroupDetailsScreen() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const {
+        isOpen: isOpenPayment,
+        onOpen: onOpenPayment,
+        onClose: onClosePayment
+    } = useDisclosure();
+
+    const {
+        isOpen: isOpenConfirm,
+        onOpen: onOpenConfirm,
+        onClose: onCloseConfirm
+    } = useDisclosure();
 
     const { isTablet } = useScreen();
+    const navigate = useNavigate();
+    const { user: loggedUser } = useAuth();
+    const { showToast } = useToast();
+    const { kickGroupUser } = useApi();
 
     const { id } = useParams();
 
@@ -37,6 +58,8 @@ export function GroupDetailsScreen() {
         queryFn: () => get(id as string)
     });
 
+    const { setError } = useError();
+
     const { search: searchDebts } = useCrud<Debt>('debt');
 
     const { data: debts } = useQuery({
@@ -45,25 +68,71 @@ export function GroupDetailsScreen() {
         queryFn: () => searchDebts(0, null, { groupId: group!.id })
     });
 
+    const { mutate: onLeaveGroup } = useMutation({
+        mutationFn: async () => {
+            if (group && loggedUser) {
+                await kickGroupUser(group.id, loggedUser.username);
+            }
+        },
+        onSuccess: () => {
+            showToast('success', `You have left the group ${group?.name}`);
+            navigate('/groups');
+        },
+        onError: (e) => {
+            if (e instanceof Error) {
+                if (e instanceof ApiError) {
+                    if (e.code === ErrorCode.NON_ZERO_BALANCE)
+                        showToast(
+                            'error',
+                            'You cant leave the group with a non zero balance'
+                        );
+                }
+            } else {
+                setError(e);
+            }
+        }
+    });
+
     return (
-        <Layout minH='min-h-[750px]'>
+        <Layout minH="min-h-[750px]">
             <GroupProvider value={{ group, debts }}>
                 <div className="max-w-[1200px] w-full flex flex-col ml-auto mr-auto h-full overflow-hidden">
                     {group ? (
                         <>
                             {isTablet ? (
-                                <div className='h-[80px]'>
+                                <div className="h-[80px]">
                                     <div className="flex justify-between mb-4">
                                         <Typography type="title">
                                             {group?.name}
                                         </Typography>
-
-                                        <Button
-                                            leftIcon={<Icon type="money" />}
-                                            onClick={onOpen}
-                                        >
-                                            {'Add payment'}
-                                        </Button>
+                                        <div className="flex gap-4">
+                                            <Tooltip
+                                                label={
+                                                    group.createdBy
+                                                        ?.username ===
+                                                        loggedUser?.username &&
+                                                    "You can't leave a group that you created"
+                                                }
+                                            >
+                                                <Button
+                                                    isDisabled={
+                                                        group.createdBy
+                                                            ?.username ===
+                                                        loggedUser?.username
+                                                    }
+                                                    variant={'ghost_error'}
+                                                    onClick={onOpenConfirm}
+                                                >
+                                                    {'Leave group'}
+                                                </Button>
+                                            </Tooltip>
+                                            <Button
+                                                leftIcon={<Icon type="money" />}
+                                                onClick={onOpenPayment}
+                                            >
+                                                {'Add payment'}
+                                            </Button>
+                                        </div>
                                     </div>
                                     <Typography type="body">
                                         {group?.description}
@@ -79,10 +148,17 @@ export function GroupDetailsScreen() {
                                     </Typography>
                                     <Button
                                         leftIcon={<Icon type="money" />}
-                                        onClick={onOpen}
+                                        onClick={onOpenPayment}
                                     >
                                         {'Add payment'}
                                     </Button>
+                                    <Button
+                                        variant={'ghost_error'}
+                                        onClick={onOpenConfirm}
+                                    >
+                                        {'Leave group'}
+                                    </Button>
+
                                     <UserDebtsSection />
                                 </div>
                             )}
@@ -123,8 +199,20 @@ export function GroupDetailsScreen() {
                         <Typography type="title">{'Loading...'}</Typography>
                     )}
 
-                    {isOpen && (
-                        <AddPaymentModal isOpen={isOpen} onClose={onClose} />
+                    {isOpenPayment && (
+                        <AddPaymentModal
+                            isOpen={isOpenPayment}
+                            onClose={onClosePayment}
+                        />
+                    )}
+                    {isOpenConfirm && (
+                        <ConfirmationModal
+                            isOpen={isOpenConfirm}
+                            title="Leave group"
+                            message="Are you sure you want to leave the group?"
+                            onConfirm={() => onLeaveGroup()}
+                            onClose={onCloseConfirm}
+                        />
                     )}
                 </div>
             </GroupProvider>
