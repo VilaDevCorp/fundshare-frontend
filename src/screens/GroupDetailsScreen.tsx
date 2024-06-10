@@ -28,6 +28,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useApi } from '../hooks/useApi';
 import { useError } from '../hooks/useError';
 import { ApiError, ErrorCode } from '../types/types';
+import { LoadingIndicator } from '../components/atom/LoadingIndicator';
 
 export function GroupDetailsScreen() {
     const {
@@ -52,7 +53,7 @@ export function GroupDetailsScreen() {
 
     const { get } = useCrud<Group>('group');
 
-    const { data: group } = useQuery<Group>({
+    const { data: group, isLoading: isLoadingGroup } = useQuery<Group>({
         queryKey: ['group', id],
         enabled: !!id,
         queryFn: () => get(id as string)
@@ -62,7 +63,7 @@ export function GroupDetailsScreen() {
 
     const { search: searchDebts } = useCrud<Debt>('debt');
 
-    const { data: debts } = useQuery({
+    const { data: debts, isLoading: isLoadingDebts } = useQuery({
         queryKey: ['groupDebts'],
         enabled: !!group?.id,
         queryFn: () => searchDebts(0, null, { groupId: group!.id })
@@ -95,7 +96,9 @@ export function GroupDetailsScreen() {
 
     return (
         <Layout minH="min-h-[750px]">
-            <GroupProvider value={{ group, debts }}>
+            <GroupProvider
+                value={{ group, debts, isLoadingGroup, isLoadingDebts }}
+            >
                 <div className="max-w-[1200px] w-full flex flex-col ml-auto mr-auto h-full overflow-hidden">
                     {group ? (
                         <>
@@ -153,6 +156,10 @@ export function GroupDetailsScreen() {
                                         {'Add payment'}
                                     </Button>
                                     <Button
+                                        isDisabled={
+                                            group.createdBy?.username ===
+                                            loggedUser?.username
+                                        }
                                         variant={'ghost_error'}
                                         onClick={onOpenConfirm}
                                     >
@@ -196,7 +203,9 @@ export function GroupDetailsScreen() {
                             )}{' '}
                         </>
                     ) : (
-                        <Typography type="title">{'Loading...'}</Typography>
+                        <article className="flex flex-col  items-center justify-center h-[300px]">
+                            <LoadingIndicator />
+                        </article>
                     )}
 
                     {isOpenPayment && (

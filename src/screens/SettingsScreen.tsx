@@ -14,7 +14,7 @@ export function SettingsScreen() {
     const { user: loggedUser } = useAuth();
     const { showToast } = useToast();
     const { setError } = useError();
-    const {queryClient} = useReactQuery()
+    const { queryClient } = useReactQuery();
 
     const [currency, setCurrency] = useState(
         loggedUser?.conf?.currency || 'euro'
@@ -41,14 +41,15 @@ export function SettingsScreen() {
 
     return (
         <Layout>
-            <div className="flex w-full flex-col gap-4 max-w-[500px] ml-auto mr-auto">
+            <div className="flex w-full flex-col gap-8 max-w-[500px] ml-auto mr-auto">
                 <FormField
                     label="Currency"
                     input={
                         <RadioGroup
                             display={'flex'}
-                            flexDirection={'column'}
-                            gap={'16px'}
+                            flexWrap={'wrap'}
+                            flexDir={{ base: 'column', md: 'row' }}
+                            gap={{ base: '24px', md: '32px' }}
                             value={currency}
                             onChange={(value) => setCurrency(value)}
                         >

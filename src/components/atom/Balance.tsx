@@ -10,7 +10,7 @@ export function Balance({
 }) {
     return (
         <span
-            className={`text-2xl text-nowrap font-bold ${balance === undefined || balance >= 0 ? 'text-primary-500' : 'text-error-500'} ${className}`}
+            className={`text-xl text-nowrap font-bold ${balance === undefined || balance >= 0 ? 'text-primary-500' : 'text-error-500'} ${className}`}
         >
             {`${balance != 0 && balance != undefined ? (balance > 0 ? '+' : '-') : ''} `}
             <Currency

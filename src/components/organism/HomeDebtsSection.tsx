@@ -8,6 +8,7 @@ import { DebtModal } from './DebtModal';
 import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useScreen } from '../../hooks/useScreen';
+import { LoadingIndicator } from '../atom/LoadingIndicator';
 
 export function HomeDebtsSection() {
     const { search: searchDebts } = useCrud<Debt>('debt');
@@ -19,7 +20,7 @@ export function HomeDebtsSection() {
         undefined
     );
 
-    const { data: debts } = useQuery({
+    const { data: debts, isLoading } = useQuery({
         queryKey: ['userDebts'],
         queryFn: () => searchDebts(0, null, { ownDebts: true })
     });
@@ -28,8 +29,10 @@ export function HomeDebtsSection() {
         <section className="flex flex-col gap-4 w-full h-full overflow-hidden">
             {isTablet && <Typography type="title">{'Your debts'}</Typography>}
             <div className="w-full flex flex-col gap-4 rounded-[2px] overflow-hidden">
-                <div className="flex flex-col gap-2 overflow-auto pr-2">
-                    {debts?.content.length === 0 ? (
+                <div className="flex flex-col gap-2 overflow-auto pr-2 min-h-[300px]">
+                    {isLoading ? (
+                        <LoadingIndicator />
+                    ) : debts?.content.length === 0 ? (
                         <NoElementsMessage label="No debts yet" />
                     ) : (
                         debts?.content.map((debt) => (

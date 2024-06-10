@@ -106,14 +106,15 @@ export const ButtonTheme = defineStyleConfig({
                     bg: 'transparent',
                     color: 'error.300',
                     backdropFilter: 'brightness(0.95)'
+                },
+                _active: {
+                    bg: 'transparent',
+                    color: 'error.300',
+
+                    backdropFilter: 'brightness(0.90)'
                 }
             },
-            _active: {
-                bg: 'transparent',
-                color: 'error.300',
 
-                backdropFilter: 'brightness(0.90)'
-            },
             _disabled: {
                 color: 'error.100'
             },

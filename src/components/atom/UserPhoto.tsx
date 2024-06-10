@@ -7,8 +7,8 @@ export function UserPhoto() {
         <Box
             borderRadius={'50%'}
             bg={'background.800'}
-            height={'50px'}
-            width={'50px'}
+            height={'40px'}
+            width={'40px'}
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}

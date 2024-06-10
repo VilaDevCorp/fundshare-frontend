@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useScreen } from '../../hooks/useScreen';
 import { PaymentCard } from '../atom/PaymentCard';
 import { Pagination } from '../ui/Pagination';
+import { LoadingIndicator } from '../atom/LoadingIndicator';
 
 export function HomePaymentsSection() {
     const { isTablet } = useScreen();
@@ -15,7 +16,7 @@ export function HomePaymentsSection() {
 
     const [page, setPage] = useState(0);
 
-    const { data: userPaymentsPage } = useQuery({
+    const { data: userPaymentsPage, isLoading } = useQuery({
         queryKey: ['groupPayments', page],
         queryFn: () => searchPaym(page, 10, { userRelated: true })
     });
@@ -27,8 +28,10 @@ export function HomePaymentsSection() {
             )}
 
             <div className="w-full flex flex-col rounded-[2px] overflow-hidden gap-4">
-                <div className="flex flex-col overflow-auto bg-background-0">
-                    {userPaymentsPage?.content.length === 0 ? (
+                <div className="flex flex-col overflow-auto  min-h-[300px]">
+                    {isLoading ? (
+                        <LoadingIndicator />
+                    ) : userPaymentsPage?.content.length === 0 ? (
                         <NoElementsMessage label="No payments yet" />
                     ) : (
                         userPaymentsPage?.content.map((payment) => (

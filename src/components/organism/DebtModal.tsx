@@ -12,6 +12,7 @@ import { UserPhoto } from '../atom/UserPhoto';
 import { User } from '../../types/entities';
 import { Balance } from '../atom/Balance';
 import { UserGroupDebtCard } from '../atom/UserGroupDebtCard';
+import { LoadingIndicator } from '../atom/LoadingIndicator';
 
 export function DebtModal({
     user,
@@ -22,7 +23,7 @@ export function DebtModal({
 }) {
     const { getDebtWithUser } = useApi();
 
-    const { data: userGroupDebts } = useQuery({
+    const { data: userGroupDebts, isLoading } = useQuery({
         queryKey: ['userGroupDebts'],
         enabled: !!user,
         queryFn: async () => {
@@ -53,34 +54,47 @@ export function DebtModal({
                             pb={'12px'}
                             px={'24px'}
                         >
-                            <div className="flex flex-col gap-1 ml-auto mr-auto justify-center items-center">
-                                <UserPhoto />
-                                <span className="font-bold text-lg">
-                                    {user.username}
-                                </span>
-                            </div>
-                            <div className="flex flex-col gap-6">
-                                <div className="w-full flex justify-between">
-                                    <span className="font-bold text-xl">
-                                        {'Total'}
-                                    </span>
-                                    <Balance
-                                        balance={
-                                            totalAmount !== undefined
-                                                ? totalAmount
-                                                : 0
-                                        }
-                                    />
-                                </div>
-                                <div className="w-full flex flex-col gap-2">
-                                    {userGroupDebts?.map((userGroupDebt) => (
-                                        <UserGroupDebtCard
-                                            key={userGroupDebt.group.id}
-                                            groupDebt={userGroupDebt}
-                                        />
-                                    ))}
-                                </div>
-                            </div>
+                            {isLoading ? (
+                                <LoadingIndicator />
+                            ) : (
+                                <>
+                                    <div className="flex flex-col gap-1 ml-auto mr-auto justify-center items-center">
+                                        <UserPhoto />
+                                        <span className="font-bold text-lg">
+                                            {user.username}
+                                        </span>
+                                    </div>
+                                    <div className="flex flex-col gap-6">
+                                        <div className="w-full flex justify-between">
+                                            <span className="font-bold text-xl">
+                                                {'Total'}
+                                            </span>
+                                            <Balance
+                                                balance={
+                                                    totalAmount !== undefined
+                                                        ? totalAmount
+                                                        : 0
+                                                }
+                                            />
+                                        </div>
+                                        <div className="w-full flex flex-col gap-2">
+                                            {userGroupDebts?.map(
+                                                (userGroupDebt) => (
+                                                    <UserGroupDebtCard
+                                                        key={
+                                                            userGroupDebt.group
+                                                                .id
+                                                        }
+                                                        groupDebt={
+                                                            userGroupDebt
+                                                        }
+                                                    />
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
                         </ModalBody>
                     </div>
                 </ModalContent>

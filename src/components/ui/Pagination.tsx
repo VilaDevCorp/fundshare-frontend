@@ -14,6 +14,9 @@ export function Pagination(props: PaginationProps) {
         <Box
             display={'flex'}
             gap={4}
+            maxW={'400px'}
+            marginLeft={'auto'}
+            marginRight={'auto'}
             alignItems={'center'}
             width={'100%'}
             justifyContent={'space-evenly'}
@@ -27,7 +30,7 @@ export function Pagination(props: PaginationProps) {
                 icon={<Icon type={'chevron-left'} />}
                 isDisabled={props.page <= 0}
             />
-            <Text fontSize={'md'}>{props.page + 1}</Text>
+            <Text fontSize={'lg'}>{props.page + 1}</Text>
             <IconButton
                 variant={'ghost'}
                 size={'square'}

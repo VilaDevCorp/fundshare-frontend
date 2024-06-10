@@ -4,7 +4,9 @@ import { Page } from '../types/types';
 
 interface GroupContext {
     group: Group | undefined;
+    isLoadingGroup: boolean;
     debts: Page<Debt> | undefined;
+    isLoadingDebts: boolean;
 }
 
 export const GroupContext = createContext<GroupContext>({} as GroupContext);

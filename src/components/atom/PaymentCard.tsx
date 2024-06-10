@@ -20,7 +20,7 @@ export function PaymentCard({
 
     return (
         <article
-            className={`flex justify-between gap-3 border-b py-4 px-6 w-full first:border-t-0 last:!border-b-0 border-background-300 `}
+            className={`flex bg-background-0 justify-between gap-3 border-b py-4 px-6 w-full first:border-t-0 last:!border-b-0 border-background-300 `}
         >
             <div className="flex flex-col">
                 <span className="text-sm font-bold">

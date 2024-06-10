@@ -19,7 +19,7 @@ export function UserGroupCard({
 }) {
     return (
         <article
-            className={`flex gap-3 md:px-8 md:py-2 items-center ${isPending && 'opacity-70'} ${!onAdd && !onRemove && '!pl-[92px]'}`}
+            className={`flex bg-background-0 gap-3 md:px-8 md:py-2 items-center ${isPending && 'opacity-70'} ${!onAdd && !onRemove && '!pl-[92px]'}`}
         >
             {onAdd && (
                 <IconButton

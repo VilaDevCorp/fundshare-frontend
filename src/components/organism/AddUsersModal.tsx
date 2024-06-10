@@ -24,6 +24,7 @@ import { ApiError, ErrorCode } from '../../types/types';
 import StatusCode from 'status-code-enum';
 import { Typography } from '../ui/Typography';
 import { NoElementsMessage } from '../atom/NoElementsMessage';
+import { LoadingIndicator } from '../atom/LoadingIndicator';
 
 export function AddUsersModal({
     isOpen,
@@ -50,7 +51,7 @@ export function AddUsersModal({
         } as CreateRequestForm);
     };
 
-    const { data: relatedUsers } = useQuery({
+    const { data: relatedUsers, isLoading: isLoadingUsers } = useQuery({
         queryKey: ['relatedUsers'],
         queryFn: async () => {
             const result = await searchRelatedUsers(0, null, {
@@ -192,28 +193,39 @@ export function AddUsersModal({
                             <Typography type={'subtitle'}>
                                 {'Known users'}
                             </Typography>
-                            <div>
-                                {filteredRelatedUsers &&
-                                filteredRelatedUsers.length > 0 ? (
-                                    filteredRelatedUsers.map((filteredUser) => (
-                                        <UserGroupCard
-                                            key={filteredUser.id}
-                                            user={filteredUser}
-                                            onAdd={(username: string) =>
-                                                onAddUserByUsername(username)
-                                            }
-                                        />
-                                    ))
-                                ) : (
+                            <div className="flex flex-col min-h-[100px]">
+                                {isLoadingUsers ? (
+                                    <LoadingIndicator />
+                                ) : filteredRelatedUsers?.length === 0 ? (
                                     <NoElementsMessage
                                         label={'No users found'}
                                     />
+                                ) : (
+                                    filteredRelatedUsers?.map(
+                                        (filteredUser) => (
+                                            <UserGroupCard
+                                                key={filteredUser.id}
+                                                user={filteredUser}
+                                                onAdd={(username: string) =>
+                                                    onAddUserByUsername(
+                                                        username
+                                                    )
+                                                }
+                                            />
+                                        )
+                                    )
                                 )}
                             </div>
                         </ModalBody>
                     </div>
 
-                    <ModalFooter position={'sticky'} display={'flex'} gap={4} bottom={0} px={'12px'}>
+                    <ModalFooter
+                        position={'sticky'}
+                        display={'flex'}
+                        gap={4}
+                        bottom={0}
+                        px={'12px'}
+                    >
                         <Button onClick={onClose} variant={'outline'}>
                             {'Cancel'}
                         </Button>

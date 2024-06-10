@@ -14,6 +14,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { GroupDetailsSection } from '../atom/GroupDetailsSection';
 import { ConfirmationModal } from './ConfirmationModal';
 import { useState } from 'react';
+import { LoadingIndicator } from '../atom/LoadingIndicator';
 
 export function GroupUsersSection() {
     const {
@@ -62,7 +63,7 @@ export function GroupUsersSection() {
     const { search: searchReq, remove: removeRequest } =
         useCrud<Request>('request');
 
-    const { data: groupRequests } = useQuery({
+    const { data: groupRequests, isLoading: isLoadingRequests } = useQuery({
         queryKey: ['groupRequests'],
         enabled: !!group?.id,
         queryFn: () => searchReq(0, null, { groupId: group!.id })
@@ -94,40 +95,48 @@ export function GroupUsersSection() {
                     {'Add users'}
                 </Button>
             )}
-            <div className="flex flex-col overflow-auto bg-background-0">
-                {groupRequests?.content.map((request) => (
-                    <UserGroupCard
-                        key={request.id}
-                        user={request.user}
-                        onRemove={
-                            loggedUser?.username === group?.createdBy?.username
-                                ? () => onRemoveRequest(request.id)
-                                : undefined
-                        }
-                        isPending
-                    />
-                ))}
-
-                {group?.users &&
-                    group?.users.map((user) => (
-                        <UserGroupCard
-                            key={user.username}
-                            user={user}
-                            onRemove={
-                                group.createdBy?.username !== user.username &&
-                                loggedUser?.username ===
-                                    group.createdBy?.username
-                                    ? () => {
-                                          setUserToKick(user.username);
-                                          onOpenConfirm();
-                                      }
-                                    : undefined
-                            }
-                            isAdmin={
-                                group.createdBy?.username === user.username
-                            }
-                        />
-                    ))}
+            <div className="flex flex-col overflow-auto h-full">
+                {isLoadingRequests ? (
+                    <LoadingIndicator />
+                ) : (
+                    <>
+                        {groupRequests?.content.map((request) => (
+                            <UserGroupCard
+                                key={request.id}
+                                user={request.user}
+                                onRemove={
+                                    loggedUser?.username ===
+                                    group?.createdBy?.username
+                                        ? () => onRemoveRequest(request.id)
+                                        : undefined
+                                }
+                                isPending
+                            />
+                        ))}
+                        {group?.users &&
+                            group?.users?.map((user) => (
+                                <UserGroupCard
+                                    key={user.username}
+                                    user={user}
+                                    onRemove={
+                                        group?.createdBy?.username !==
+                                            user.username &&
+                                        loggedUser?.username ===
+                                            group?.createdBy?.username
+                                            ? () => {
+                                                  setUserToKick(user.username);
+                                                  onOpenConfirm();
+                                              }
+                                            : undefined
+                                    }
+                                    isAdmin={
+                                        group?.createdBy?.username ===
+                                        user.username
+                                    }
+                                />
+                            ))}
+                    </>
+                )}
             </div>
             {isOpenAddUsers && (
                 <AddUsersModal

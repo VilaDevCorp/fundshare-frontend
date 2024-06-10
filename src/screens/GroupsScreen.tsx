@@ -12,6 +12,7 @@ import { Page } from '../types/types';
 import { Group } from '../types/entities';
 import { Pagination } from '../components/ui/Pagination';
 import { NoElementsMessage } from '../components/atom/NoElementsMessage';
+import { LoadingIndicator } from '../components/atom/LoadingIndicator';
 
 export function GroupsScreen() {
     const { isTablet } = useScreen();
@@ -22,7 +23,7 @@ export function GroupsScreen() {
 
     const { search } = useCrud<Group>('group');
 
-    const { data: groupPage } = useQuery<Page<Group>>({
+    const { data: groupPage, isLoading } = useQuery<Page<Group>>({
         queryKey: ['groups', page],
         queryFn: () => search(page, 10, {}),
         placeholderData: keepPreviousData
@@ -47,8 +48,10 @@ export function GroupsScreen() {
                     </>
                 )}
                 <div className="w-full flex flex-col overflow-hidden gap-4">
-                    <div className="flex flex-col gap-4 items-center overflow-auto pr-2">
-                        {groupPage?.content.length === 0 ? (
+                    <div className="flex flex-col gap-4 items-center overflow-auto pr-2 min-h-[300px]">
+                        {isLoading ? (
+                            <LoadingIndicator />
+                        ) : groupPage?.content.length === 0 ? (
                             <NoElementsMessage label="No groups found" />
                         ) : (
                             groupPage?.content?.map((group) => (
@@ -64,10 +67,8 @@ export function GroupsScreen() {
                         />
                     )}
                 </div>
-                {isOpen && (
-                    <CreateGroupModal isOpen={isOpen} onClose={onClose} />
-                )}
             </div>
+            {isOpen && <CreateGroupModal isOpen={isOpen} onClose={onClose} />}
         </Layout>
     );
 }

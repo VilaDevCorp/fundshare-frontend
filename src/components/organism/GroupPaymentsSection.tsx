@@ -7,6 +7,7 @@ import { PaymentCard } from '../atom/PaymentCard';
 import { NoElementsMessage } from '../atom/NoElementsMessage';
 import { Pagination } from '../ui/Pagination';
 import { GroupDetailsSection } from '../atom/GroupDetailsSection';
+import { LoadingIndicator } from '../atom/LoadingIndicator';
 
 export function GroupPaymentsSection() {
     const { group } = useGroup();
@@ -15,7 +16,7 @@ export function GroupPaymentsSection() {
 
     const [page, setPage] = useState(0);
 
-    const { data: groupPaymentsPage } = useQuery({
+    const { data: groupPaymentsPage, isLoading } = useQuery({
         queryKey: ['groupPayments', page],
         enabled: !!group?.id,
         queryFn: () => searchPaym(page, 10, { groupId: group!.id })
@@ -24,8 +25,10 @@ export function GroupPaymentsSection() {
     return (
         <GroupDetailsSection title="History">
             <div className="flex flex-col gap-4 overflow-hidden">
-                {groupPaymentsPage?.content.length === 0 ? (
-                    <NoElementsMessage label="No payments yet" />
+                {isLoading ? (
+                    <LoadingIndicator />
+                ) : groupPaymentsPage?.content.length === 0 ? (
+                    <NoElementsMessage className='mt-[10%]' label="No payments yet" />
                 ) : (
                     <div className="flex flex-col bg-background-0 overflow-auto">
                         {groupPaymentsPage?.content.map((payment) => (

@@ -113,7 +113,7 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                 ) && (
                     <Tooltip
                         label={
-                            'You have to pick at least one user with an over 0 amount.'
+                            'You have to pick at least one user with an amount over 0.'
                         }
                         bg={'error.700'}
                         color={'text.0'}
