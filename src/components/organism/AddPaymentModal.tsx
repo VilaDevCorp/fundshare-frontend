@@ -237,15 +237,20 @@ export function AddPaymentModal({
                 </>
             }
             buttons={
-                <Button
-                    isLoading={isLoading}
-                    isDisabled={isDisabled}
-                    type="submit"
-                    variant="solid"
-                    width={{ base: '100%', tablet: 'auto' }}
-                >
-                    Create
-                </Button>
+                <>
+                    <Button onClick={onClose} variant="outline">
+                        Cancel
+                    </Button>
+                    <Button
+                        isLoading={isLoading}
+                        isDisabled={isDisabled}
+                        type="submit"
+                        variant="solid"
+                        width={{ base: '100%', tablet: 'auto' }}
+                    >
+                        Create
+                    </Button>
+                </>
             }
         />
     );

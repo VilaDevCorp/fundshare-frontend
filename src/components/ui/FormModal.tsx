@@ -48,7 +48,7 @@ export function FormModal(props: FormModalProps) {
                             {form}
                         </ModalBody>
 
-                        <ModalFooter position={'sticky'} bottom={0} px={'12px'}>
+                        <ModalFooter display={'flex'} gap={4} position={'sticky'} bottom={0} px={'12px'}>
                             {buttons}
                         </ModalFooter>
                     </form>

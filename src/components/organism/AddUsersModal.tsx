@@ -213,10 +213,13 @@ export function AddUsersModal({
                         </ModalBody>
                     </div>
 
-                    <ModalFooter position={'sticky'} bottom={0} px={'12px'}>
+                    <ModalFooter position={'sticky'} display={'flex'} gap={4} bottom={0} px={'12px'}>
+                        <Button onClick={onClose} variant={'outline'}>
+                            {'Cancel'}
+                        </Button>
                         <Button
                             onClick={() => onCreateRequest()}
-                            disabled={isDisabled}
+                            isDisabled={isDisabled}
                             isLoading={isLoadingInvitingUsers}
                         >
                             {'Invite'}

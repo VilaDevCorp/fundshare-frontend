@@ -36,7 +36,6 @@ export const ButtonTheme = defineStyleConfig({
     variants: {
         solid: {
             bg: 'primary.500',
-            padding: '10px',
             borderColor: 'transparent',
             _hover: {
                 bg: 'primary.300'
@@ -51,7 +50,6 @@ export const ButtonTheme = defineStyleConfig({
         },
         solid_error: {
             bg: 'error.500',
-            padding: '10px',
             borderColor: 'transparent',
             _hover: {
                 bg: 'error.300'
