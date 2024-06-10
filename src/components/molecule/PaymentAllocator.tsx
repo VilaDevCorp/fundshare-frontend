@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { UserPaymentCard } from '../atom/UserPaymentCard';
 import { Tooltip } from '@chakra-ui/react';
 import { Icon } from '../atom/Icon';
+import { getCurrencySymbol } from '../../utils/utilFunctions';
 
 type UserAmounts = { [username: string]: string };
 
@@ -128,7 +129,7 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                     </Tooltip>
                 )}
                 {type === 'divided' ? (
-                    `Total: ${totalAmount} €`
+                    `Total: ${totalAmount} ${getCurrencySymbol(loggedUser?.conf?.currency)}`
                 ) : Number(totalAmount) - totalAssignedAmount === 0 ? (
                     <span className="text-primary-500">{'Completed:'}</span>
                 ) : Number(totalAmount) - totalAssignedAmount < 0 ? (
@@ -137,7 +138,7 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                     <span className="text-error-500">{'Underallocated:'}</span>
                 )}
                 {type === 'total' &&
-                    `${Math.abs(Number(totalAmount) - totalAssignedAmount).toFixed(2)} € 
+                    `${Math.abs(Number(totalAmount) - totalAssignedAmount).toFixed(2)} ${getCurrencySymbol(loggedUser?.conf?.currency)} 
                         (${
                             isNaN(
                                 (Math.abs(

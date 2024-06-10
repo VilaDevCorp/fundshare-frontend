@@ -1,5 +1,5 @@
 import { createContext, ReactNode } from 'react';
-import { GroupDebt, RegisterUserForm, User } from '../types/entities';
+import { GroupDebt, RegisterUserForm, User, UserConf } from '../types/entities';
 import { ApiResponse } from '../types/types';
 import { checkResponseException } from '../utils/utilFunctions';
 import { useAuth } from '../hooks/useAuth';
@@ -17,6 +17,7 @@ interface ApiContext {
     respondRequest: (requestId: string, isAccepted: boolean) => Promise<void>;
     kickGroupUser: (groupId: string, username: string) => Promise<void>;
     getDebtWithUser: (username: string) => Promise<GroupDebt[]>;
+    updateConf: (conf: UserConf) => Promise<void>;
 }
 
 export const ApiContext = createContext<ApiContext>({} as ApiContext);
@@ -143,6 +144,22 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         return resObject.data;
     };
 
+    const updateConf = async (conf: UserConf): Promise<void> => {
+        const url = `${apiUrl}conf`;
+        const options: RequestInit = {
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(conf),
+            headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
+                'content-type': 'application/json'
+            })
+        };
+        const res = await fetch(url, options);
+        const resObject = await res.json();
+        checkResponseException(res, resObject);
+    };
+
     const value: ApiContext = {
         register,
         sendValidationCode,
@@ -151,7 +168,8 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         resetPassword,
         respondRequest,
         kickGroupUser,
-        getDebtWithUser
+        getDebtWithUser,
+        updateConf
     };
 
     return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

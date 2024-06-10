@@ -4,6 +4,7 @@ import { useScreen } from '../../hooks/useScreen';
 import { useAuth } from '../../hooks/useAuth';
 import { Icon } from '../atom/Icon';
 import { UserPhoto } from '../atom/UserPhoto';
+import { Balance } from '../atom/Balance';
 
 export function TopMenu() {
     const { isLaptop } = useScreen();
@@ -50,7 +51,7 @@ export function TopMenu() {
                             whiteSpace={'nowrap'}
                             maxWidth={'100%'}
                         >
-                            {user?.balance?.toFixed(2)} €
+                            <Balance className='text-sm' balance={user?.balance} />
                         </Text>
                     </VStack>
                 </HStack>

@@ -37,7 +37,6 @@ const navItems: NavItem[] = [
 export function TopNav() {
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location.pathname.split('/')[1]);
     const { queryClient } = useReactQuery();
 
     return (

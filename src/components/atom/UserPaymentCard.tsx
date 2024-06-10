@@ -14,6 +14,8 @@ import { User } from '../../types/entities';
 import { Typography } from '../ui/Typography';
 import { Icon } from './Icon';
 import { UserPhoto } from './UserPhoto';
+import { getCurrencySymbol } from '../../utils/utilFunctions';
+import { useAuth } from '../../hooks/useAuth';
 
 export function UserPaymentCard({
     user,
@@ -32,6 +34,8 @@ export function UserPaymentCard({
     percentage?: string;
     setPercentage?: (percentage: string) => void;
 }) {
+    const { user: loggedUser } = useAuth();
+
     return (
         <article className="flex flex-col gap-4">
             <div className={`flex gap-3 items-center`}>
@@ -68,16 +72,21 @@ export function UserPaymentCard({
                         >
                             <NumberInputField />
                         </NumberInput>
-                        <InputRightAddon>€</InputRightAddon>
+                        <InputRightAddon>
+                            {getCurrencySymbol(loggedUser?.conf?.currency)}
+                        </InputRightAddon>
                     </InputGroup>
                 ) : (
                     amount !== undefined && (
-                        <span className="ml-auto">{amount} €</span>
+                        <span className="ml-auto">
+                            {amount}{' '}
+                            {getCurrencySymbol(loggedUser?.conf?.currency)}
+                        </span>
                     )
                 )}
             </div>
             {setAmount ? (
-                <div className='px-6'>
+                <div className="px-6">
                     <Slider
                         value={Number(percentage)}
                         max={100}

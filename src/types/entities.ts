@@ -4,10 +4,15 @@ export interface BaseEntity {
     createdBy?: User;
 }
 
+export interface UserConf {
+    currency: string;
+}
+
 export interface User extends BaseEntity {
     username: string;
     email: string;
     balance?: number;
+    conf?: UserConf;
 }
 
 export interface RegisterUserForm {

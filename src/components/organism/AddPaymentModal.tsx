@@ -31,6 +31,11 @@ import { useReactQuery } from '../../hooks/useReactQuery';
 import { useGroup } from '../../hooks/useGroup';
 import { PaymentAllocator } from '../molecule/PaymentAllocator';
 import { Icon } from '../atom/Icon';
+import {
+    calculateBaseCurrency,
+    getCurrencySymbol
+} from '../../utils/utilFunctions';
+import { useAuth } from '../../hooks/useAuth';
 
 export interface PaymentInfo {
     totalAmount: string;
@@ -75,7 +80,9 @@ export function AddPaymentModal({
     const { showToast } = useToast();
     const { setError } = useError();
 
-    const {group} = useGroup();
+    const { group } = useGroup();
+
+    const { user: loggedUser } = useAuth();
 
     const createPayment = async () => {
         if (
@@ -89,7 +96,10 @@ export function AddPaymentModal({
                 payees: selectedUsers.map((user) => {
                     if (Number(userAmounts[user.username]) > 0) {
                         return {
-                            amount: Number(userAmounts[user.username]),
+                            amount: calculateBaseCurrency(
+                                Number(userAmounts[user.username]),
+                                loggedUser?.conf?.currency
+                            ),
                             username: user.username
                         };
                     }
@@ -206,7 +216,11 @@ export function AddPaymentModal({
                                 >
                                     <NumberInputField ref={amountInputRef} />
                                 </NumberInput>
-                                <InputRightAddon>€</InputRightAddon>
+                                <InputRightAddon>
+                                    {getCurrencySymbol(
+                                        loggedUser?.conf?.currency
+                                    )}
+                                </InputRightAddon>
                             </InputGroup>
                         }
                     />

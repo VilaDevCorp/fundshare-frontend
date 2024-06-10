@@ -1,5 +1,6 @@
 import { useScreen } from '../../hooks/useScreen';
 import { Debt } from '../../types/entities';
+import { Currency } from './Currency';
 import { Icon } from './Icon';
 import { UserPhoto } from './UserPhoto';
 
@@ -16,7 +17,9 @@ export function GroupDebtCard({ debt }: { debt: Debt }) {
             </div>
             <div className="flex gap-4 items-center">
                 <Icon type="doubleChevronRight" />
-                <span className=" font-bold">{debt.amount.toFixed(2)} €</span>
+                <span className=" font-bold">
+                    <Currency amount={debt.amount} />
+                </span>
                 <Icon type="doubleChevronRight" />
             </div>
             <div className="flex gap-2 items-center">

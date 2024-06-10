@@ -5,6 +5,7 @@ import { Link } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useReactQuery } from '../../hooks/useReactQuery';
+import { Currency } from './Currency';
 
 export function PaymentCard({
     payment,
@@ -47,7 +48,7 @@ export function PaymentCard({
                 >
                     <span className="">{payment.createdBy?.username}</span>
                     <span className="">
-                        - {payment.totalAmount.toFixed(2)} €
+                        - <Currency amount={payment.totalAmount} />
                     </span>
                 </div>
 
@@ -59,7 +60,7 @@ export function PaymentCard({
                         >
                             <span>{userPayment.user.username}</span>
                             <span className="text-right">
-                                + {userPayment.amount.toFixed(2)} €
+                                + <Currency amount={userPayment.amount} />
                             </span>
                         </div>
                     ))}
