@@ -189,6 +189,7 @@ export function RegisterScreen() {
                             value={username}
                             ref={usernameInputRef}
                             onChange={(e) => setUsername(e.target.value)}
+                            maxLength={80}
                         />
                     }
                 />

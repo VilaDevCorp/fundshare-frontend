@@ -153,6 +153,7 @@ export function AddPaymentModal({
                                 ref={descriptionInputRef}
                                 onChange={(e) => setDescription(e.target.value)}
                                 value={description}
+                                maxLength={150}
                             />
                         }
                     />

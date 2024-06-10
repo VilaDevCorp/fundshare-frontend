@@ -70,6 +70,7 @@ export function CreateGroupModal({
                         error={nameDirty && nameError ? nameMessage : ''}
                         input={
                             <Input
+                                maxLength={80}
                                 ref={nameInputRef}
                                 onChange={(e) => setName(e.target.value)}
                                 value={name}
@@ -80,6 +81,7 @@ export function CreateGroupModal({
                         label="Description"
                         input={
                             <Textarea
+                                maxLength={200}
                                 onChange={(e) => setDescription(e.target.value)}
                                 value={description}
                             />
