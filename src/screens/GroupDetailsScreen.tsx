@@ -170,13 +170,13 @@ export function GroupDetailsScreen() {
                                 </div>
                             )}
                             {isLaptop ? (
-                                <div className="w-full flex gap-8 py-6 h-[calc(100%-80px)]">
-                                    <div className="w-full flex flex-col gap-8">
+                                <div className="w-full flex flex-col gap-8 py-6 h-[calc(100%-80px)]">
+                                    <div className="w-full h-1/3 flex gap-8">
                                         <UserDebtsSection />
-                                        <GroupPaymentsSection />
-                                    </div>
-                                    <div className="w-full flex flex-col gap-8">
                                         <GroupDebtsSection />
+                                    </div>
+                                    <div className="w-full h-2/3 flex gap-8">
+                                        <GroupPaymentsSection />
                                         <GroupUsersSection />
                                     </div>
                                 </div>
