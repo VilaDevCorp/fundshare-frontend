@@ -41,7 +41,7 @@ export function GroupsScreen() {
                     </div>
                 ) : (
                     <>
-                        <Typography type="title">{'My groups'}</Typography>
+                        <Typography type="title">{'Groups'}</Typography>
                         <Button leftIcon={<Icon type="add" />} onClick={onOpen}>
                             {'Create group'}
                         </Button>

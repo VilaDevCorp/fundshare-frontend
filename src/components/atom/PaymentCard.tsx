@@ -20,7 +20,7 @@ export function PaymentCard({
 
     return (
         <article
-            className={`flex bg-background-0 justify-between gap-3 border-b py-4 px-6 w-full first:border-t-0 last:!border-b-0 border-background-300 `}
+            className={`flex  bg-background-0 justify-between gap-4 border-b py-4 px-6  first:border-t-0 last:!border-b-0 border-background-300 `}
         >
             <div className="flex flex-col">
                 <span className="text-sm font-bold">
@@ -42,12 +42,12 @@ export function PaymentCard({
                     </Link>
                 )}
             </div>
-            <div className="flex flex-col w-[70%] max-w-[250px]  ">
+            <div className="flex flex-col w-full">
                 <div
-                    className={`flex justify-end gap-2 items-center text-error-500 ${user?.username === payment.createdBy?.username ? 'font-bold' : ''} `}
+                    className={`flex w-full justify-end gap-2 items-end text-error-500 ${user?.username === payment.createdBy?.username ? 'font-bold' : ''} `}
                 >
-                    <span className="">{payment.createdBy?.username}</span>
-                    <span className="">
+                    <span className="overflow-hidden line-clamp-3">{payment.createdBy?.username}</span>
+                    <span className="text-wrap overflow-hidden">
                         - <Currency amount={payment.totalAmount} />
                     </span>
                 </div>
@@ -55,11 +55,11 @@ export function PaymentCard({
                 {payment.userPayments &&
                     payment.userPayments.map((userPayment) => (
                         <div
-                            className={`flex justify-end gap-2 items-center text-primary-500 ${user?.username === userPayment.user.username ? 'font-bold' : ''} `}
+                            className={`flex justify-end gap-2 items-end text-primary-500 ${user?.username === userPayment.user.username ? 'font-bold' : ''} `}
                             key={userPayment.id}
                         >
-                            <span>{userPayment.user.username}</span>
-                            <span className="text-right">
+                            <span className='overflow-hidden  line-clamp-3'>{userPayment.user.username}</span>
+                            <span className="text-right whitespace-nowrap">
                                 + <Currency amount={userPayment.amount} />
                             </span>
                         </div>

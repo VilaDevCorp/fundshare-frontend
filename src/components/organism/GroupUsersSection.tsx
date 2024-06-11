@@ -49,6 +49,7 @@ export function GroupUsersSection() {
         onSuccess: () => {
             showToast('success', 'User kicked!');
             queryClient.invalidateQueries({ queryKey: ['group'] });
+            queryClient.invalidateQueries({ queryKey: ['groupDebts'] });
             queryClient.invalidateQueries({ queryKey: ['groupRequests'] });
             queryClient.invalidateQueries({ queryKey: ['groupPayments'] });
             queryClient.invalidateQueries({ queryKey: ['getUserInfo'] });
@@ -95,7 +96,7 @@ export function GroupUsersSection() {
                     {'Add users'}
                 </Button>
             )}
-            <div className="flex flex-col overflow-auto h-full">
+            <div className="flex flex-col overflow-auto h-full pr-2">
                 {isLoadingRequests ? (
                     <LoadingIndicator />
                 ) : (

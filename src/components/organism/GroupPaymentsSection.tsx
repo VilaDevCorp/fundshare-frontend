@@ -24,7 +24,7 @@ export function GroupPaymentsSection() {
 
     return (
         <GroupDetailsSection title="History">
-            <div className="flex flex-col gap-4 overflow-hidden">
+            <div className="flex flex-col gap-4 overflow-hidden h-full">
                 {isLoading ? (
                     <LoadingIndicator />
                 ) : groupPaymentsPage?.content.length === 0 ? (
@@ -38,6 +38,7 @@ export function GroupPaymentsSection() {
                 )}
                 {groupPaymentsPage?.content.length !== 0 && (
                     <Pagination
+                        boxProps={{ className: 'mt-auto' }}
                         page={page}
                         onPageChange={(page) => setPage(page)}
                         hasNextPage={!!groupPaymentsPage?.hasNext}

@@ -58,14 +58,14 @@ export function DebtModal({
                                 <LoadingIndicator />
                             ) : (
                                 <>
-                                    <div className="flex flex-col gap-1 ml-auto mr-auto justify-center items-center">
+                                    <div className="flex flex-col gap-1 ml-auto mr-auto justify-center items-center overflow-hidden w-full ">
                                         <UserPhoto />
-                                        <span className="font-bold text-lg">
+                                        <span className="font-bold text-lg w-full text-wrap">
                                             {user.username}
                                         </span>
                                     </div>
-                                    <div className="flex flex-col gap-6">
-                                        <div className="w-full flex justify-between">
+                                    <div className="flex flex-col gap-6 w-full">
+                                        <div className="w-full flex justify-between gap-4 overflow-hidden">
                                             <span className="font-bold text-xl">
                                                 {'Total'}
                                             </span>

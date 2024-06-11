@@ -51,7 +51,10 @@ export function TopMenu() {
                             whiteSpace={'nowrap'}
                             maxWidth={'100%'}
                         >
-                            <Balance className='text-sm' balance={user?.balance} />
+                            <Balance
+                                className="text-sm text-wrap"
+                                balance={user?.balance}
+                            />
                         </Text>
                     </VStack>
                 </HStack>

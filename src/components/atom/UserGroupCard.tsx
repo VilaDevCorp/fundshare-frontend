@@ -19,7 +19,7 @@ export function UserGroupCard({
 }) {
     return (
         <article
-            className={`flex bg-background-0 gap-3 md:px-8 md:py-2 items-center ${isPending && 'opacity-70'} ${!onAdd && !onRemove && '!pl-[92px]'}`}
+            className={`flex bg-background-0 h-[64px] min-h-[64px] gap-3 md:px-8 md:py-2 items-center overflow-hidden w-full ${isPending && 'opacity-70'} ${!onAdd && !onRemove && '!pl-[60px] md:!pl-[92px]'}`}
         >
             {onAdd && (
                 <IconButton
@@ -43,14 +43,25 @@ export function UserGroupCard({
                 />
             )}
             <UserPhoto />
-            <Typography type="body">{user.username}</Typography>
+            <Typography overflow={'hidden'} flexShrink={1} type="body">
+                {user.username}
+            </Typography>
             {isPending && (
-                <Typography type="detail" className="ml-auto">
+                <Typography
+                    minW={'fit-content'}
+                    type="detail"
+                    className="ml-auto"
+                >
                     {'Pending'}
                 </Typography>
             )}
             {isAdmin && (
-                <Typography type="detail" className="ml-auto">
+                <Typography
+                    minW={'fit-content'}
+                    flexShrink={0}
+                    type="detail"
+                    className="ml-auto"
+                >
                     {'Admin'}
                 </Typography>
             )}

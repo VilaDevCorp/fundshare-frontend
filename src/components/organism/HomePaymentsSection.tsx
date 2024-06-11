@@ -28,11 +28,11 @@ export function HomePaymentsSection() {
             )}
 
             <div className="w-full flex flex-col rounded-[2px] overflow-hidden gap-4">
-                <div className="flex flex-col overflow-auto  min-h-[300px]">
+                <div className="flex flex-col overflow-auto  min-h-[300px] bg-background-0">
                     {isLoading ? (
                         <LoadingIndicator />
                     ) : userPaymentsPage?.content.length === 0 ? (
-                        <NoElementsMessage label="No payments yet" />
+                        <NoElementsMessage className='mt-[24px]' label="No payments yet" />
                     ) : (
                         userPaymentsPage?.content.map((payment) => (
                             <PaymentCard

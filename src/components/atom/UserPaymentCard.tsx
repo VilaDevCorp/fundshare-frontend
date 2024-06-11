@@ -16,6 +16,7 @@ import { Icon } from './Icon';
 import { UserPhoto } from './UserPhoto';
 import { getCurrencySymbol } from '../../utils/utilFunctions';
 import { useAuth } from '../../hooks/useAuth';
+import { useScreen } from '../../hooks/useScreen';
 
 export function UserPaymentCard({
     user,
@@ -35,9 +36,10 @@ export function UserPaymentCard({
     setPercentage?: (percentage: string) => void;
 }) {
     const { user: loggedUser } = useAuth();
+    const { isTablet } = useScreen();
 
     return (
-        <article className="flex flex-col gap-4">
+        <article className="flex flex-col gap-4 w-full overflow-hidden">
             <div className={`flex gap-3 items-center`}>
                 {onAdd && (
                     <IconButton
@@ -59,12 +61,12 @@ export function UserPaymentCard({
                         onClick={() => onRemove(user.username)}
                     />
                 )}
-                <UserPhoto />
-                <Typography type="body">{user.username}</Typography>
+                {isTablet && <UserPhoto />}
+                <Typography overflow={'hidden'} flexShrink={1} type="body">{user.username}</Typography>
                 {setAmount ? (
                     <InputGroup justifyContent={'end'}>
                         <NumberInput
-                            w={'120px'}
+                            w={'100px'}
                             value={amount}
                             precision={2}
                             onChange={(value) => setAmount(value)}
@@ -78,7 +80,7 @@ export function UserPaymentCard({
                     </InputGroup>
                 ) : (
                     amount !== undefined && (
-                        <span className="ml-auto">
+                        <span className="ml-auto whitespace-nowrap">
                             {amount}{' '}
                             {getCurrencySymbol(loggedUser?.conf?.currency)}
                         </span>

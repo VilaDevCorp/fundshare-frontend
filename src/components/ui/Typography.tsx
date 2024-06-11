@@ -40,7 +40,7 @@ const getTypographyElement = (props: TypographyProps) => {
                 </Text>
             );
         default:
-            return <Text fontSize={'md'}>{children}</Text>;
+            return <Text {...chakraHeadingProps} fontSize={'md'}>{children}</Text>;
     }
 };
 

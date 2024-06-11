@@ -11,7 +11,7 @@ export function UserGroupDebtCard({ groupDebt }: { groupDebt: GroupDebt }) {
 
     return (
         <article
-            className={`flex gap-3 py-2 border-b w-full justify-between items-center first:border-t  border-background-200`}
+            className={`flex gap-3 py-2 border-b w-full justify-between items-center first:border-t overflow-hidden  border-background-200`}
         >
             <div className="flex gap-2 items-center">
                 <span className="text-sm font-bold">

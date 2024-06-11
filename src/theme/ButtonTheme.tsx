@@ -23,6 +23,7 @@ export const ButtonTheme = defineStyleConfig({
             height: 'auto !important'
         },
         square: {
+            flexShrink: 0,
             padding: '12px 24px',
             fontSize: 'xl',
             height: '48px',

@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useError } from '../hooks/useError';
 import { useToast } from '../hooks/useToast';
 import { useReactQuery } from '../hooks/useReactQuery';
+import { Typography } from '../components/ui/Typography';
 
 export function SettingsScreen() {
     const { updateConf } = useApi();
@@ -41,7 +42,8 @@ export function SettingsScreen() {
 
     return (
         <Layout>
-            <div className="flex w-full flex-col gap-8 max-w-[500px] ml-auto mr-auto">
+            <div className="flex w-full flex-col gap-4 max-w-[500px] ml-auto mr-auto">
+                <Typography type="title">{'Settings'}</Typography>
                 <FormField
                     label="Currency"
                     input={
@@ -59,6 +61,7 @@ export function SettingsScreen() {
                     }
                 />
                 <Button
+                    mt={'24px'}
                     onClick={() => onSaveConf()}
                     isLoading={isPending}
                     isDisabled={isPending}

@@ -25,6 +25,7 @@ import StatusCode from 'status-code-enum';
 import { Typography } from '../ui/Typography';
 import { NoElementsMessage } from '../atom/NoElementsMessage';
 import { LoadingIndicator } from '../atom/LoadingIndicator';
+import { useScreen } from '../../hooks/useScreen';
 
 export function AddUsersModal({
     isOpen,
@@ -36,6 +37,8 @@ export function AddUsersModal({
     const { queryClient } = useReactQuery();
     const { showToast } = useToast();
     const { setError } = useError();
+
+    const { isTablet } = useScreen();
 
     const { create: createReq } = useCrud<Request[]>('request');
     const { get: getUser, search: searchRelatedUsers } = useCrud<User>('user');

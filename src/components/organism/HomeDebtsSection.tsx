@@ -33,7 +33,7 @@ export function HomeDebtsSection() {
                     {isLoading ? (
                         <LoadingIndicator />
                     ) : debts?.content.length === 0 ? (
-                        <NoElementsMessage label="No debts yet" />
+                        <NoElementsMessage className='mt-[24px]' label="No debts yet" />
                     ) : (
                         debts?.content.map((debt) => (
                             <UserDebtCard

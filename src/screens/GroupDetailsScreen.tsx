@@ -195,7 +195,7 @@ export function GroupDetailsScreen() {
                                         <TabPanel>
                                             <GroupDebtsSection />
                                         </TabPanel>
-                                        <TabPanel>
+                                        <TabPanel paddingTop={'8px'}>
                                             <GroupUsersSection />
                                         </TabPanel>
                                     </TabPanels>
