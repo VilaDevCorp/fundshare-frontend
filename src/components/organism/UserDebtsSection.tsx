@@ -18,7 +18,7 @@ export function UserDebtsSection() {
     );
 
     return (
-        <GroupDetailsSection title="Your debts">
+        <GroupDetailsSection title="Your debts" showAlwaysTitle className='!h-[200px] md:!h-full'>
             <div className="flex flex-col gap-4 overflow-hidden">
                 {isLoadingDebts ? (
                     <LoadingIndicator />

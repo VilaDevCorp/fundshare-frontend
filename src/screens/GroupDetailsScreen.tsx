@@ -43,7 +43,7 @@ export function GroupDetailsScreen() {
         onClose: onCloseConfirm
     } = useDisclosure();
 
-    const { isTablet } = useScreen();
+    const { isLaptop } = useScreen();
     const navigate = useNavigate();
     const { user: loggedUser } = useAuth();
     const { showToast } = useToast();
@@ -95,14 +95,14 @@ export function GroupDetailsScreen() {
     });
 
     return (
-        <Layout minH="min-h-[750px]">
+        <Layout minH="lg:min-h-[750px] !h-auto lg:!h-[calc(100vh-96px)]">
             <GroupProvider
                 value={{ group, debts, isLoadingGroup, isLoadingDebts }}
             >
                 <div className="max-w-[1200px] w-full flex flex-col ml-auto mr-auto h-full overflow-hidden">
                     {group ? (
                         <>
-                            {isTablet ? (
+                            {isLaptop ? (
                                 <div className="h-[80px]">
                                     <div className="flex justify-between mb-4">
                                         <Typography type="title">
@@ -169,7 +169,7 @@ export function GroupDetailsScreen() {
                                     <UserDebtsSection />
                                 </div>
                             )}
-                            {isTablet ? (
+                            {isLaptop ? (
                                 <div className="w-full flex gap-8 py-6 h-[calc(100%-80px)]">
                                     <div className="w-full flex flex-col gap-8">
                                         <UserDebtsSection />
@@ -181,14 +181,14 @@ export function GroupDetailsScreen() {
                                     </div>
                                 </div>
                             ) : (
-                                <Tabs marginTop={'1rem'}>
+                                <Tabs marginTop={'1rem'} height={'400px'}>
                                     <TabList>
                                         <Tab>{'History'}</Tab>
                                         <Tab>{'Debts'}</Tab>
                                         <Tab>{'Users'}</Tab>
                                     </TabList>
 
-                                    <TabPanels>
+                                    <TabPanels height={'345px'}>
                                         <TabPanel>
                                             <GroupPaymentsSection />
                                         </TabPanel>

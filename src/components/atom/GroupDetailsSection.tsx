@@ -5,19 +5,23 @@ import { useScreen } from '../../hooks/useScreen';
 export function GroupDetailsSection({
     children,
     title,
+    showAlwaysTitle, //To show the title in mobile too
     className
 }: {
     children: React.ReactNode;
     title: string;
+    showAlwaysTitle?: boolean;
     className?: HtmlHTMLAttributes<HTMLSpanElement>[`className`];
 }) {
-    const { isTablet } = useScreen();
+    const { isLaptop } = useScreen();
 
     return (
         <section
             className={`w-full flex flex-col gap-4 rounded-[2px] overflow-hidden min-h-[100px] h-full ${className}`}
         >
-            {isTablet && <Typography type="subtitle">{title}</Typography>}
+            {(isLaptop || showAlwaysTitle) && (
+                <Typography type="subtitle">{title}</Typography>
+            )}
             {children}
         </section>
     );
