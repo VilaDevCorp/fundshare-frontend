@@ -10,7 +10,7 @@ export const InputTheme = defineMultiStyleConfig({
         field: {
             borderRadius: 2,
             color: 'text.500',
-            fontSize: 'sm'
+            fontSize: 'md'
         },
         addon: {
             fontSize: 'lg'
@@ -51,9 +51,9 @@ export const InputTheme = defineMultiStyleConfig({
                 }
             },
             addon: {
-                bg: 'background.50',
+                bg: 'transparent',
                 color: 'text.800',
-                fontSize: 'lg',
+                fontSize: 'xl',
                 borderWidth: 0,
                 height: 'auto'
             }

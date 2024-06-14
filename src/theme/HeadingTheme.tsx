@@ -13,6 +13,10 @@ export const HeadingTheme = defineStyleConfig({
             fontSize: 'xl',
             fontWeight: 'normal'
         },
+        md: {
+            fontSize: 'md',
+            fontWeight: 'normal'
+        },
         sm: {
             fontSize: 'sm',
             fontWeight: 'normal'

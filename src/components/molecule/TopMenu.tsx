@@ -1,15 +1,20 @@
-import { Box, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
+import { HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 import { TopNav } from '../atom/TopNav';
 import { useScreen } from '../../hooks/useScreen';
 import { useAuth } from '../../hooks/useAuth';
 import { Icon } from '../atom/Icon';
+import { UserPhoto } from '../atom/UserPhoto';
+import { Balance } from '../atom/Balance';
 
 export function TopMenu() {
     const { isLaptop } = useScreen();
     const { user, logout } = useAuth();
 
     return (
-        <header className="flex justify-between items-center h-24  bg-primary-50 w-full px-8 py-4 gap-4 sticky top-0">
+        <header
+            className="flex justify-between items-center h-24  
+        bg-primary-50 w-full px-8 py-4 gap-4 z-50"
+        >
             {isLaptop && <TopNav />}
             <HStack
                 overflow={'hidden'}
@@ -18,19 +23,7 @@ export function TopMenu() {
                 justifyContent={{ base: 'space-between', laptop: 'flex-end' }}
             >
                 <HStack gap={'16px'} overflow={'hidden'}>
-                    <Box
-                        borderRadius={'50%'}
-                        bg={'background.800'}
-                        height={'50px'}
-                        width={'50px'}
-                        padding={'10px'}
-                    >
-                        <Icon
-                            type={'user'}
-                            color={'background.0'}
-                            fontSize={'2xl'}
-                        />
-                    </Box>
+                    <UserPhoto />
                     <VStack
                         gap={0}
                         alignItems={'flex-start'}
@@ -58,7 +51,10 @@ export function TopMenu() {
                             whiteSpace={'nowrap'}
                             maxWidth={'100%'}
                         >
-                            -10333.15 €
+                            <Balance
+                                className="text-sm text-wrap"
+                                balance={user?.balance}
+                            />
                         </Text>
                     </VStack>
                 </HStack>

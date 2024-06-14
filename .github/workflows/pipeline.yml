@@ -3,11 +3,6 @@ on:
     push:
         branches:
             - main
-            # - develop
-    # pull_request:
-    #   branches:
-    #     - main
-    #     - develop
 jobs:
     avoid_conflicts:
         runs-on: ubuntu-latest
@@ -18,23 +13,24 @@ jobs:
               uses: styfle/cancel-workflow-action@0.9.1
               with:
                   access_token: ${{ github.token }}
-    # test:
-    #   runs-on: ubuntu-latest
-    #   steps:
-    #     - uses: actions/checkout@v4
-    #       with:
-    #         fetch-depth: 0
-    #     - name: Launch PostgreSQL
-    #       run: docker-compose up -d db db-test
-    #     - uses: actions/setup-java@v4
-    #       with:
-    #         distribution: "oracle"
-    #         java-version: "17"
-    #         cache: "maven"
-    #     - name: Test application
-    #       run: mvn -B test
+    e2e:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            # # Install npm dependencies, cache them correctly
+            # # and run all Cypress tests
+            - name: Cypress run
+              uses: cypress-io/github-action@v6
+              with:
+                build: yarn build --mode e2e
+                start: npx serve -s dist
+                wait-on: 'http://localhost:3000'
+                command-prefix: 'yarn'
+                browser: chrome
+                headed: true
     deploy:
-        # needs: [test]
+        needs: [e2e]
         runs-on: ubuntu-latest
         if: github.ref == 'refs/heads/main'
         steps:

@@ -30,6 +30,7 @@ import {
 import { Typography } from '../components/ui/Typography';
 import { conf } from '../../conf';
 import { useToast } from '../hooks/useToast';
+import { useMutation } from '@tanstack/react-query';
 
 export function RegisterScreen() {
     const { register } = useApi();
@@ -68,19 +69,10 @@ export function RegisterScreen() {
         useState<string>('');
     const [isTermsOfServiceOpen, setIsTermsOfServiceOpen] =
         useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const { setError } = useError();
 
     const { showToast } = useToast();
-
-    const disabledButton =
-        isLoading ||
-        emailError ||
-        passwordError ||
-        passwordMatchError !== '' ||
-        usernameError ||
-        serviceTermsAcceptedError !== '';
 
     const passwordMatchValidate = () => {
         if (!passwordMatchDirty && (password || repeatPassword)) {
@@ -119,7 +111,7 @@ export function RegisterScreen() {
         serviceTermsAcceptedValidate();
     }, [serviceTermsAccepted]);
 
-    const onRegister = async () => {
+    const registerUser = async () => {
         const usernameValid = usernameValidate();
         const emailValid = emailValidate();
         const passwordValid = passwordValidate();
@@ -132,35 +124,44 @@ export function RegisterScreen() {
             passwordMatch &&
             serviceTermsAccepted
         ) {
-            setIsLoading(true);
-            try {
-                await register({ username, email, password });
-                showToast('success', 'User succesfully registered');
-                navigate('/login');
-            } catch (e) {
-                if (e instanceof ApiError) {
-                    if (e.statusCode === StatusCode.ClientErrorConflict) {
-                        if (e.code === ErrorCode.USERNAME_ALREADY_IN_USE) {
-                            showToast(
-                                'error',
-                                'The username is already in use'
-                            );
-                            return;
-                        }
-                        if (e.code === ErrorCode.EMAIL_ALREADY_IN_USE) {
-                            showToast('error', 'The email is already in use');
-                            return;
-                        }
-                    }
-                }
-                if (e instanceof Error) {
-                    setError(e);
-                }
-            } finally {
-                setIsLoading(false);
-            }
+            await register({ username, email, password });
+        } else {
+            throw new Error('There are errors in the form');
         }
     };
+
+    const { mutate: onRegister, isPending: isLoading } = useMutation({
+        mutationFn: registerUser,
+        onSuccess: () => {
+            showToast('success', 'User succesfully registered');
+            navigate('/login');
+        },
+        onError: (e) => {
+            if (e instanceof ApiError) {
+                if (e.statusCode === StatusCode.ClientErrorConflict) {
+                    if (e.code === ErrorCode.USERNAME_ALREADY_IN_USE) {
+                        showToast('error', 'The username is already in use');
+                        return;
+                    }
+                    if (e.code === ErrorCode.EMAIL_ALREADY_IN_USE) {
+                        showToast('error', 'The email is already in use');
+                        return;
+                    }
+                }
+            }
+            if (e instanceof Error) {
+                setError(e);
+            }
+        }
+    });
+
+    const disabledButton =
+        isLoading ||
+        emailError ||
+        passwordError ||
+        passwordMatchError !== '' ||
+        usernameError ||
+        serviceTermsAcceptedError !== '';
 
     return (
         <Layout isPublic>
@@ -188,6 +189,7 @@ export function RegisterScreen() {
                             value={username}
                             ref={usernameInputRef}
                             onChange={(e) => setUsername(e.target.value)}
+                            maxLength={80}
                         />
                     }
                 />
@@ -251,7 +253,6 @@ export function RegisterScreen() {
                         </HStack>
                     }
                 />
-
                 <Button
                     type="submit"
                     isDisabled={disabledButton}

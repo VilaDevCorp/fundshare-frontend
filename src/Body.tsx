@@ -4,6 +4,10 @@ import { LoginScreen } from './screens/LoginScreen';
 import { Suspense, lazy, useEffect } from 'react';
 import { HomeScreen } from './screens/HomeScreen';
 import { LoadingScreen } from './screens/LoadingScreen';
+import { GroupsScreen } from './screens/GroupsScreen';
+import { RequestsScreen } from './screens/RequestsScreen';
+import { GroupDetailsScreen } from './screens/GroupDetailsScreen';
+import { SettingsScreen } from './screens/SettingsScreen';
 
 const LazyRegisterScreen = lazy(() =>
     import('./screens/RegisterScreen').then((module) => ({
@@ -31,22 +35,48 @@ const LazyResetPasswordScreen = lazy(() =>
 function Body() {
     const authInfo = useAuth();
 
-    useEffect(() => {
+    const calculate1vh = () => {
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    useEffect(() => {
+        calculate1vh();
+        window.addEventListener('resize', calculate1vh);
+        return () => {
+            window.removeEventListener('resize', calculate1vh);
+        };
     }, []);
 
     return (
-        <div className="w-full h-full flex flex-col ">
+        <div className="w-full h-full flex flex-col overflow-auto ">
             <BrowserRouter>
                 {authInfo.isLoadingUserInfo === false ? (
                     <>
                         <Suspense fallback={<LoadingScreen />}>
                             <Routes>
                                 <Route path="/" element={<HomeScreen />} />
-                                <Route path="/groups" element={<HomeScreen />} />
-                                <Route path="/requests" element={<HomeScreen />} />
-                                <Route path="/settings" element={<HomeScreen />} />
+                                <Route
+                                    path="/groups"
+                                    element={<GroupsScreen />}
+                                />
+                                <Route
+                                    path="/requests"
+                                    element={<RequestsScreen />}
+                                />
+                                <Route
+                                    path="/settings"
+                                    element={<SettingsScreen />}
+                                />
+                                <Route
+                                    path="/groups/:id"
+                                    element={
+                                        <Suspense fallback={<LoadingScreen />}>
+                                            <GroupDetailsScreen />
+                                        </Suspense>
+                                    }
+                                />
+
                                 <Route
                                     path="/login"
                                     element={<LoginScreen />}

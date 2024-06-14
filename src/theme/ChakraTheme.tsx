@@ -57,11 +57,11 @@ const colors = {
     },
 
     error: {
-        50: '#FFEBEB',
-        100: '#FFD1D1',
-        200: '#FFB6B6',
-        300: '#FF9A9A',
-        400: '#FF7F7F',
+        50: '#E9AEAE',
+        100: '#E39B9B',
+        200: '#DD8A8A',
+        300: '#D87979',
+        400: '##D26868',
         500: '#C84B4B',
         600: '#B93F3F',
         700: '#A93333',
@@ -73,13 +73,13 @@ const colors = {
 };
 
 const fontSizes = {
-    xs: '0.75rem',
-    sm: '0.875rem',
-    md: '1rem',
-    lg: '1.25rem',
-    xl: '1.5rem',
-    '2xl': '1.875rem',
-    '3xl': '2rem'
+    xs: '0.625rem',
+    sm: '0.75rem',
+    md: '0.875rem',
+    lg: '1rem',
+    xl: '1.125rem',
+    '2xl': '1.375rem',
+    '3xl': '1.75rem'
 };
 
 const breakpoints = {
@@ -95,7 +95,7 @@ const breakpoints = {
 const shadows = {
     inputFocus: '0 0 0 1px #005654',
     inputInvalid: '0 0 0 1px #C84B4B',
-    inputHover: '0 0 0 1px #707070'
+    inputHover: '0 0 0 1px #C8C8C8'
 };
 
 export const theme = extendTheme({

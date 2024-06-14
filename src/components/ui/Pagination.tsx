@@ -1,20 +1,26 @@
-import { Box, IconButton, Text } from '@chakra-ui/react';
+import { Box, BoxProps, IconButton, Text } from '@chakra-ui/react';
 import { Icon } from '../atom/Icon';
 
 interface PaginationProps {
     page: number;
-    totalPages: number;
+    hasNextPage: boolean;
     onPageChange: (page: number) => void;
+    boxProps?: BoxProps
 }
 
 export function Pagination(props: PaginationProps) {
+    
     return (
         <Box
             display={'flex'}
             gap={4}
+            maxW={'400px'}
+            marginLeft={'auto'}
+            marginRight={'auto'}
             alignItems={'center'}
             width={'100%'}
             justifyContent={'space-evenly'}
+            {...props.boxProps}
         >
             <IconButton
                 variant={'ghost'}
@@ -24,14 +30,14 @@ export function Pagination(props: PaginationProps) {
                 icon={<Icon type={'chevron-left'} />}
                 isDisabled={props.page <= 0}
             />
-            <Text fontSize={'md'}>{props.page + 1}</Text>
+            <Text fontSize={'lg'}>{props.page + 1}</Text>
             <IconButton
                 variant={'ghost'}
                 size={'square'}
                 aria-label={'next-page'}
                 onClick={() => props.onPageChange(props.page + 1)}
                 icon={<Icon type={'chevron-right'} />}
-                isDisabled={props.page >= props.totalPages - 1}
+                isDisabled={!props.hasNextPage}
             />
         </Box>
     );

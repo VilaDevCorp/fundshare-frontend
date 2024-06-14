@@ -7,6 +7,9 @@ export const ButtonTheme = defineStyleConfig({
         borderWidth: '2px !important',
         _disabled: {
             cursor: 'default'
+        },
+        _focus: {
+            boxShadow: 'none'
         }
     },
     sizes: {
@@ -20,8 +23,11 @@ export const ButtonTheme = defineStyleConfig({
             height: 'auto !important'
         },
         square: {
+            flexShrink: 0,
             padding: '12px 24px',
             fontSize: 'xl',
+            height: '48px',
+            width: '48px',
             fontWeight: 'normal',
             svg: {
                 fontSize: '1.2em'
@@ -31,7 +37,6 @@ export const ButtonTheme = defineStyleConfig({
     variants: {
         solid: {
             bg: 'primary.500',
-            padding: '10px',
             borderColor: 'transparent',
             _hover: {
                 bg: 'primary.300'
@@ -41,6 +46,20 @@ export const ButtonTheme = defineStyleConfig({
             },
             _disabled: {
                 bg: 'primary.100 !important'
+            },
+            color: 'text.0'
+        },
+        solid_error: {
+            bg: 'error.500',
+            borderColor: 'transparent',
+            _hover: {
+                bg: 'error.300'
+            },
+            _active: {
+                bg: 'error.200'
+            },
+            _disabled: {
+                bg: 'error.100 !important'
             },
             color: 'text.0'
         },
@@ -58,15 +77,17 @@ export const ButtonTheme = defineStyleConfig({
             },
             color: 'primary.500'
         },
-
         ghost: {
             bg: 'transparent',
             borderColor: 'transparent',
-            _hover: {
-                bg: 'transparent',
-                color: 'primary.300',
-                backdropFilter: 'brightness(0.95)'
+            _enabled: {
+                _hover: {
+                    bg: 'transparent',
+                    color: 'primary.300',
+                    backdropFilter: 'brightness(0.95)'
+                }
             },
+
             _active: {
                 bg: 'transparent',
                 color: 'primary.300',
@@ -77,6 +98,28 @@ export const ButtonTheme = defineStyleConfig({
                 color: 'primary.100'
             },
             color: 'primary.500'
+        },
+        ghost_error: {
+            bg: 'transparent',
+            borderColor: 'transparent',
+            _enabled: {
+                _hover: {
+                    bg: 'transparent',
+                    color: 'error.300',
+                    backdropFilter: 'brightness(0.95)'
+                },
+                _active: {
+                    bg: 'transparent',
+                    color: 'error.300',
+
+                    backdropFilter: 'brightness(0.90)'
+                }
+            },
+
+            _disabled: {
+                color: 'error.100'
+            },
+            color: 'error.500'
         }
     },
     // The default size and variant values
