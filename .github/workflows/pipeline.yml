@@ -33,6 +33,7 @@ jobs:
         needs: [e2e]
         runs-on: ubuntu-latest
         if: github.ref == 'refs/heads/main'
+        timeout-minutes: 10
         steps:
             - name: Deploy to Contabo server
               uses: appleboy/ssh-action@v1.0.3
