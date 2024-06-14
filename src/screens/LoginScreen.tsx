@@ -118,6 +118,7 @@ export function LoginScreen() {
                             }
                             input={
                                 <Input
+                                    data-cy="username_input"
                                     ref={usernameInputRef}
                                     value={username}
                                     onChange={(e) =>
@@ -135,6 +136,7 @@ export function LoginScreen() {
                             }
                             input={
                                 <Input
+                                    data-cy="password_input"
                                     ref={passwordInputRef}
                                     type="password"
                                     value={password}
