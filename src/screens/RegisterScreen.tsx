@@ -161,7 +161,8 @@ export function RegisterScreen() {
         passwordError ||
         passwordMatchError !== '' ||
         usernameError ||
-        serviceTermsAcceptedError !== '';
+        serviceTermsAcceptedError !== '' ||
+        !serviceTermsAccepted;
 
     return (
         <Layout isPublic>
@@ -171,6 +172,7 @@ export function RegisterScreen() {
                     error={emailError && emailDirty ? emailMessage : undefined}
                     input={
                         <Input
+                            data-cy="emailInput"
                             value={email}
                             ref={emailInputRef}
                             onChange={(e) => setEmail(e.target.value)}
@@ -186,6 +188,7 @@ export function RegisterScreen() {
                     }
                     input={
                         <Input
+                            data-cy="usernameInput"
                             value={username}
                             ref={usernameInputRef}
                             onChange={(e) => setUsername(e.target.value)}
@@ -202,6 +205,7 @@ export function RegisterScreen() {
                     }
                     input={
                         <Input
+                            data-cy="passwordInput"
                             type="password"
                             value={password}
                             ref={passwordInputRef}
@@ -219,6 +223,7 @@ export function RegisterScreen() {
                     }
                     input={
                         <Input
+                            data-cy="repeatPasswordInput"
                             type="password"
                             value={repeatPassword}
                             onChange={(e) => setRepeatPassword(e.target.value)}
@@ -236,6 +241,7 @@ export function RegisterScreen() {
                     input={
                         <HStack>
                             <Checkbox
+                                data-cy="termsOfServiceCheckbox"
                                 checked={serviceTermsAccepted}
                                 onChange={(e) =>
                                     setServiceTermsAccepted(e.target.checked)

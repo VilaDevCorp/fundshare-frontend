@@ -58,7 +58,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                             fontSize={'2xl'}
                             color={toastProps.color}
                         />
-                        <Text>{message}</Text>
+                        <Text data-cy="toast_text">{message}</Text>
                     </Box>
                 );
             }
