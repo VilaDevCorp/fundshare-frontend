@@ -12,7 +12,7 @@ export const TextareaTheme = defineStyleConfig({
             padding: '10px',
             height: '48px',
             resize: 'none',
-            bg: 'neutral.100',
+            bg: 'neutral.200',
 
             _hover: {
                 boxShadow: 'inputHover'
