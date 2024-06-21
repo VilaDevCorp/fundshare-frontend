@@ -30,6 +30,7 @@ export function TopMenu() {
                         overflow={'hidden'}
                     >
                         <Text
+                            data-cy={'top_menu_username'}
                             as={'span'}
                             fontSize={'md'}
                             color={'text.900'}
