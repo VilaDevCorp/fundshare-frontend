@@ -25,10 +25,12 @@ jobs:
               with:
                 build: yarn build --mode e2e
                 start: npx serve -s dist --ssl-cert=cert/cert.pem --ssl-key=cert/key.pem --ssl-pass=cert/pass
-                wait-on: 'https://127.0.0.1:3000'
+                wait-on: 'https://localhost:3000'
                 command-prefix: 'yarn'
                 browser: chrome
                 headed: true
+              env:
+                NODE_TLS_REJECT_UNAUTHORIZED: 0
     deploy:
         needs: [e2e]
         runs-on: ubuntu-latest
