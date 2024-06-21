@@ -16,6 +16,7 @@ const getTypographyElement = (props: TypographyProps) => {
                 <Heading
                     as="h1"
                     size="xl"
+                    letterSpacing={0.5}
                     fontWeight={'light'}
                     {...chakraHeadingProps}
                 >

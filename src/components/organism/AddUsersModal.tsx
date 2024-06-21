@@ -138,86 +138,104 @@ export function AddUsersModal({
                         <ModalBody
                             display={'flex'}
                             flexDir={'column'}
-                            gap={'16px'}
+                            gap={'24px'}
                             pb={'12px'}
                             px={'24px'}
                         >
-                            <Typography type={'subtitle'}>
-                                {'Selected users'}
-                            </Typography>
-                            <div className="">
-                                {selectedUsers.length > 0 ? (
-                                    selectedUsers.map((user) => (
-                                        <UserGroupCard
-                                            key={user.id}
-                                            user={user}
-                                            onRemove={(username: string) => {
-                                                setSelectedUsers(
-                                                    selectedUsers.filter(
-                                                        (u) =>
-                                                            u.username !==
-                                                            username
-                                                    )
-                                                );
-                                            }}
-                                        />
-                                    ))
-                                ) : (
-                                    <NoElementsMessage
-                                        label={'No users selected'}
-                                    />
-                                )}
-                            </div>
-                            <Typography type={'subtitle'}>
-                                {'Add by username'}
-                            </Typography>
-                            <form
-                                className="flex gap-4"
-                                onSubmit={(e) => {
-                                    e.preventDefault();
-                                    onAddUserByUsername(username);
-                                }}
-                            >
-                                <Input
-                                    onChange={(e) =>
-                                        setUsername(e.target.value)
-                                    }
-                                    placeholder={'Username'}
-                                    value={username}
-                                />
-                                <IconButton
-                                    type="submit"
-                                    size={'square'}
-                                    isDisabled={username.length <= 0}
-                                    aria-label="Add user"
-                                    icon={<Icon type="add" />}
-                                />
-                            </form>
-                            <Typography type={'subtitle'}>
-                                {'Known users'}
-                            </Typography>
-                            <div className="flex flex-col min-h-[100px]">
-                                {isLoadingUsers ? (
-                                    <LoadingIndicator />
-                                ) : filteredRelatedUsers?.length === 0 ? (
-                                    <NoElementsMessage
-                                        label={'No users found'}
-                                    />
-                                ) : (
-                                    filteredRelatedUsers?.map(
-                                        (filteredUser) => (
+                            <div className="flex flex-col gap-2">
+                                <Typography
+                                    fontWeight={'normal'}
+                                    type={'subtitle'}
+                                >
+                                    {'Selected users'}
+                                </Typography>
+                                <div className="">
+                                    {selectedUsers.length > 0 ? (
+                                        selectedUsers.map((user) => (
                                             <UserGroupCard
-                                                key={filteredUser.id}
-                                                user={filteredUser}
-                                                onAdd={(username: string) =>
-                                                    onAddUserByUsername(
-                                                        username
-                                                    )
-                                                }
+                                                key={user.id}
+                                                user={user}
+                                                onRemove={(
+                                                    username: string
+                                                ) => {
+                                                    setSelectedUsers(
+                                                        selectedUsers.filter(
+                                                            (u) =>
+                                                                u.username !==
+                                                                username
+                                                        )
+                                                    );
+                                                }}
+                                                noBorder
                                             />
+                                        ))
+                                    ) : (
+                                        <NoElementsMessage
+                                            label={'No users selected'}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <Typography
+                                    type={'subtitle'}
+                                    fontWeight={'normal'}
+                                >
+                                    {'Add by username'}
+                                </Typography>
+                                <form
+                                    className="flex gap-4"
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        onAddUserByUsername(username);
+                                    }}
+                                >
+                                    <Input
+                                        onChange={(e) =>
+                                            setUsername(e.target.value)
+                                        }
+                                        placeholder={'Username'}
+                                        value={username}
+                                    />
+                                    <IconButton
+                                        type="submit"
+                                        size={'square'}
+                                        isDisabled={username.length <= 0}
+                                        aria-label="Add user"
+                                        icon={<Icon type="add" />}
+                                    />
+                                </form>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <Typography
+                                    type={'subtitle'}
+                                    fontWeight={'normal'}
+                                >
+                                    {'Known users'}
+                                </Typography>
+                                <div className="flex flex-col min-h-[100px]">
+                                    {isLoadingUsers ? (
+                                        <LoadingIndicator />
+                                    ) : filteredRelatedUsers?.length === 0 ? (
+                                        <NoElementsMessage
+                                            label={'No more known users to add'}
+                                        />
+                                    ) : (
+                                        filteredRelatedUsers?.map(
+                                            (filteredUser) => (
+                                                <UserGroupCard
+                                                    key={filteredUser.id}
+                                                    user={filteredUser}
+                                                    onAdd={(username: string) =>
+                                                        onAddUserByUsername(
+                                                            username
+                                                        )
+                                                    }
+                                                />
+                                            )
                                         )
-                                    )
-                                )}
+                                    )}
+                                </div>
                             </div>
                         </ModalBody>
                     </div>
@@ -238,6 +256,7 @@ export function AddUsersModal({
                             onClick={() => onCreateRequest()}
                             isDisabled={isDisabled}
                             isLoading={isLoadingInvitingUsers}
+                            width={{ base: '100%', tablet: 'auto' }}
                         >
                             {'Invite'}
                         </Button>

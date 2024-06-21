@@ -100,7 +100,6 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                 display={'flex'}
                 justifyContent={'center'}
                 top={0}
-                background={'background.0'}
                 borderRadius={'2px'}
                 py={'8px'}
                 gap={2}
@@ -116,7 +115,7 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                             'You have to pick at least one user with an amount over 0.'
                         }
                         bg={'error.700'}
-                        color={'text.0'}
+                        color={'neutral.0'}
                         placement="bottom"
                     >
                         <span>

@@ -60,7 +60,7 @@ export function DebtModal({
                                 <>
                                     <div className="flex flex-col gap-1 ml-auto mr-auto justify-center items-center overflow-hidden w-full ">
                                         <UserPhoto />
-                                        <span className="font-bold text-lg w-full text-wrap">
+                                        <span className="font-bold text-lg text-wrap">
                                             {user.username}
                                         </span>
                                     </div>

@@ -19,16 +19,16 @@ export function UserDebtsSection() {
 
     return (
         <GroupDetailsSection title="Your debts" showAlwaysTitle className='!h-[200px] md:!h-full'>
-            <div className="flex flex-col gap-4 overflow-hidden">
+            <div className="flex flex-col gap-4 overflow-hidden h-full">
                 {isLoadingDebts ? (
                     <LoadingIndicator />
                 ) : ownDebts?.length === 0 ? (
                     <NoElementsMessage className='mt-[10%]' label="No debts yet" />
                 ) : (
-                    <div className="flex flex-col bg-background-0 overflow-auto">
+                    <div className="flex flex-col bg-neutral-100 overflow-auto shadow-sm h-full md:mb-1">
                         {ownDebts?.map((debt) => (
                             <UserDebtCard
-                                key={`${debt.payee}-${debt.payer}`}
+                                key={`${debt.payee.username}-${debt.payer.username}`}
                                 debt={debt}
                             />
                         ))}

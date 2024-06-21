@@ -13,7 +13,7 @@ export const TabsTheme = defineMultiStyleConfig({
             height: '100%'
         },
         tab: {
-            bg: 'background.0',
+            bg: 'neutral.100',
             width: '100%',
             transition: 'font-weight .2s ease',
 
@@ -29,9 +29,9 @@ export const TabsTheme = defineMultiStyleConfig({
             }
         },
         tablist: {
-            bg: 'background.0',
+            bg: 'neutral.100',
             height: '45px',
-            borderBottomColor: 'background.700 !important',
+            boxShadow: 'sm',
             gap: '0px',
             padding: '0px'
         },
@@ -42,7 +42,8 @@ export const TabsTheme = defineMultiStyleConfig({
             height: '100%',
             padding: '0',
             overflowY: 'hidden',
-            bg: 'background.0'
+            bg: 'neutral.100',
+            boxShadow: 'md'
         }
     },
     sizes: {

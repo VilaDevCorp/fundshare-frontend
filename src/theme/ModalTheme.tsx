@@ -6,37 +6,55 @@ const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(parts.keys);
 export const ModalTheme = defineMultiStyleConfig({
     baseStyle: {
         dialog: {
-            bg: 'background.0',
+            bg: 'neutral.0',
             borderRadius: '2px',
-            boxShadow: 'md',
+            boxShadow: 'lg',
             maxW: '2xl',
             w: '100%',
             zIndex: 'modal',
-            padding: '12px 24px',
             overflow: 'hidden'
+        },
+        overlay: {
+            backdropFilter: 'blur(4px) brightness(0.8)',
+            bg:'transparent'
         },
         header: {
             fontSize: '2xl',
             fontWeight: 'light',
-            padding: 0,
+            padding: { base: '12px 12px !important', tablet: '12px 24px !important' },
             display: 'flex',
             alignItems: 'center',
+            letterSpacing: '0.5px',
             justifyContent: 'space-between',
-            marginBottom: '24px'
+            paddingBottom: '12px !important',
+            shadow: 'sm',
+            marginBottom: '1px',
         },
         body: {
-            padding: 0,
+            padding: { base: '12px 12px !important', tablet: '12px 24px !important' },
+            bg: 'neutral.100',
             overflowY: 'auto'
         },
         closeButton: {
-            borderWidth: '1px',
+            borderWidth: '2px',
             position: 'static',
+            fontSize: 'lg',
+            bg: 'neutral.100',
+            shadow: 'sm',
+            _hover: {
+                bg: 'neutral.0'
+            },
+            _active: {
+                bg: 'neutral.200',
+                boxShadow: 'none'
+            },
             borderRadius: '2px',
             borderColor: 'primary.500'
         },
         footer: {
-            marginTop: '24px',
-            padding: 0
+            shadow: 'sm_top',
+            padding: { base: '12px 12px !important', tablet: '12px 24px !important' },
+            marginTop: '1px',
         }
     },
     sizes: {

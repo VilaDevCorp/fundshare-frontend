@@ -36,11 +36,12 @@ export function RequestCard({ request }: { request: Request }) {
         });
 
     return (
-        <article className="flex flex-col sm:flex-row justify-between w-full px-4 py-2 gap-3 bg-background-0 rounded-[2px] shadow-md border-2 border-transparent">
-            <Typography flexShrink={1} type="body">
-                <b>{request.group.createdBy?.username}</b>
+        <article className="flex flex-col sm:flex-row justify-between w-full px-4 py-2 gap-3 
+            bg-neutral-0 rounded-[2px] shadow-md border-2 border-transparent overflow-hidden ">
+            <Typography flexShrink={1}  type="body">
+                <b className='break-all'>{request.group.createdBy?.username}</b>
                 {` invited you to join `}
-                <b>{request.group?.name}</b>
+                <b className='break-all'>{request.group?.name}</b>
                 {`. Do you want to join?`}
             </Typography>
             <div className="flex  flex-row sm:flex-col justify-between gap-3 items-center">

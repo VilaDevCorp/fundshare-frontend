@@ -1,7 +1,32 @@
+import { Currency } from './src/types/entities';
+
 const dateTimeFormat = 'DD/MM/yyyy HH:mm';
 const dateFormat = 'DD/MM/yyyy';
 const dateUrlFormat = 'DD-MM-yyyy';
 const dateInputFormat = 'YYYY-MM-DD';
+
+const currencies: Currency[] = [
+    {
+        id: 'euro',
+        symbol: '€',
+        name: 'Euro',
+        rate: 1
+    },
+    {
+        id: 'usd',
+        symbol: '$',
+        name: 'USD',
+        rate: 1.07
+    },
+
+    {
+        id: 'gbp',
+        symbol: '£',
+        name: 'GBP',
+        rate: 0.85
+    }
+];
+
 
 const termsOfService = `
 **Terms of Service Agreement**
@@ -68,5 +93,6 @@ export const conf = {
     dateUrlFormat,
     dateInputFormat,
     dateTimeFormat,
-    termsOfService
+    termsOfService,
+    currencies
 };
