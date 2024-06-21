@@ -10,23 +10,26 @@ export const RadioTheme = defineMultiStyleConfig({
         control: {
             borderRadius: '50%',
 
-            bg: 'background.0 !important',
+            bg: 'neutral.0 !important',
             borderWidth: '1px',
             borderColor: 'primary.500 !important',
             _checked: {},
             _disabled: {
-                bg: 'background.100',
-                borderColor: 'background.100'
+                bg: 'neutral.100',
+                borderColor: 'neutral.100'
             },
             _before: {
                 width: '73% !important',
                 height: '73% !important',
                 bg: 'primary.500 !important'
+            },
+            _focus: {
+                boxShadow: 'none'
             }
         },
         label: {
             fontSize: 'xs',
-            color: 'text.900',
+            color: 'neutral.900',
             _checked: {
                 color: 'primary.500'
             }

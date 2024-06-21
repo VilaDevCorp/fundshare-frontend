@@ -1,4 +1,6 @@
 import { HtmlHTMLAttributes } from 'react';
+import { NotFoundIcon } from './NotFoundIcon';
+
 
 export function NoElementsMessage({
     label,
@@ -8,10 +10,11 @@ export function NoElementsMessage({
     className?: HtmlHTMLAttributes<HTMLSpanElement>[`className`];
 }) {
     return (
-        <span
-            className={`w-full flex justify-center text-text-700 ${className}`}
+        <div
+            className={`w-full gap-1 flex flex-col justify-center items-center ${className}`}
         >
-            {label}
-        </span>
+            <NotFoundIcon width={'44'} className='text-neutral-800'  />
+            <span className={` text-neutral-700`}>{label}</span>
+        </div>
     );
 }

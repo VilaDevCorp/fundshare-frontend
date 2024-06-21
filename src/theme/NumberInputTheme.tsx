@@ -9,7 +9,7 @@ export const NumberInputTheme = defineMultiStyleConfig({
     baseStyle: {
         field: {
             borderRadius: 2,
-            color: 'text.500',
+            color: 'neutral.500',
             fontSize: 'xl',
             textAlign: 'end'
         }
@@ -17,9 +17,12 @@ export const NumberInputTheme = defineMultiStyleConfig({
     variants: {
         outline: {
             field: {
-                borderColor: 'text.700',
+                borderColor: 'neutral.700',
                 padding: '10px',
                 height: '48px',
+                bg: 'neutral.100',
+                color: 'neutral.900',
+
 
                 _hover: {
                     boxShadow: 'inputHover'
@@ -27,7 +30,7 @@ export const NumberInputTheme = defineMultiStyleConfig({
                 _focus: {
                     borderColor: 'primary.500',
                     boxShadow: 'inputFocus',
-                    color: 'text.900',
+                    color: 'neutral.1000',
                     _invalid: {
                         borderColor: 'error.500',
                         boxShadow: 'inputInvalid'
@@ -39,12 +42,11 @@ export const NumberInputTheme = defineMultiStyleConfig({
                 },
                 _disabled: {
                     _hover: {
-                        borderColor: 'background.100',
+                        borderColor: 'neutral.100',
                         boxShadow: 'none'
                     },
-                    borderColor: 'background.100',
+                    borderColor: 'neutral.100',
                     opacity: 1,
-                    bg: 'background.100',
                     cursor: 'default'
                 }
             }

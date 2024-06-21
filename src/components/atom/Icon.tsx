@@ -2,13 +2,25 @@ import {
     Icon as ChakraIcon,
     IconProps as ChakraIconProps
 } from '@chakra-ui/react';
-import { BiError, BiGroup, BiHome, BiMoney, BiPlus } from 'react-icons/bi';
+import {
+    BiError,
+    BiGroup,
+    BiHome,
+    BiMoney,
+    BiPlus,
+    BiUserPlus,
+    BiWrench
+} from 'react-icons/bi';
 import { CgUserAdd, CgUserRemove } from 'react-icons/cg';
-import { CiSettings } from 'react-icons/ci';
 import { FaRegQuestionCircle, FaUser } from 'react-icons/fa';
 import { FaAnglesRight } from 'react-icons/fa6';
-import { IoArrowForwardCircle, IoChevronBack, IoChevronForward } from 'react-icons/io5';
-import { MdLogout } from 'react-icons/md';
+import { FiLogOut } from 'react-icons/fi';
+import {
+    IoArrowForwardCircle,
+    IoChevronBack,
+    IoChevronForward
+} from 'react-icons/io5';
+import { PiEmpty } from 'react-icons/pi';
 import { TiTick, TiTimes } from 'react-icons/ti';
 
 type IconType =
@@ -29,7 +41,8 @@ type IconType =
     | 'deleteUser'
     | 'info'
     | 'doubleChevronRight'
-    | 'arrowRight';
+    | 'arrowRight'
+    | 'empty';
 
 interface IconProps extends ChakraIconProps {
     type: IconType;
@@ -42,11 +55,11 @@ const getIcon = (type: IconType) => {
         case 'group':
             return BiGroup;
         case 'request':
-            return FaRegQuestionCircle;
+            return BiUserPlus;
         case 'settings':
-            return CiSettings;
+            return BiWrench;
         case 'logout':
-            return MdLogout;
+            return FiLogOut;
         case 'chevron-left':
             return IoChevronBack;
         case 'chevron-right':
@@ -73,6 +86,8 @@ const getIcon = (type: IconType) => {
             return FaAnglesRight;
         case 'arrowRight':
             return IoArrowForwardCircle;
+        case 'empty':
+            return PiEmpty;
     }
 };
 

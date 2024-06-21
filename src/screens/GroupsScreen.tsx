@@ -31,7 +31,7 @@ export function GroupsScreen() {
 
     return (
         <Layout>
-            <div className="max-w-[800px] w-full gap-8 flex flex-col ml-auto mr-auto h-full overflow-hidden">
+            <div className="max-w-[800px] w-full gap-4 flex flex-col ml-auto mr-auto h-full overflow-hidden">
                 {isTablet ? (
                     <div className="flex justify-between">
                         <Typography type="title">{'Groups'}</Typography>
@@ -48,7 +48,7 @@ export function GroupsScreen() {
                     </>
                 )}
                 <div className="w-full flex flex-col overflow-hidden gap-4">
-                    <div className="flex flex-col gap-4 items-center overflow-auto pr-2 min-h-[300px]">
+                    <div className="flex flex-col gap-2 items-center overflow-auto pr-2 min-h-[300px] pb-2">
                         {isLoading ? (
                             <LoadingIndicator />
                         ) : groupPage?.content.length === 0 ? (

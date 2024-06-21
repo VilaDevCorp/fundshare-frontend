@@ -41,7 +41,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 const toastProps = getToastProps(type);
                 return (
                     <Box
-                        bg={'background.0'}
+                        bg={'neutral.0'}
                         borderWidth={'2px'}
                         borderColor={toastProps.color}
                         borderRadius={'2px'}

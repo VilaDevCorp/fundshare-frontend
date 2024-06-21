@@ -5,7 +5,7 @@ export function UserPhoto() {
     return (
         <Box
             borderRadius={'50%'}
-            bg={'background.800'}
+            bg={'neutral.800'}
             height={'40px'}
             width={'40px'}
             display={'flex'}
@@ -13,7 +13,7 @@ export function UserPhoto() {
             alignItems={'center'}
             padding={'10px'}
         >
-            <Icon type={'user'} color={'background.0'} fontSize={'2xl'} />
+            <Icon type={'user'} color={'neutral.0'} fontSize={'2xl'} />
         </Box>
     );
 }

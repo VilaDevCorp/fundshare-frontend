@@ -3,12 +3,13 @@ import { Layout } from '../components/organism/Layout';
 import { FormField } from '../components/ui/FormField';
 import { useApi } from '../hooks/useApi';
 import { useAuth } from '../hooks/useAuth';
-import { RadioGroup, Radio, Button } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useError } from '../hooks/useError';
 import { useToast } from '../hooks/useToast';
 import { useReactQuery } from '../hooks/useReactQuery';
 import { Typography } from '../components/ui/Typography';
+import { CurrencySelector } from '../components/molecule/CurrencySelector';
 
 export function SettingsScreen() {
     const { updateConf } = useApi();
@@ -47,17 +48,10 @@ export function SettingsScreen() {
                 <FormField
                     label="Currency"
                     input={
-                        <RadioGroup
-                            display={'flex'}
-                            flexWrap={'wrap'}
-                            flexDir={{ base: 'column', md: 'row' }}
-                            gap={{ base: '24px', md: '32px' }}
-                            value={currency}
-                            onChange={(value) => setCurrency(value)}
-                        >
-                            <Radio value="euro">Euro</Radio>
-                            <Radio value="dollar">Dollar</Radio>
-                        </RadioGroup>
+                        <CurrencySelector
+                            currency={currency}
+                            setCurrency={setCurrency}
+                        />
                     }
                 />
                 <Button

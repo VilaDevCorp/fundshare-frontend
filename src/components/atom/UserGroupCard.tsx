@@ -1,4 +1,4 @@
-import { IconButton } from '@chakra-ui/react';
+import { Badge, IconButton } from '@chakra-ui/react';
 import { User } from '../../types/entities';
 import { Typography } from '../ui/Typography';
 import { Icon } from './Icon';
@@ -9,17 +9,25 @@ export function UserGroupCard({
     onAdd,
     onRemove,
     isPending,
-    isAdmin
+    isAdmin,
+    loggedUserIsAdmin,
+    noBorder
 }: {
     user: User;
     onAdd?: (username: string) => void;
     onRemove?: (username: string) => void;
     isPending?: boolean;
     isAdmin?: boolean;
+    loggedUserIsAdmin?: boolean;
+    noBorder?: boolean;
 }) {
     return (
         <article
-            className={`flex bg-background-0 h-[64px] min-h-[64px] gap-3 md:px-8 md:py-2 items-center overflow-hidden w-full ${isPending && 'opacity-70'} ${!onAdd && !onRemove && '!pl-[60px] md:!pl-[92px]'}`}
+            className={`flex bg-neutral-0 h-[64px] min-h-[64px] gap-3  
+                px-4 md:py-2 items-center overflow-hidden w-full  
+                ${loggedUserIsAdmin && !onAdd && !onRemove && '!pl-[calc(48px+16px+12px)]'}
+                ${!noBorder && 'border-b first:border-t border-background-200'}`}
+                
         >
             {onAdd && (
                 <IconButton
@@ -52,7 +60,7 @@ export function UserGroupCard({
                     type="detail"
                     className="ml-auto"
                 >
-                    {'Pending'}
+                    <Badge bg={'neutral.300'} color={'neutral.900'}>{'Pending'}</Badge>
                 </Typography>
             )}
             {isAdmin && (
@@ -62,7 +70,7 @@ export function UserGroupCard({
                     type="detail"
                     className="ml-auto"
                 >
-                    {'Admin'}
+                    <Badge bg={'primary.300'} color={'neutral.0'} >{'Admin'}</Badge>
                 </Typography>
             )}
         </article>

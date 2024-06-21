@@ -33,8 +33,9 @@ export const ScreenProvider = ({ children }: { children: ReactNode }) => {
     const isDesktop = screenWidth >= ScreenWidthEnum.DESKTOP;
 
     const onResize = () => {
-        setScreenWidth(window.screen.width);
-        setScreenHeight(window.screen.height);
+        console.log(isTablet, isMobileL, isMobileM, isLaptop, isDesktop)
+        setScreenWidth(window.innerWidth);
+        setScreenHeight(window.innerHeight);
     };
 
     useEffect(() => {

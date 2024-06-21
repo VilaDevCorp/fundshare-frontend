@@ -34,8 +34,7 @@ export function BottomNav() {
 
     return (
         <nav
-            className="w-full h-16 sticky bottom-0 flex justify-between px-6 py-3 gap-6 
-        bg-background-0"
+            className="w-full h-16 min-h-16 sticky bottom-0 flex justify-between px-2 py-3 gap-6 bg-primary-0 shadow-sm_top"
         >
             {navItems.map((item) => (
                 <a
@@ -47,7 +46,8 @@ export function BottomNav() {
                         });
                     }}
                     key={item.path}
-                    className={`flex text-3xl justify-center items-center w-10 h-10 ${pathname === item.path ? 'text-primary-500 text-4xl' : ''}`}
+                    className={`flex text-3xl justify-center text-neutral-600 items-center w-full  
+                        h-10 ${pathname === item.path ? '!text-primary-500 text-4xl' : ''}`}
                 >
                     {item.icon}
                 </a>

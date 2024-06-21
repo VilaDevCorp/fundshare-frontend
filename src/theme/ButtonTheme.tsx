@@ -4,11 +4,15 @@ export const ButtonTheme = defineStyleConfig({
     // The styles all button have in common
     baseStyle: {
         borderRadius: '2px',
+        boxShadow: 'sm',
         borderWidth: '2px !important',
         _disabled: {
             cursor: 'default'
         },
         _focus: {
+            boxShadow: 'sm'
+        },
+        _active: {
             boxShadow: 'none'
         }
     },
@@ -20,7 +24,7 @@ export const ButtonTheme = defineStyleConfig({
             svg: {
                 fontSize: '1.2em'
             },
-            height: 'auto !important'
+            height: 'auto !important',
         },
         square: {
             flexShrink: 0,
@@ -28,6 +32,8 @@ export const ButtonTheme = defineStyleConfig({
             fontSize: 'xl',
             height: '48px',
             width: '48px',
+            minWidth: '48px',
+            minHeight: '48px',
             fontWeight: 'normal',
             svg: {
                 fontSize: '1.2em'
@@ -42,12 +48,17 @@ export const ButtonTheme = defineStyleConfig({
                 bg: 'primary.300'
             },
             _active: {
-                bg: 'primary.200'
+                bg: 'primary.600',
+                boxShadow: 'none'
+            },
+            _focus: {
+                boxShadow: 'sm'
             },
             _disabled: {
-                bg: 'primary.100 !important'
+                bg: 'primary.300 !important',
+                filter: 'brightness(0.7)'
             },
-            color: 'text.0'
+            color: 'neutral.100'
         },
         solid_error: {
             bg: 'error.500',
@@ -56,20 +67,22 @@ export const ButtonTheme = defineStyleConfig({
                 bg: 'error.300'
             },
             _active: {
-                bg: 'error.200'
+                bg: 'error.600',
+                boxShadow: 'none'
             },
             _disabled: {
                 bg: 'error.100 !important'
             },
-            color: 'text.0'
+            color: 'neutral.0'
         },
         outline: {
             borderColor: 'primary.500',
+            bg: 'neutral.100',
             _hover: {
-                bg: 'background.100'
+                bg: 'neutral.0'
             },
             _active: {
-                bg: 'background.200'
+                bg: 'neutral.200'
             },
             _disabled: {
                 borderColor: 'primary.100',
@@ -79,45 +92,34 @@ export const ButtonTheme = defineStyleConfig({
         },
         ghost: {
             bg: 'transparent',
-            borderColor: 'transparent',
-            _enabled: {
-                _hover: {
-                    bg: 'transparent',
-                    color: 'primary.300',
-                    backdropFilter: 'brightness(0.95)'
-                }
+            boxShadow: 'none',
+            borderColor: 'transparent !important',
+            _hover: {
+                bg:'transparent',
+                backdropFilter: 'brightness(0.95)'
             },
-
             _active: {
                 bg: 'transparent',
-                color: 'primary.300',
-
+                color: 'primary.700',
                 backdropFilter: 'brightness(0.90)'
             },
             _disabled: {
-                color: 'primary.100'
+                opacity: 0.2
             },
             color: 'primary.500'
         },
         ghost_error: {
             bg: 'transparent',
             borderColor: 'transparent',
-            _enabled: {
-                _hover: {
-                    bg: 'transparent',
-                    color: 'error.300',
-                    backdropFilter: 'brightness(0.95)'
-                },
-                _active: {
-                    bg: 'transparent',
-                    color: 'error.300',
-
-                    backdropFilter: 'brightness(0.90)'
-                }
+            boxShadow: 'none !important',
+            _hover: {
+                backdropFilter: 'brightness(0.95)'
             },
+            _active: {
+                bg: 'transparent',
+                color: 'error.700',
 
-            _disabled: {
-                color: 'error.100'
+                backdropFilter: 'brightness(0.90)'
             },
             color: 'error.500'
         }

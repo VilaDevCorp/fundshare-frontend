@@ -3,15 +3,16 @@ import { defineStyleConfig } from '@chakra-ui/react';
 export const TextareaTheme = defineStyleConfig({
     baseStyle: {
         borderRadius: 2,
-        color: 'text.500',
-        fontSize: 'sm'
+        color: 'neutral.800',
+        fontSize: 'md'
     },
     variants: {
         outline: {
-            borderColor: 'text.700',
+            borderColor: 'neutral.700',
             padding: '10px',
             height: '48px',
             resize: 'none',
+            bg: 'neutral.100',
 
             _hover: {
                 boxShadow: 'inputHover'
@@ -19,7 +20,7 @@ export const TextareaTheme = defineStyleConfig({
             _focus: {
                 borderColor: 'primary.500',
                 boxShadow: 'inputFocus',
-                color: 'text.900',
+                color: 'neutral.900',
                 _invalid: {
                     borderColor: 'error.500',
                     boxShadow: 'inputInvalid'
@@ -31,12 +32,12 @@ export const TextareaTheme = defineStyleConfig({
             },
             _disabled: {
                 _hover: {
-                    borderColor: 'background.100',
+                    borderColor: 'neutral.100',
                     boxShadow: 'none'
                 },
-                borderColor: 'background.100',
+                borderColor: 'neutral.100',
                 opacity: 1,
-                bg: 'background.100',
+                bg: 'neutral.100',
                 cursor: 'default'
             }
         }
