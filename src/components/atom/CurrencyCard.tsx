@@ -15,7 +15,7 @@ export function CurrencyCard({
                 bg-neutral-0 shadow-sm flex flex-col
                  items-center ${
                      isSelected
-                         ? 'border-primary-400'
+                         ? '!border-primary-400'
                          : 'hover:bg-neutral-100 active:shadow-none active:bg-neutral-300'
                  }`}
             onClick={onClick}
