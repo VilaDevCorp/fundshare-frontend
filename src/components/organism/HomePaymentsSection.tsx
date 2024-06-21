@@ -27,12 +27,15 @@ export function HomePaymentsSection() {
                 <Typography type="title">{'Recent payments'}</Typography>
             )}
 
-            <div className="w-full flex flex-col rounded-[2px] overflow-hidden gap-2">
-                <div className="flex flex-col overflow-auto  min-h-[300px] bg-neutral-100 shadow-sm">
+            <div className="w-full flex flex-col rounded-[2px] overflow-hidden h-full md:h-auto gap-2">
+                <div className="flex flex-col overflow-auto  min-h-[300px]  bg-neutral-100 md:shadow-sm">
                     {isLoading ? (
                         <LoadingIndicator />
                     ) : userPaymentsPage?.content.length === 0 ? (
-                        <NoElementsMessage className='mt-[24px]' label="No payments yet" />
+                        <NoElementsMessage
+                            className="mt-[24px]"
+                            label="No payments yet"
+                        />
                     ) : (
                         userPaymentsPage?.content.map((payment) => (
                             <PaymentCard
@@ -45,6 +48,7 @@ export function HomePaymentsSection() {
                 </div>
                 {userPaymentsPage?.content.length !== 0 && (
                     <Pagination
+                        boxProps={{ className: 'mt-auto' }}
                         page={page}
                         onPageChange={(page) => setPage(page)}
                         hasNextPage={!!userPaymentsPage?.hasNext}
