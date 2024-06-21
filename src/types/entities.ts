@@ -82,3 +82,10 @@ export interface GroupDebt {
     group: Group;
     amount: number;
 }
+
+export interface Currency {
+    id: string;
+    name: string;
+    symbol: string;
+    rate: number;
+}

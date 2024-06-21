@@ -2,11 +2,13 @@ import { defineStyleConfig } from '@chakra-ui/react';
 
 export const HeadingTheme = defineStyleConfig({
     // The styles all button have in common
-    baseStyle: {},
+    baseStyle: {
+        color:'neutral.900'
+    },
     // Two sizes: sm and md
     sizes: {
         xl: {
-            fontSize: '3xl',
+            fontSize: '2xl',
             fontWeight: 'light'
         },
         lg: {

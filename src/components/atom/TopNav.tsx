@@ -41,11 +41,11 @@ export function TopNav() {
 
     return (
         <HStack width={'100%'} height={'100%'} gap={'24px'}>
-            <Image src={logo} alt="Logo" height={'100%'} />
+            <Image src={logo} alt="Logo" height={'80%'} />
             <nav className="flex gap-6">
                 {navItems.map((item) => (
                     <a
-                        className={`gap-2 flex items-center hover:spfont-bold cursor-pointer group  ${location.pathname.split('/')[1] === item.path.split('/')[1] ? 'text-primary-500' : ' transition-all ease-out hover:scale-105'} `}
+                        className={`gap-2 flex text-neutral-800 hover:text-neutral-900 items-center cursor-pointer group  ${location.pathname.split('/')[1] === item.path.split('/')[1] ? '!text-primary-500 ' : ' transition-all ease-out '} `}
                         key={item.label}
                         onClick={() => {
                             navigate(item.path);
@@ -59,7 +59,7 @@ export function TopNav() {
                             {item.icon}
                         </span>
                         <span
-                            className={`text-xl font-light transition-all  ${location.pathname.split('/')[1] === item.path.split('/')[1] ? '!font-bold' : ''}`}
+                            className={`text-xl transition-all   ${location.pathname.split('/')[1] === item.path.split('/')[1] ? '!font-bold' : ''}`}
                         >
                             {item.label}
                         </span>

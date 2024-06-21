@@ -25,7 +25,7 @@ export function FormField(props: FormFieldProps) {
                     <Tooltip
                         label={props.error}
                         bg={'error.700'}
-                        color={'text.0'}
+                        color={'neutral.0'}
                         placement="bottom"
                     >
                         <span>

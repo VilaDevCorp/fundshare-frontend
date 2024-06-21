@@ -15,7 +15,7 @@ export const SliderTheme = defineMultiStyleConfig({
             bg: 'primary.500'
         },
         track: {
-            bg: 'background.700'
+            bg: 'neutral.700'
         }
     },
     sizes: {

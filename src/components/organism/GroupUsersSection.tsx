@@ -15,6 +15,7 @@ import { GroupDetailsSection } from '../atom/GroupDetailsSection';
 import { ConfirmationModal } from './ConfirmationModal';
 import { useState } from 'react';
 import { LoadingIndicator } from '../atom/LoadingIndicator';
+import { useScreen } from '../../hooks/useScreen';
 
 export function GroupUsersSection() {
     const {
@@ -37,6 +38,8 @@ export function GroupUsersSection() {
 
     const { user: loggedUser } = useAuth();
     const { group } = useGroup();
+
+    const { isTablet } = useScreen();
 
     const [userToKick, setUserToKick] = useState<string | undefined>(undefined);
 
@@ -86,21 +89,37 @@ export function GroupUsersSection() {
     });
 
     return (
-        <GroupDetailsSection title="Users">
-            {loggedUser?.username === group?.createdBy?.username && (
-                <Button
-                    variant={'outline'}
-                    leftIcon={<Icon type="addUser" />}
-                    onClick={() => onOpenAddUsers()}
-                >
-                    {'Add users'}
-                </Button>
-            )}
-            <div className="flex flex-col overflow-auto h-full pr-2">
+        <GroupDetailsSection
+            title="Users"
+            topButton={
+                loggedUser?.username === group?.createdBy?.username && (
+                    <Button
+                        variant={'outline'}
+                        w={'fit-content'}
+                        leftIcon={<Icon type="addUser" />}
+                        onClick={() => onOpenAddUsers()}
+                    >
+                        {'Add users'}
+                    </Button>
+                )
+            }
+        >
+            {!isTablet &&
+                loggedUser?.username === group?.createdBy?.username && (
+                    <Button
+                        variant={'outline'}
+                        w={'full'}
+                        leftIcon={<Icon type="addUser" />}
+                        onClick={() => onOpenAddUsers()}
+                    >
+                        {'Add users'}
+                    </Button>
+                )}
+            <div className="flex flex-col overflow-auto h-full">
                 {isLoadingRequests ? (
                     <LoadingIndicator />
                 ) : (
-                    <>
+                    <div className="flex flex-col overflow-auto bg-neutral-100 md:shadow-sm h-full md:mb-1">
                         {groupRequests?.content.map((request) => (
                             <UserGroupCard
                                 key={request.id}
@@ -130,13 +149,17 @@ export function GroupUsersSection() {
                                               }
                                             : undefined
                                     }
+                                    loggedUserIsAdmin={
+                                        group?.createdBy?.username ===
+                                        loggedUser?.username
+                                    }
                                     isAdmin={
                                         group?.createdBy?.username ===
                                         user.username
                                     }
                                 />
                             ))}
-                    </>
+                    </div>
                 )}
             </div>
             {isOpenAddUsers && (

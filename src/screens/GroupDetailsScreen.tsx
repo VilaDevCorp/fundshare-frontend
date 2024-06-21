@@ -103,7 +103,7 @@ export function GroupDetailsScreen() {
                     {group ? (
                         <>
                             {isLaptop ? (
-                                <div className="h-[80px]">
+                                <div className="h-[96px]">
                                     <div className="flex justify-between mb-4">
                                         <Typography type="title">
                                             {group?.name}
@@ -170,12 +170,12 @@ export function GroupDetailsScreen() {
                                 </div>
                             )}
                             {isLaptop ? (
-                                <div className="w-full flex flex-col gap-8 py-6 h-[calc(100%-80px)]">
-                                    <div className="w-full h-1/3 flex gap-8">
+                                <div className="w-full flex flex-col gap-8 h-[calc(100%-96px)] overflow-hidden">
+                                    <div className="w-full h-1/3 flex gap-8 overflow-hidden">
                                         <UserDebtsSection />
                                         <GroupDebtsSection />
                                     </div>
-                                    <div className="w-full h-2/3 flex gap-8">
+                                    <div className="w-full h-2/3 flex gap-8 overflow-hidden">
                                         <GroupPaymentsSection />
                                         <GroupUsersSection />
                                     </div>

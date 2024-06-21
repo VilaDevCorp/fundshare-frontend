@@ -8,7 +8,7 @@ const { defineMultiStyleConfig } = createMultiStyleConfigHelpers(
 export const CheckboxTheme = defineMultiStyleConfig({
     baseStyle: {
         control: {
-            borderColor: 'text.700',
+            borderColor: 'neutral.700',
             borderWidth: '1px',
             _checked: {
                 bg: 'primary.500',

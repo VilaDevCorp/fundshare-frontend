@@ -12,8 +12,8 @@ export function TopMenu() {
 
     return (
         <header
-            className="flex justify-between items-center h-24  
-        bg-primary-50 w-full px-8 py-4 gap-4 z-50"
+            className="flex justify-between items-center h-24 min-h-24  
+        bg-primary-0 w-full px-4 py-2 gap-4 z-50 shadow-sm"
         >
             {isLaptop && <TopNav />}
             <HStack
@@ -33,7 +33,7 @@ export function TopMenu() {
                             data-cy={'top_menu_username'}
                             as={'span'}
                             fontSize={'md'}
-                            color={'text.900'}
+                            color={'neutral.900'}
                             fontWeight={'bold'}
                             textOverflow={'ellipsis'}
                             overflow={'hidden'}
@@ -45,11 +45,11 @@ export function TopMenu() {
                         <Text
                             as={'span'}
                             fontSize={'lg'}
-                            color={'error.500'}
                             fontWeight={'bold'}
                             textOverflow={'ellipsis'}
                             overflow={'hidden'}
                             whiteSpace={'nowrap'}
+                            noOfLines={2}
                             maxWidth={'100%'}
                         >
                             <Balance

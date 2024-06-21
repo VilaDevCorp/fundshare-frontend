@@ -1,4 +1,5 @@
 import { ApiError, ApiResponse } from '../types/types';
+import { conf } from '../../conf';
 
 const checkResponseException = (
     res: Response,
@@ -20,11 +21,16 @@ const calculateCurrency = (
     if (amount === undefined) {
         return 0;
     }
-    if (currency === 'dollar') {
-        return amount * 1.07;
-    } else {
-        return amount;
+    let result: number | undefined = undefined;
+    conf.currencies.forEach((c) => {
+        if (c.id === currency) {
+            result = amount * c.rate;
+        }
+    });
+    if (result !== undefined) {
+        return result;
     }
+    return NaN;
 };
 
 const calculateBaseCurrency = (
@@ -34,19 +40,29 @@ const calculateBaseCurrency = (
     if (amount === undefined) {
         return 0;
     }
-    if (currency === 'dollar') {
-        return amount / 1.07;
-    } else {
-        return amount;
+    let result: number | undefined = undefined;
+    conf.currencies.forEach((c) => {
+        if (c.id === currency) {
+            result = amount / c.rate;
+        }
+    });
+    if (result !== undefined) {
+        return result;
     }
+    return NaN;
 };
 
 const getCurrencySymbol = (currency: string | undefined) => {
-    if (currency === 'dollar') {
-        return '$';
-    } else {
-        return '€';
+    let result: string | undefined = undefined;
+    conf.currencies.forEach((c) => {
+        if (c.id === currency) {
+            result = c.symbol;
+        }
+    });
+    if (result !== undefined) {
+        return result;
     }
+    return '';
 };
 
 export {

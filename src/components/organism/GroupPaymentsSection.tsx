@@ -24,13 +24,13 @@ export function GroupPaymentsSection() {
 
     return (
         <GroupDetailsSection title="History">
-            <div className="flex flex-col gap-4 overflow-hidden h-full">
+            <div className="flex flex-col gap-4 overflow-hidden h-full ">
                 {isLoading ? (
                     <LoadingIndicator />
                 ) : groupPaymentsPage?.content.length === 0 ? (
                     <NoElementsMessage className='mt-[10%]' label="No payments yet" />
                 ) : (
-                    <div className="flex flex-col bg-background-0 overflow-auto">
+                    <div className="flex flex-col bg-neutral-100 overflow-auto md:shadow-sm h-full md:mb-1">
                         {groupPaymentsPage?.content.map((payment) => (
                             <PaymentCard key={payment.id} payment={payment} />
                         ))}
