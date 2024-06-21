@@ -28,7 +28,7 @@ export function HomePaymentsSection() {
             )}
 
             <div className="w-full flex flex-col rounded-[2px] overflow-hidden gap-2">
-                <div className="flex flex-col overflow-auto  min-h-[300px] bg-neutral-0 shadow-sm">
+                <div className="flex flex-col overflow-auto  min-h-[300px] bg-neutral-100 shadow-sm">
                     {isLoading ? (
                         <LoadingIndicator />
                     ) : userPaymentsPage?.content.length === 0 ? (
