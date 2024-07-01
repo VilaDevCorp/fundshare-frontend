@@ -70,7 +70,7 @@ export function RegisterScreen() {
     const [isTermsOfServiceOpen, setIsTermsOfServiceOpen] =
         useState<boolean>(false);
 
-    const { setError } = useError();
+    const { setError } = useError(navigate);
 
     const { showToast } = useToast();
 

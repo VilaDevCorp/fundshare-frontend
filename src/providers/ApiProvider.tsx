@@ -65,7 +65,7 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
     };
 
     const forgottenPassword = async (username: string): Promise<void> => {
-        const url = `${apiUrl}public/forgottenpassword/${username}`;
+        const url = `${apiUrl}public/forgotten-password/${username}`;
         const options: RequestInit = {
             method: 'POST'
         };
@@ -79,7 +79,7 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         code: string,
         password: string
     ): Promise<void> => {
-        const url = `${apiUrl}public/resetpassword/${username}/${code}`;
+        const url = `${apiUrl}public/reset-password/${username}/${code}`;
         const options: RequestInit = {
             method: 'POST',
             body: password,

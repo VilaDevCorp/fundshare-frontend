@@ -37,6 +37,7 @@ import {
 } from '../../utils/utilFunctions';
 import { useAuth } from '../../hooks/useAuth';
 import { useScreen } from '../../hooks/useScreen';
+import { useNavigate } from 'react-router-dom';
 
 export interface PaymentInfo {
     totalAmount: string;
@@ -79,7 +80,8 @@ export function AddPaymentModal({
     const { create } = useCrud<Payment>('payment');
     const { queryClient } = useReactQuery();
     const { showToast } = useToast();
-    const { setError } = useError();
+    const navigate = useNavigate();
+    const { setError } = useError(navigate);
 
     const { group } = useGroup();
 

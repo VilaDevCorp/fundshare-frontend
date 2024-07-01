@@ -10,12 +10,14 @@ import { useToast } from '../hooks/useToast';
 import { useReactQuery } from '../hooks/useReactQuery';
 import { Typography } from '../components/ui/Typography';
 import { CurrencySelector } from '../components/molecule/CurrencySelector';
+import { useNavigate } from 'react-router-dom';
 
 export function SettingsScreen() {
     const { updateConf } = useApi();
     const { user: loggedUser } = useAuth();
     const { showToast } = useToast();
-    const { setError } = useError();
+    const navigate = useNavigate();
+    const { setError } = useError(navigate);
     const { queryClient } = useReactQuery();
 
     const [currency, setCurrency] = useState(
