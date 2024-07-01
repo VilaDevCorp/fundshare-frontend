@@ -16,6 +16,7 @@ import { ConfirmationModal } from './ConfirmationModal';
 import { useState } from 'react';
 import { LoadingIndicator } from '../atom/LoadingIndicator';
 import { useScreen } from '../../hooks/useScreen';
+import { useNavigate } from 'react-router-dom';
 
 export function GroupUsersSection() {
     const {
@@ -30,7 +31,8 @@ export function GroupUsersSection() {
         onClose: onCloseConfirm
     } = useDisclosure();
 
-    const { setError } = useError();
+    const navigate = useNavigate();
+    const { setError } = useError(navigate);
     const { showToast } = useToast();
 
     const { kickGroupUser } = useApi();

@@ -9,6 +9,7 @@ import { useError } from '../../hooks/useError';
 import { useMutation } from '@tanstack/react-query';
 import { FormModal } from '../ui/FormModal';
 import { useReactQuery } from '../../hooks/useReactQuery';
+import { useNavigate } from 'react-router-dom';
 
 export function CreateGroupModal({
     isOpen,
@@ -29,7 +30,8 @@ export function CreateGroupModal({
     const { create } = useCrud<Group>('group');
     const { queryClient } = useReactQuery();
     const { showToast } = useToast();
-    const { setError } = useError();
+    const navigate = useNavigate();
+    const { setError } = useError(navigate);
 
     const createGroup = async () => {
         if (nameValidate()) {

@@ -17,7 +17,7 @@ export const useError = (navigate?: NavigateFunction) => {
         if (error) {
             if (error instanceof ApiError) {
                 switch (error.statusCode) {
-                    case StatusCode.ClientErrorForbidden:
+                    case StatusCode.ClientErrorUnauthorized:
                         if (
                             error.code === ErrorCode.NOT_JWT_TOKEN ||
                             error.code === ErrorCode.NOT_CSR_TOKEN ||

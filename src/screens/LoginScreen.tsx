@@ -34,7 +34,7 @@ export function LoginScreen() {
     const [passwordDirty, passwordError, passwordMessage, passwordValidate] =
         useValidator(password, [notEmptyValidator], passwordInputRef);
 
-    const { setError } = useError();
+    const { setError } = useError(navigate);
 
     const { queryClient } = useReactQuery();
 

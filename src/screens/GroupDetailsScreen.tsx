@@ -59,7 +59,7 @@ export function GroupDetailsScreen() {
         queryFn: () => get(id as string)
     });
 
-    const { setError } = useError();
+    const { setError } = useError(navigate);
 
     const { search: searchDebts } = useCrud<Debt>('debt');
 

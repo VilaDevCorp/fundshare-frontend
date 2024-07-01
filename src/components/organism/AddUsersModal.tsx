@@ -26,6 +26,7 @@ import { Typography } from '../ui/Typography';
 import { NoElementsMessage } from '../atom/NoElementsMessage';
 import { LoadingIndicator } from '../atom/LoadingIndicator';
 import { useScreen } from '../../hooks/useScreen';
+import { useNavigate } from 'react-router-dom';
 
 export function AddUsersModal({
     isOpen,
@@ -36,7 +37,8 @@ export function AddUsersModal({
 }) {
     const { queryClient } = useReactQuery();
     const { showToast } = useToast();
-    const { setError } = useError();
+    const navigate = useNavigate();
+    const { setError } = useError(navigate);
 
     const { isTablet } = useScreen();
 
