@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useApi } from '../hooks/useApi';
 import { ApiError, ErrorCode } from '../types/types';
@@ -19,8 +19,15 @@ export function ValidateAccountScreen() {
 
     const { showToast } = useToast();
 
+    //Avoid problems of double validation (strict mode)
+    const alreadyValidatedRef = useRef(false);
+
     useEffect(() => {
+        if (alreadyValidatedRef.current) {
+            return;
+        }
         onValidateAccount();
+        alreadyValidatedRef.current = true;
     }, []);
 
     const validate = async () => {
