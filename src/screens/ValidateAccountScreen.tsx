@@ -41,6 +41,10 @@ export function ValidateAccountScreen() {
         },
         onError: (e) => {
             if (e instanceof ApiError) {
+                if (e.statusCode === StatusCode.ClientErrorNotFound) {
+                    setCodeError('There is no code to validate');
+                    return;
+                }
                 if (e.statusCode === StatusCode.ClientErrorConflict) {
                     setCodeError('The code has already been used');
                     return;
