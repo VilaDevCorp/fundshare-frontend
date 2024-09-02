@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         reloadUserInfo();
     }, [csrfToken]);
+    
 
     const self = async (): Promise<User | undefined> => {
         if (csrfToken) {
