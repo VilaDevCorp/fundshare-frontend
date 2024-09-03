@@ -31,6 +31,7 @@ import { Typography } from '../components/ui/Typography';
 import { conf } from '../../conf';
 import { useToast } from '../hooks/useToast';
 import { useMutation } from '@tanstack/react-query';
+import { PasswordInput } from '../components/atom/PasswordInput';
 
 export function RegisterScreen() {
     const { register } = useApi();
@@ -204,12 +205,10 @@ export function RegisterScreen() {
                             : undefined
                     }
                     input={
-                        <Input
-                            data-cy="passwordInput"
-                            type="password"
-                            value={password}
+                        <PasswordInput
+                            password={password}
+                            setPassword={setPassword}
                             ref={passwordInputRef}
-                            onChange={(e) => setPassword(e.target.value)}
                         />
                     }
                 />
@@ -222,11 +221,9 @@ export function RegisterScreen() {
                             : undefined
                     }
                     input={
-                        <Input
-                            data-cy="repeatPasswordInput"
-                            type="password"
-                            value={repeatPassword}
-                            onChange={(e) => setRepeatPassword(e.target.value)}
+                        <PasswordInput
+                            password={repeatPassword}
+                            setPassword={setRepeatPassword}
                         />
                     }
                 />

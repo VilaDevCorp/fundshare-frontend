@@ -16,6 +16,7 @@ import { Icon } from '../components/atom/Icon';
 import { Button, Input, Link } from '@chakra-ui/react';
 import { FormField } from '../components/ui/FormField';
 import { useMutation } from '@tanstack/react-query';
+import { PasswordInput } from '../components/atom/PasswordInput';
 
 export function ResetPasswordScreen() {
     const navigate = useNavigate();
@@ -131,11 +132,10 @@ export function ResetPasswordScreen() {
                                 : ''
                         }
                         input={
-                            <Input
+                            <PasswordInput
+                                password={password}
+                                setPassword={setPassword}
                                 ref={passwordInputRef}
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
                             />
                         }
                     />
@@ -147,12 +147,9 @@ export function ResetPasswordScreen() {
                                 : ''
                         }
                         input={
-                            <Input
-                                value={repeatPassword}
-                                type="password"
-                                onChange={(e) =>
-                                    setRepeatPassword(e.target.value)
-                                }
+                            <PasswordInput
+                                password={repeatPassword}
+                                setPassword={setRepeatPassword}
                             />
                         }
                     />
