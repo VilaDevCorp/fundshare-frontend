@@ -48,7 +48,7 @@ jobs:
                       set -e
                       cd services/fundshare-front
                       git checkout main
-                      git pull https://davilasanvilar:${{ secrets.GIT_PAT }}@github.com/davilasanvilar/fundshare-frontend.git
+                      git pull https://davilasanvilar:${{ secrets.GIT_PAT }}@github.com/VilaDevCorp/fundshare-frontend.git
                       yarn install
                       yarn build
                       rm -rf /var/www/fundshare_dist
