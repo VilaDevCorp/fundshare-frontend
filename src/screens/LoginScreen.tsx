@@ -10,11 +10,12 @@ import { useError } from '../hooks/useError';
 import { useApi } from '../hooks/useApi';
 import { useMutation } from '@tanstack/react-query';
 import { FormField } from '../components/ui/FormField';
-import { Button, Checkbox, Input, Link } from '@chakra-ui/react';
+import { Button, Checkbox, IconButton, Input, InputGroup, InputRightElement, Link } from '@chakra-ui/react';
 import { Typography } from '../components/ui/Typography';
 import { useToast } from '../hooks/useToast';
 import { Icon } from '../components/atom/Icon';
 import { useReactQuery } from '../hooks/useReactQuery';
+import { PasswordInput } from '../components/atom/PasswordInput';
 
 export function LoginScreen() {
     const auth = useAuth();
@@ -33,6 +34,8 @@ export function LoginScreen() {
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [passwordDirty, passwordError, passwordMessage, passwordValidate] =
         useValidator(password, [notEmptyValidator], passwordInputRef);
+
+    const [showPassword, setShowPassword] = useState(false)
 
     const { setError } = useError(navigate);
 
@@ -135,15 +138,7 @@ export function LoginScreen() {
                                     : undefined
                             }
                             input={
-                                <Input
-                                    data-cy="password_input"
-                                    ref={passwordInputRef}
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
-                                />
+                                <PasswordInput password={password} setPassword={setPassword} ref={passwordInputRef} />
                             }
                         />
                         <Checkbox

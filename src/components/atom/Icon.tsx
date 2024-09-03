@@ -9,7 +9,9 @@ import {
     BiMoney,
     BiPlus,
     BiUserPlus,
-    BiWrench
+    BiWrench,
+    BiShow,
+    BiHide
 } from 'react-icons/bi';
 import { CgUserAdd, CgUserRemove } from 'react-icons/cg';
 import { FaRegQuestionCircle, FaUser } from 'react-icons/fa';
@@ -42,7 +44,9 @@ type IconType =
     | 'info'
     | 'doubleChevronRight'
     | 'arrowRight'
-    | 'empty';
+    | 'empty'
+    | 'show'
+    | 'hide';
 
 interface IconProps extends ChakraIconProps {
     type: IconType;
@@ -88,6 +92,10 @@ const getIcon = (type: IconType) => {
             return IoArrowForwardCircle;
         case 'empty':
             return PiEmpty;
+        case 'show':
+            return BiShow;
+        case 'hide':
+            return BiHide;
     }
 };
 
