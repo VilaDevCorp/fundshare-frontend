@@ -13,7 +13,7 @@ import { PublicFormLayout } from '../components/organism/PublicFormLayout';
 import { Layout } from '../components/organism/Layout';
 import { useToast } from '../hooks/useToast';
 import { Icon } from '../components/atom/Icon';
-import { Button, Input, Link } from '@chakra-ui/react';
+import { Button, Link } from '@chakra-ui/react';
 import { FormField } from '../components/ui/FormField';
 import { useMutation } from '@tanstack/react-query';
 import { PasswordInput } from '../components/atom/PasswordInput';

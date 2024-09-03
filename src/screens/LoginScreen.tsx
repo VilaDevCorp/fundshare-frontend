@@ -10,7 +10,7 @@ import { useError } from '../hooks/useError';
 import { useApi } from '../hooks/useApi';
 import { useMutation } from '@tanstack/react-query';
 import { FormField } from '../components/ui/FormField';
-import { Button, Checkbox, IconButton, Input, InputGroup, InputRightElement, Link } from '@chakra-ui/react';
+import { Button, Checkbox, Input, Link } from '@chakra-ui/react';
 import { Typography } from '../components/ui/Typography';
 import { useToast } from '../hooks/useToast';
 import { Icon } from '../components/atom/Icon';
@@ -34,8 +34,6 @@ export function LoginScreen() {
     const passwordInputRef = useRef<HTMLInputElement>(null);
     const [passwordDirty, passwordError, passwordMessage, passwordValidate] =
         useValidator(password, [notEmptyValidator], passwordInputRef);
-
-    const [showPassword, setShowPassword] = useState(false)
 
     const { setError } = useError(navigate);
 
