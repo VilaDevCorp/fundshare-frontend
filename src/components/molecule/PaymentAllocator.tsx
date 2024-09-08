@@ -226,7 +226,7 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                 {/*We do this to keep the logged user at the top of the list*/}
                 {unassignedUsers && unassignedUsers.length !== 0 ? (
                     <div className="flex flex-col gap-2">
-                        {unassignedUsers.filter(user => user.id === loggedUser?.id).length > 0 ?
+                        {unassignedUsers.filter(user => user.username === loggedUser?.username).length > 0 ?
                             <UserPaymentCard
                                 user={loggedUser!}
                                 key={loggedUser?.username}
@@ -235,7 +235,7 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                                 }
                             /> : <></>}
                         {unassignedUsers.map((notSelectedUser) => (
-                            notSelectedUser.id === loggedUser?.id ? <></> :
+                            notSelectedUser.username === loggedUser?.username ? <></> :
                                 <UserPaymentCard
                                     user={notSelectedUser}
                                     key={notSelectedUser.username}
