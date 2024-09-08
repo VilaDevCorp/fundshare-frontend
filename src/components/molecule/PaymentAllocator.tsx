@@ -38,7 +38,6 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
 
     const unassignedUsers = group?.users?.filter(
         (user) =>
-            user.username !== loggedUser?.username &&
             !selectedUsers.find(
                 (selectedUser) => selectedUser.username === user.username
             )
@@ -110,23 +109,23 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                 {!Object.values(userAmounts).some(
                     (amount) => Number(amount) > 0
                 ) && (
-                    <Tooltip
-                        label={
-                            'You have to pick at least one user with an amount over 0.'
-                        }
-                        bg={'error.700'}
-                        color={'neutral.0'}
-                        placement="bottom"
-                    >
-                        <span>
-                            <Icon
-                                color={'error.500'}
-                                fontSize={'lg'}
-                                type={'warning'}
-                            />
-                        </span>
-                    </Tooltip>
-                )}
+                        <Tooltip
+                            label={
+                                'You have to pick at least one user with an amount over 0.'
+                            }
+                            bg={'error.700'}
+                            color={'neutral.0'}
+                            placement="bottom"
+                        >
+                            <span>
+                                <Icon
+                                    color={'error.500'}
+                                    fontSize={'lg'}
+                                    type={'warning'}
+                                />
+                            </span>
+                        </Tooltip>
+                    )}
                 {type === 'divided' ? (
                     `Total: ${totalAmount} ${getCurrencySymbol(loggedUser?.conf?.currency)}`
                 ) : Number(totalAmount) - totalAssignedAmount === 0 ? (
@@ -138,24 +137,23 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                 )}
                 {type === 'total' &&
                     `${Math.abs(Number(totalAmount) - totalAssignedAmount).toFixed(2)} ${getCurrencySymbol(loggedUser?.conf?.currency)} 
-                        (${
-                            isNaN(
-                                (Math.abs(
-                                    Number(totalAmount) - totalAssignedAmount
-                                ) /
-                                    Number(totalAmount)) *
-                                    100
-                            )
-                                ? '100'
-                                : (
-                                      (Math.abs(
-                                          Number(totalAmount) -
-                                              totalAssignedAmount
-                                      ) /
-                                          Number(totalAmount)) *
-                                      100
-                                  ).toFixed(2)
-                        }%)`}
+                        (${isNaN(
+                        (Math.abs(
+                            Number(totalAmount) - totalAssignedAmount
+                        ) /
+                            Number(totalAmount)) *
+                        100
+                    )
+                        ? '100'
+                        : (
+                            (Math.abs(
+                                Number(totalAmount) -
+                                totalAssignedAmount
+                            ) /
+                                Number(totalAmount)) *
+                            100
+                        ).toFixed(2)
+                    }%)`}
             </Typography>
             <div>
                 {selectedUsers.length !== 0 ? (
@@ -170,8 +168,8 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                                 selectedUser.username
                             ]
                                 ? (Number(userAmounts[selectedUser.username]) /
-                                      Number(totalAmount)) *
-                                  100
+                                    Number(totalAmount)) *
+                                100
                                 : 0;
                             return (
                                 <UserPaymentCard
@@ -184,16 +182,16 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                                     setAmount={
                                         type === 'total'
                                             ? (amount) =>
-                                                  setUserAmounts((prev) => {
-                                                      const newUserAmounts = {
-                                                          ...prev
-                                                      };
-                                                      newUserAmounts[
-                                                          selectedUser.username
-                                                      ] = amount;
+                                                setUserAmounts((prev) => {
+                                                    const newUserAmounts = {
+                                                        ...prev
+                                                    };
+                                                    newUserAmounts[
+                                                        selectedUser.username
+                                                    ] = amount;
 
-                                                      return newUserAmounts;
-                                                  })
+                                                    return newUserAmounts;
+                                                })
                                             : undefined
                                     }
                                     percentage={(
@@ -202,19 +200,19 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                                     setPercentage={
                                         type === 'total'
                                             ? (percentage) =>
-                                                  setUserAmounts((prev) => {
-                                                      const newUserAmounts = {
-                                                          ...prev
-                                                      };
-                                                      newUserAmounts[
-                                                          selectedUser.username
-                                                      ] = (
-                                                          Number(amount) *
-                                                          (Number(percentage) /
-                                                              100)
-                                                      ).toFixed(2);
-                                                      return newUserAmounts;
-                                                  })
+                                                setUserAmounts((prev) => {
+                                                    const newUserAmounts = {
+                                                        ...prev
+                                                    };
+                                                    newUserAmounts[
+                                                        selectedUser.username
+                                                    ] = (
+                                                        Number(amount) *
+                                                        (Number(percentage) /
+                                                            100)
+                                                    ).toFixed(2);
+                                                    return newUserAmounts;
+                                                })
                                             : undefined
                                     }
                                 />
@@ -227,6 +225,14 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
 
                 {unassignedUsers && unassignedUsers.length !== 0 ? (
                     <div className="flex flex-col gap-2">
+                        {unassignedUsers.filter(user => user.id === loggedUser?.id).length > 0 ?
+                            <UserPaymentCard
+                                user={loggedUser!}
+                                key={loggedUser?.username}
+                                onAdd={() =>
+                                    onAddUserToPayment(loggedUser!)
+                                }
+                            /> : <></>}
                         {unassignedUsers.map((notSelectedUser) => (
                             <UserPaymentCard
                                 user={notSelectedUser}

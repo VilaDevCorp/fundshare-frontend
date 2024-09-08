@@ -62,7 +62,7 @@ export function UserPaymentCard({
                     />
                 )}
                 {isTablet && <UserPhoto />}
-                <Typography overflow={'hidden'} flexShrink={1} type="body">{user.username}</Typography>
+                <Typography overflow={'hidden'} flexShrink={1} type="body">{user.username === loggedUser?.username ? 'Me' : user.username}</Typography>
                 {setAmount ? (
                     <InputGroup justifyContent={'end'} ml={'auto'} w={'auto'}>
                         <NumberInput
