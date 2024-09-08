@@ -47,7 +47,8 @@ export function BottomNav() {
                     }}
                     key={item.path}
                     className={`flex text-3xl justify-center text-neutral-600 items-center w-full  
-                        h-10 ${pathname.startsWith(item.path) ? '!text-primary-500 text-4xl' : ''}`}
+                        h-10 ${item.path === navItems[0].path && pathname === navItems[0].path
+                            || item.path !== navItems[0].path && pathname.startsWith(item.path) ? '!text-primary-500 text-4xl' : ''}`}
                 >
                     {item.icon}
                 </a>
