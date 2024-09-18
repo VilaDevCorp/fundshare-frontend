@@ -25,7 +25,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(fu
                 }
             />
             <InputRightElement>
-                <IconButton variant={'ghost'} style={{ boxShadow: 'none' }} aria-label='show-password'
+                <IconButton tabIndex={-1} variant={'ghost'} style={{ boxShadow: 'none' }} aria-label='show-password'
                     icon={<Icon type={showPassword ? 'hide' : 'show'} />} onClick={() => setShowPassword(oldVal => !oldVal)} />
             </InputRightElement>
         </InputGroup>
