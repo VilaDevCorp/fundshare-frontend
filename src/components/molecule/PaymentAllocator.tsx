@@ -98,12 +98,12 @@ export function PaymentAllocator(props: PaymentAllocatorProps) {
                 w={'100%'}
                 display={'flex'}
                 justifyContent={'center'}
-                top={0}
+                top={"-12px"}
                 borderRadius={'2px'}
                 py={'8px'}
                 gap={2}
                 zIndex={10}
-                backdropFilter={'opacity(0.4) blur(4px)'}
+                background={'neutral.100'}
                 type="subtitle"
             >
                 {!Object.values(userAmounts).some(
