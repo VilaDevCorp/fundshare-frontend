@@ -18,6 +18,7 @@ interface ApiContext {
     kickGroupUser: (groupId: string, username: string) => Promise<void>;
     getDebtWithUser: (username: string) => Promise<GroupDebt[]>;
     updateConf: (conf: UserConf) => Promise<void>;
+    updateProfilePicture: (profilePicture?: File) => Promise<void>;
 }
 
 export const ApiContext = createContext<ApiContext>({} as ApiContext);
@@ -160,6 +161,25 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         checkResponseException(res, resObject);
     };
 
+    const updateProfilePicture = async (profilePicture?: File): Promise<void> => {
+        const url = `${apiUrl}profilepicture`;
+        const formData = new FormData();
+        if (profilePicture) {
+            formData.append('profilePicture', profilePicture);
+        }
+        const options: RequestInit = {
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+            headers: new Headers({
+                'X-API-CSRF': csrfToken ? csrfToken : '',
+            })
+        };
+        const res = await fetch(url, options);
+        const resObject = await res.json();
+        checkResponseException(res, resObject);
+    };
+
     const value: ApiContext = {
         register,
         sendValidationCode,
@@ -169,7 +189,8 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
         respondRequest,
         kickGroupUser,
         getDebtWithUser,
-        updateConf
+        updateConf,
+        updateProfilePicture
     };
 
     return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

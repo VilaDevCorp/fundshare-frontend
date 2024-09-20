@@ -22,7 +22,7 @@ export function UserDebtCard({
             onClick={onClick}
         >
             <div className="flex gap-2 items-center overflow-hidden min-w-[150px]">
-                <UserPhoto />
+                <UserPhoto pictureUrl={isPayer ? debt.payee.pictureUrl : debt.payer.pictureUrl} />
                 <span className="text-sm font-bold overflow-hidden ">
                     {isPayer ? debt.payee.username : debt.payer.username}
                 </span>

@@ -53,7 +53,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     code: result.errorCode
                 });
             }
-            return result.data;
+            const user = result.data;
+            user.loadTimestamp = Date.now();
+            return user;
         } else {
             throw new Error('No csrf token');
         }

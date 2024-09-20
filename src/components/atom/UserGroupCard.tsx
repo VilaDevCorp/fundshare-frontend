@@ -50,7 +50,7 @@ export function UserGroupCard({
                     onClick={() => onRemove(user.username)}
                 />
             )}
-            <UserPhoto />
+            <UserPhoto pictureUrl={user.pictureUrl} />
             <Typography overflow={'hidden'} flexShrink={1} type="body">
                 {user.username}
             </Typography>

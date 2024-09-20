@@ -95,7 +95,7 @@ export function GroupDetailsScreen() {
     });
 
     return (
-        <Layout minH="lg:min-h-[750px] !h-auto lg:!h-[calc(100vh-96px)]">
+        <Layout minH="lg:min-h-[750px] lg:!h-[calc(100vh-96px)]">
             <GroupProvider
                 value={{ group, debts, isLoadingGroup, isLoadingDebts }}
             >

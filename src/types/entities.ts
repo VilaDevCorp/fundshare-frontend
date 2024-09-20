@@ -13,6 +13,10 @@ export interface User extends BaseEntity {
     email: string;
     balance?: number;
     conf?: UserConf;
+    pictureUrl?: string;
+    //This is a timestamp of the last time the user's picture was updated
+    // (to force the browser to reload the image adding this to the <img> key)
+    loadTimestamp: number;
 }
 
 export interface RegisterUserForm {

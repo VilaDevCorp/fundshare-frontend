@@ -61,7 +61,7 @@ export function UserPaymentCard({
                         onClick={() => onRemove(user.username)}
                     />
                 )}
-                {isTablet && <UserPhoto />}
+                {isTablet && <UserPhoto pictureUrl={user.pictureUrl} />}
                 <Typography overflow={'hidden'} flexShrink={1} type="body">{user.username === loggedUser?.username ? 'Me' : user.username}</Typography>
                 {setAmount ? (
                     <InputGroup justifyContent={'end'} ml={'auto'} w={'auto'}>

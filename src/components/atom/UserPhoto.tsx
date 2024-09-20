@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import { Icon } from './Icon';
 import { Box } from '@chakra-ui/react';
 
-export function UserPhoto() {
+export function UserPhoto({ pictureUrl, onClick }: { pictureUrl?: string, onClick?: () => void }) {
+
+    const [picUrl, setPicUrl] = useState(pictureUrl)
+
     return (
         <Box
             borderRadius={'50%'}
@@ -11,9 +15,16 @@ export function UserPhoto() {
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
-            padding={'10px'}
+            onClick={onClick}
+            cursor={onClick ? 'pointer' : 'default'}
         >
-            <Icon type={'user'} color={'neutral.0'} fontSize={'2xl'} />
-        </Box>
+            {picUrl ?
+                <img className='rounded-full object-cover w-full h-full' src={picUrl} alt="User photo" onError={() => setPicUrl(undefined)} />
+                :
+                <span className='p-2'>
+                    <Icon type={'user'} color={'neutral.0'} fontSize={'2xl'} />
+                </span>
+            }
+        </Box >
     );
 }

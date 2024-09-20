@@ -1,14 +1,18 @@
-import { HStack, IconButton, Text, VStack } from '@chakra-ui/react';
+import { Button, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 import { TopNav } from '../atom/TopNav';
 import { useScreen } from '../../hooks/useScreen';
 import { useAuth } from '../../hooks/useAuth';
 import { Icon } from '../atom/Icon';
 import { UserPhoto } from '../atom/UserPhoto';
 import { Balance } from '../atom/Balance';
+import { ProfilePictureModal } from './ProfilePictureModal';
+import { useState } from 'react';
 
 export function TopMenu() {
     const { isLaptop } = useScreen();
     const { user, logout } = useAuth();
+
+    const [profilePictureModalOpen, setprofilePictureModalOpen] = useState(false)
 
     return (
         <header
@@ -23,7 +27,7 @@ export function TopMenu() {
                 justifyContent={{ base: 'space-between', laptop: 'flex-end' }}
             >
                 <HStack gap={'16px'} overflow={'hidden'}>
-                    <UserPhoto />
+                    <UserPhoto key={user?.loadTimestamp} pictureUrl={user?.pictureUrl} onClick={() => setprofilePictureModalOpen(true)} />
                     <VStack
                         gap={0}
                         alignItems={'flex-start'}
@@ -67,6 +71,7 @@ export function TopMenu() {
                     icon={<Icon type={'logout'} />}
                 ></IconButton>
             </HStack>
+            {profilePictureModalOpen && <ProfilePictureModal isOpen={profilePictureModalOpen} onClose={() => setprofilePictureModalOpen(false)} />}
         </header>
     );
 }

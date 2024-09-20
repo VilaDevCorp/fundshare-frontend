@@ -15,7 +15,7 @@ export function GroupDebtCard({ debt }: { debt: Debt }) {
                 border-background-200 bg-neutral-0 `}
         >
             <div className="flex gap-2 items-center w-[25%] overflow-hidden">
-                {isTablet && <UserPhoto />}
+                {isTablet && <UserPhoto pictureUrl={debt.payee.pictureUrl} />}
                 <span className="text-sm font-bold overflow-hidden">
                     {debt.payee.username}
                 </span>
@@ -26,7 +26,7 @@ export function GroupDebtCard({ debt }: { debt: Debt }) {
                 <Icon color={'primary.500'} type="doubleChevronRight" />
             </div>
             <div className="flex gap-2 items-center w-[25%] justify-end overflow-hidden ">
-                {isTablet && <UserPhoto />}
+                {isTablet && <UserPhoto pictureUrl={debt.payer.pictureUrl} />}
                 <span className="text-sm font-bold overflow-hidden ">
                     {debt.payer.username}
                 </span>
