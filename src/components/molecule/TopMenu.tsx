@@ -1,4 +1,4 @@
-import { Button, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
+import { HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 import { TopNav } from '../atom/TopNav';
 import { useScreen } from '../../hooks/useScreen';
 import { useAuth } from '../../hooks/useAuth';

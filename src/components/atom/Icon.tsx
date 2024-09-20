@@ -22,6 +22,7 @@ import {
     IoChevronBack,
     IoChevronForward
 } from 'react-icons/io5';
+import { MdEdit } from 'react-icons/md';
 import { PiEmpty } from 'react-icons/pi';
 import { TiTick, TiTimes } from 'react-icons/ti';
 
@@ -46,7 +47,8 @@ type IconType =
     | 'arrowRight'
     | 'empty'
     | 'show'
-    | 'hide';
+    | 'hide'
+    | 'edit'
 
 interface IconProps extends ChakraIconProps {
     type: IconType;
@@ -96,6 +98,8 @@ const getIcon = (type: IconType) => {
             return BiShow;
         case 'hide':
             return BiHide;
+        case 'edit':
+            return MdEdit;
     }
 };
 

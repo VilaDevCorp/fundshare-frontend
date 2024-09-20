@@ -6,6 +6,7 @@ export function UserPhoto({ pictureUrl, onClick }: { pictureUrl?: string, onClic
 
     const [picUrl, setPicUrl] = useState(pictureUrl)
 
+
     return (
         <Box
             borderRadius={'50%'}
@@ -17,13 +18,22 @@ export function UserPhoto({ pictureUrl, onClick }: { pictureUrl?: string, onClic
             alignItems={'center'}
             onClick={onClick}
             cursor={onClick ? 'pointer' : 'default'}
+            position={'relative'}
         >
-            {picUrl ?
-                <img className='rounded-full object-cover w-full h-full' src={picUrl} alt="User photo" onError={() => setPicUrl(undefined)} />
-                :
-                <span className='p-2'>
-                    <Icon type={'user'} color={'neutral.0'} fontSize={'2xl'} />
+
+            {onClick && (
+                < span className='opacity-0 hover:opacity-100 transition-all absolute w-full h-full flex justify-center items-center rounded-full backdrop-brightness-50'>
+                    <Icon type={'edit'} color={'neutral.0'} fontSize={'3xl'} />
                 </span>
+            )
+            }
+            {
+                picUrl ?
+                    <img className='rounded-full object-cover w-full h-full' src={picUrl} alt="User photo" onError={() => setPicUrl(undefined)} />
+                    :
+                    <span className='p-2'>
+                        <Icon type={'user'} color={'neutral.0'} fontSize={'2xl'} />
+                    </span>
             }
         </Box >
     );
